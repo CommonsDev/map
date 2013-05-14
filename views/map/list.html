@@ -1,0 +1,8 @@
+<leaflet markers="markers" center="center"></leaflet>
+
+<a href="#" ng-click="markers.Madrid.lat = 10">YO</a>
+<ul>
+  <li ng-repeat="map in maps">
+    <a href="#" ng-click="save()">{{ map.name }}</a> {{ map.center }}
+  </li>
+</ul>

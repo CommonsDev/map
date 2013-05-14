@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" ng-app="gup">
+<head>
+  <meta charset="utf-8">
+  <title>GUP</title>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+  <style>
+    .angular-leaflet-map {
+      width: 200px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+
+  {{ 2 + 2 }}
+  <a href="/new">New</a>
+  <a href="/">List</a>
+
+    <div ng-view>
+    </div>
+
+
+
+    
+  <!-- vendor includes -->
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js" type="text/javascript"></script>
+
+  <!-- angular -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+  <script src="scripts/vendor/angular-resource-tastypie.js"></script>
+  <script src="scripts/vendor/angular-leaflet-directive.js" type="text/javascript"></script>
+
+  <!-- Map module -->
+  <script src="scripts/lib/map/services.js"></script>
+  <script src="scripts/lib/map/controllers.js"></script>
+
+
+  <!-- main app -->
+  <script src="scripts/app.js"></script>
+
+</body>
+</html>
