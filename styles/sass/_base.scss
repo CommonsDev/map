@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+$experimental-support-for-khtml:false;
+
+@-ms-viewport {
+  width: device-width;
+}
+
+@viewport {
+  width: device-width;
+}
+
+@import "compass/reset";
+@import "compass/css3";
+
+@mixin background-vertical-gradient($colorTop, $colorBottom) {
+    background-image: linear-gradient(top, $colorTop 0%, $colorBottom 100%);
+    background-image: -moz-linear-gradient(top, $colorTop 0%, $colorBottom 100%);
+    background-image: -ms-linear-gradient(top, $colorTop 0%, $colorBottom 100%);
+    background-image: -o-linear-gradient(top, $colorTop 0%, $colorBottom 100%);
+    background-image: -webkit-linear-gradient(top, $colorTop 0%, $colorBottom 100%);
+    background-color: $colorBottom; /* For IE9 */
+    background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0, $colorTop),
+    color-stop(1, $colorBottom)
+    );
+}
+
+$color: #0098fa;
+$color_link: #04619d;
+$color_dark: #045f98;
+$color_darker: #045181 ;
+$color_trans: rgba(0,26,42,0.85);

@@ -398,7 +398,7 @@ angular.module('ngResource', ['ng']).
             url: route.url(extend({}, extractParams(data, action.params || {}), params)),
             data: data
           }).then(function(response) {
-              var data = response.data.objects;
+              var data = response.data.objects || response.data;
 
               if (data) {
                 if (action.isArray) {

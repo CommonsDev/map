@@ -1,28 +1,45 @@
 module = angular.module('map.controllers', [])
 
-class MapCtrl
+class MapDetailCtrl
         constructor: (@$scope, @Map) ->
-                @$scope.maps = @Map.query()
+                icon = L.icon({
+                        iconUrl: '/images/pointer.png'
+                        shadowUrl: null,
+                        iconSize: new L.Point(61, 61)
+                        iconAnchor: new L.Point(4, 56)
+                })
 
-                @$scope.center =
-                        lat: 40.095,
-                        lng: -3.823,
-                        zoom: 4
+                @$scope.center = {lat: 0, lng: 0, zoom: 1}
+                @$scope.tilelayer = 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg'
+                @$scope.markers = {}
 
-                @$scope.markers =
-                        Madrid:
-                                lat: 40.095
-                                lng: -3.823
-                                message: "Drag me to your position"
-                                focus: true
-                                draggable: true
+                @$scope.map = @Map.get({mapId: 1}, (aMap, getResponseHeaders) => # FIXME: HARDCODED VALUE
+                        # Locate user using HTML5 Api or use map center
+                        if aMap.locate
+                                navigator.geolocation.getCurrentPosition((position) =>
+                                        @$scope.center =
+                                                lat: position.coords.latitude
+                                                lng: position.coords.longitude
+                                                zoom: aMap.zoom
+                                )
+                        else
+                                @$scope.center =
+                                        lat: aMap.center.coordinates[0]
+                                        lng: aMap.center.coordinates[1]
+                                        zoom: aMap.zoom
 
-                @$scope.save = =>
-                        @$scope.maps[0].$save(->
-                                console.debug('saved')
-                        )
+                        # Add every marker (FIXME: Should handle layers)
+                        for layer in aMap.tile_layers
+                                for marker in layer.markers
+                                        @$scope.markers[marker.id] =
+                                                lat: marker.position.coordinates[0]
+                                                lng: marker.position.coordinates[1]
+                                                message: 'un bo ti point'
+                                                icon: icon
 
-MapCtrl.$inject = ["$scope", "Map"]
+                )
+
+MapDetailCtrl.$inject = ["$scope", "Map"]
 
 
 class MapNewCtrl
@@ -33,5 +50,5 @@ MapNewCtrl.$inject = ['$scope', "Map"]
 
 
 # Controller declarations
-module.controller("MapCtrl", MapCtrl)
+module.controller("MapDetailCtrl", MapDetailCtrl)
 module.controller("MapNewCtrl", MapNewCtrl)

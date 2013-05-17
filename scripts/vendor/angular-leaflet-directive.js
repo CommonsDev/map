@@ -53,7 +53,7 @@ leafletDirective.directive("leaflet", ["$http", "$log", function ($http, $log) {
                 });
 
                 scope.$watch("center", function (center, oldValue) {
-                    map.setView([center.lat, center.lng], center.zoom);
+			map.setView([center.lat, center.lng], center.zoom);
                 }, true);
             }
 
@@ -65,7 +65,8 @@ leafletDirective.directive("leaflet", ["$http", "$log", function ($http, $log) {
                     var marker = new L.marker(
                         scope.markers[mkey],
                         {
-                            draggable: markerData.draggable ? true:false
+                            draggable: markerData.draggable ? true:false,
+			    icon: markerData.icon ? markerData.icon:new L.Icon.Default()
                         }
                     );
 
