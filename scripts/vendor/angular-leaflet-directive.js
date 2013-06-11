@@ -26,9 +26,14 @@ leafletDirective.directive("leaflet", ["$http", "$log", function ($http, $log) {
             map.setView([0, 0], 1);
 
             // Set tile layer
-            var tilelayer = scope.tilelayer || 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             var maxZoom = scope.maxZoom || 12;
-            L.tileLayer(tilelayer, { maxZoom: maxZoom }).addTo(map);
+
+            var tilelayers = scope.tilelayers;
+	    if ( tilelayers ) {
+		for (var tilelayer in tilelayers) {
+		    L.tileLayer(tilelayer.url_template, tilelayer.attrs).addTo(map);
+		}
+
 
             // Manage map center events
             if (attrs.center && scope.center) {

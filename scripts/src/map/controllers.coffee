@@ -9,8 +9,18 @@ class MapDetailCtrl
                         iconAnchor: new L.Point(4, 56)
                 })
 
-                @$scope.center = {lat: 0, lng: 0, zoom: 1}
-                @$scope.tilelayer = 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg'
+                @$scope.tilelayers =
+                        truc:
+                                url_template: 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg'
+                                attrs:
+                                        zoom: 4
+
+                @$scope.center =
+                        lat: 0
+                        lng: 0
+                        zoom: 1
+
+
                 @$scope.markers = {}
 
                 @$scope.map = @Map.get({mapId: 1}, (aMap, getResponseHeaders) => # FIXME: HARDCODED VALUE
@@ -30,12 +40,19 @@ class MapDetailCtrl
 
                         # Add every marker (FIXME: Should handle layers)
                         for layer in aMap.tile_layers
+                                @$scope.tilelayers[layer.name] =
+                                                url_template: 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg'
+                                                attrs:
+                                                        zoom: 4
+
                                 for marker in layer.markers
                                         @$scope.markers[marker.id] =
+                                                href: "/marker/detail/#{ marker.id }"
                                                 lat: marker.position.coordinates[0]
                                                 lng: marker.position.coordinates[1]
-                                                message: 'un bo ti point'
-                                                icon: icon
+                                                attrs:
+                                                        icon: icon
+
 
                 )
 
@@ -49,6 +66,14 @@ class MapNewCtrl
 MapNewCtrl.$inject = ['$scope', "Map"]
 
 
+class MapMarkerDetailCtrl
+        constructor: (@$scope) ->
+                null
+
+MapMarkerDetailCtrl.$inject = ['$scope']
+
+
 # Controller declarations
 module.controller("MapDetailCtrl", MapDetailCtrl)
 module.controller("MapNewCtrl", MapNewCtrl)
+module.controller("MapMarkerDetailCtrl", MapMarkerDetailCtrl)

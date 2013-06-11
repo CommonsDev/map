@@ -1,19 +1,19 @@
 $(document).ready(function(){
-	$('.card, .widgets').hide();
-	$('.card .bigpic').hide();
+	// $('.card, .widgets').hide();
+	// $('.card .bigpic').hide();
 
-	$('.marker').hover(function(){
-		$(this).find('.card').not('.active').filter(':not(:animated)').fadeIn(300);
-	}, function(){
-		$(this).find('.card').not('.active').filter(':not(:animated)').fadeOut(300);
-	});
+	// $('.marker').hover(function(){
+	// 	$(this).find('.card').not('.active').filter(':not(:animated)').fadeIn(300);
+	// }, function(){
+	// 	$(this).find('.card').not('.active').filter(':not(:animated)').fadeOut(300);
+	// });
 
 	$('html, body, *').mousewheel(function(e, delta) {
 		this.scrollLeft -= (delta * 40);
 		e.preventDefault();
 	});
 
-	//CARD ACTIVE
+	//CARD ACTIVE (FIXME: If only one can be active, shouldn't it be better to select it using its ID instead of class? //@glibersat)
 	$('.card .inner').click(function(){
 		card = $(this).parent('.card');
 		widgets = card.siblings('.widgets');
