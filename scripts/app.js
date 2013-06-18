@@ -4,7 +4,7 @@ config = {
 
 angular.module('map', ['map.controllers', 'map.services', 'leaflet-directive']);
 
-angular.module('gup', ['map']).constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/').config(['$locationProvider', '$routeProvider', 'moduleTemplateBaseUrl', function($locationProvider, $routeProvider, moduleTemplateBaseUrl){
+angular.module('gup', ['map', 'http-auth-interceptor']).constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/').config(['$locationProvider', '$routeProvider', 'moduleTemplateBaseUrl', function($locationProvider, $routeProvider, moduleTemplateBaseUrl){
 					   $locationProvider.html5Mode(true);
 					   $routeProvider
 					       .when('/', {

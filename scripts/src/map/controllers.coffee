@@ -9,6 +9,12 @@ class MapDetailCtrl
                         iconAnchor: new L.Point(4, 56)
                 })
 
+                # XXX Test auth interceptor
+                $scope.$on('event:auth-loginRequired', ->
+                        console.debug("need LOGIN")
+                )
+
+
                 @$scope.tilelayers =
                         truc:
                                 url_template: 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg'
@@ -67,10 +73,12 @@ MapNewCtrl.$inject = ['$scope', "Map"]
 
 
 class MapMarkerDetailCtrl
-        constructor: (@$scope) ->
-                null
+        constructor: (@$scope, @Marker) ->
+                @$scope.marker = @Marker.get({markerId: 1}, (aMarker, getResponseHeaders) => # FIXME: HARDCODED VALUE
+                        console.debug("marker loaded")
+                )
 
-MapMarkerDetailCtrl.$inject = ['$scope']
+MapMarkerDetailCtrl.$inject = ['$scope', "Marker"]
 
 
 # Controller declarations
