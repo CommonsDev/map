@@ -74,8 +74,11 @@ MapNewCtrl.$inject = ['$scope', "Map"]
 
 class MapMarkerDetailCtrl
         constructor: (@$scope, @Marker) ->
+                @$scope.isLoading = true
+
                 @$scope.marker = @Marker.get({markerId: 1}, (aMarker, getResponseHeaders) => # FIXME: HARDCODED VALUE
                         console.debug("marker loaded")
+                        @$scope.isLoading = false
                 )
 
 MapMarkerDetailCtrl.$inject = ['$scope', "Marker"]
