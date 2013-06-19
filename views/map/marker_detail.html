@@ -1,17 +1,17 @@
 <article>
-  <section class="card">
+  <section class="card" ng-show="!isLoading">
     <header>
       <a href="javascript:void(0)" class="card-like" title="je supporte"><img src="/images/card_like.png" alt="support" /></a>
       <div class="minipic">
         <svg height="184" width="248" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
-          <image mask="url(#mask1)" height="184" width="248" xlink:href="/images/_TEMP/prima.jpg"/>
+          <image mask="url(#mask1)" height="184" width="248" xlink:href="http://carpe.local:8000{{ marker.picture }}"/>
         </svg>
       </div>
       <div class="bigpic">
         <!--<svg height="282" width="378" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
           <image mask="url(#mask2)" height="282" width="378" xlink:href="/images/_TEMP/prima_big.jpg"/>
         </svg>-->
-        <img src="/images/_TEMP/prima_big.jpg" alt="" />
+        <img src="http://carpe.local:8000{{ marker.picture }}" height="282" width="378" alt="" />
       </div>
       <div class="author">
         <img src="/images/_TEMP/dave.png" alt="Dave" />
@@ -20,8 +20,8 @@
       </div>
     </header>
     <div class="inner">
-      <span class="date">Il y a 2 jours</span>
-      <h1>Dégradation de plusieurs lampadaires</h1>
+      <span class="date">{{ marker.created_on | fromNow }}</span>
+      <h1>{{ marker.title }}</h1>
       <p>
         Grand place, centre ville <br />
         59000 Lille.
@@ -52,10 +52,10 @@
   <div class="widgets">
     <div class="slidee">
       <section class="description">
-        <div class="title">Dégradation de plusieurs lampadaires</div>
+        <div class="title">{{ marker.title }}</div>
         <div class="inner">
           <p>
-            Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit.
+            {{ marker.description }}
           </p>
         </div>
       </section>
