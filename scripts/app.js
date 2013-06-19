@@ -1,11 +1,17 @@
 config = {
-    templateBaseUrl: '/views/'
+    templateBaseUrl: '/views/',
+    REST_URI: 'http://carpe.local\\:8000/api/'
 }
 
 angular.module('map', ['map.controllers', 'map.services', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers']);
 
-angular.module('gup', ['common', 'map']).constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/').config(['$locationProvider', '$routeProvider', 'moduleTemplateBaseUrl', function($locationProvider, $routeProvider, moduleTemplateBaseUrl){
+app = angular.module('gup', ['common', 'map']);
+
+// Config
+app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
+
+app.config(['$locationProvider', '$routeProvider', 'moduleTemplateBaseUrl', function($locationProvider, $routeProvider, moduleTemplateBaseUrl){
 					   $locationProvider.html5Mode(true);
 					   $routeProvider
 					       .when('/', {
@@ -27,3 +33,7 @@ angular.module('gup', ['common', 'map']).constant('moduleTemplateBaseUrl', confi
 				       }
 				      ])
 
+app.run(['$rootScope', function($rootScope) {
+  $rootScope.MEDIA_URI = 'http://localhost:8000';
+  $rootScope.CONFIG = config;
+}]);

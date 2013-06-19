@@ -4,14 +4,14 @@
       <a href="javascript:void(0)" class="card-like" title="je supporte"><img src="/images/card_like.png" alt="support" /></a>
       <div class="minipic">
         <svg height="184" width="248" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
-          <image mask="url(#mask1)" height="184" width="248" xlink:href="http://carpe.local:8000{{ marker.picture }}"/>
+          <image mask="url(#mask1)" height="184" width="248" xlink:href="{{ MEDIA_URI }}{{ marker.picture }}"/> <!-- pb w/ angular+xlink -->
         </svg>
       </div>
       <div class="bigpic">
         <!--<svg height="282" width="378" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
           <image mask="url(#mask2)" height="282" width="378" xlink:href="/images/_TEMP/prima_big.jpg"/>
         </svg>-->
-        <img src="http://carpe.local:8000{{ marker.picture }}" height="282" width="378" alt="" />
+        <img ng-src="{{ MEDIA_URI }}{{ marker.picture }}" height="282" width="378" alt="{{ marker.title }}" />
       </div>
       <div class="author">
         <img src="/images/_TEMP/dave.png" alt="Dave" />

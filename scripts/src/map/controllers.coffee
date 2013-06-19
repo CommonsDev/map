@@ -56,39 +56,38 @@ class MapDetailCtrl
 
                 )
 
-MapDetailCtrl.$inject = ["$scope", "Map"]
-
 
 class MapNewCtrl
         constructor: (@$scope, @Map) ->
                 null
 
-MapNewCtrl.$inject = ['$scope', "Map"]
-
 
 class MapMarkerDetailCtrl
-        constructor: (@$scope, @Marker) ->
+        constructor: (@$scope, @$routeParams, @Marker) ->
                 @$scope.isLoading = true
 
-                @$scope.marker = @Marker.get({markerId: 1}, (aMarker, getResponseHeaders) => # FIXME: HARDCODED VALUE
+                @$scope.marker = @Marker.get({markerId: @$routeParams.markerId}, (aMarker, getResponseHeaders) =>
                         console.debug("marker loaded")
                         @$scope.isLoading = false
                 )
 
-MapMarkerDetailCtrl.$inject = ['$scope', "Marker"]
 
 class MapMarkerNewCtrl
         constructor: (@$scope, @Marker) ->
                 marker = new @Marker()
+                marker.title = 'A TITLE'
+                marker.position = {}
+                marker.position.coordinates = [30.0, 50.0]
+                marker.position.type = "Point"
+                marker.tile_layer = "/api/scout/v0/tilelayer/1"
+                marker.created_by = "/api/account/v0/profile/1"
+
                 marker.$save()
                 console.debug("new marker")
 
-MapMarkerDetailCtrl.$inject = ['$scope', "Marker"]
-
-
 
 # Controller declarations
-module.controller("MapDetailCtrl", MapDetailCtrl)
-module.controller("MapNewCtrl", MapNewCtrl)
-module.controller("MapMarkerDetailCtrl", MapMarkerDetailCtrl)
-module.controller("MapMarkerNewCtrl", MapMarkerNewCtrl)
+module.controller("MapDetailCtrl", ['$scope', 'Map', MapDetailCtrl])
+module.controller("MapNewCtrl", ['$scope', "Map", MapNewCtrl])
+module.controller("MapMarkerDetailCtrl", ['$scope', '$routeParams', 'Marker', MapMarkerDetailCtrl])
+module.controller("MapMarkerNewCtrl", ['$scope', 'Marker', MapMarkerNewCtrl])
