@@ -37,6 +37,78 @@ div#background-map {
 	width: 100%;
 }
 
+/* ============= TOOLBAR ============= */
+
+#toolbar {
+	height:100%;
+	min-height:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	width:80px;
+	background:rgba(22,23,25,0.95);
+
+	a {
+		display:block;
+		height:80px;
+		width:80px;
+		text-align:center;
+		color:#706f6f;
+		border-top:1px solid #2e2f30;
+		border-bottom:1px solid black;
+		font-size:0.7rem;
+		text-decoration:none;
+		line-height:125px;
+
+		&:hover {
+			color:#85c9fa;
+		}
+	}
+
+	li:first-child a { border-top: 0 }
+	li:last-child a { border-bottom: 0 }
+
+	li.item1 a { 
+		background:image-url('toolbar/home.png') no-repeat center 22px;
+
+		&:hover {
+			background:image-url('toolbar/home_active.png') no-repeat center 22px;
+		}
+	}
+
+	li.item2 a { 
+		background:image-url('toolbar/add.png') no-repeat center 15px;
+
+		&:hover {
+			background:image-url('toolbar/add_active.png') no-repeat center 15px;
+		}
+	}
+
+	li.item3 a { 
+		background:image-url('toolbar/search.png') no-repeat center 17px;
+
+		&:hover {
+			background:image-url('toolbar/search_active.png') no-repeat center 17px;
+		}
+	}
+
+	li.item4 a { 
+		background:image-url('toolbar/selec.png') no-repeat center 20px;
+
+		&:hover {
+			background:image-url('toolbar/selec_active.png') no-repeat center 20px;
+		}
+	}
+
+	li.item5 a { 
+		background:image-url('toolbar/discu.png') no-repeat center 17px;
+
+		&:hover {
+			background:image-url('toolbar/discu_active.png') no-repeat center 17px;
+		}
+	}
+}
+
 /* TODO : adapter à la version finale */
 
 div.marker {
@@ -323,6 +395,7 @@ div.marker {
 
 /* ============= FOOTER ============= */
 
+/*
 body > footer {
 	position:fixed;
 	bottom:0;
@@ -355,6 +428,8 @@ body > footer {
 		}
 	}
 }
+
+*/
 
 /* ============= SIDEBAR ============= */
 
@@ -402,4 +477,11 @@ body > footer {
 			margin:0 10px;
 		}
 	}
+}
+
+/* ================= LEAFLET HACKS ============= */
+
+
+.leaflet-container .leaflet-control-zoom {
+	margin-left:92px;	
 }
