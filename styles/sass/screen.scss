@@ -431,6 +431,235 @@ body > footer {
 
 */
 
+/* ============= ADDBAR ============= */
+
+#add-panel {
+	height:100%;
+	min-height:100%;
+	position:fixed;
+	top:0;
+	right:0;
+	border-left:1px solid white;
+	@include box-shadow(3px 0px 10px #666);
+}
+
+.add-panel-block {
+	h1 {
+		padding:35px 0 35px 45px;
+		width:100%;
+		float:left;
+
+		img {
+			float:left;
+			display:block;
+		}
+
+		span {
+			border-left: 2px dotted #CDCDCD;
+		    color: #4B4B4B;
+		    display: block;
+		    float: left;
+		    font-size: 1.9rem;
+		    line-height: 2.2rem;
+		    margin-left: 18px;
+		    padding-left: 18px;
+		    width: 375px;
+		}
+	}
+
+	.disabled-overlay { display:none }
+
+	&.disabled .disabled-overlay {
+		display:block;
+		position:absolute;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		min-height:100%;
+		background:rgba(0,0,0,0.2);
+	}
+}
+
+#add-block-1 {
+	border-top:6px solid #ff646a;
+	background:#f8f8f8;
+	height:100%;
+	min-height:100%;
+	width:505px;    
+	position:absolute;
+	right:1025px;
+	top:0;
+	z-index:1000;
+}
+
+#add-block-2 {
+	border-top:6px solid #00aaaa;
+	background:image-url('_TEMP/photo_bg.jpg') no-repeat top left;
+	height:100%;
+	min-height:100%;
+	width:520px;    
+	position:absolute;
+	right:520px;
+	top:0;
+	z-index:2000;
+	@include box-shadow(3px 0px 10px #666);
+
+	h1 span {
+		color:white;
+		border-left: 2px dotted #fff;
+	}
+
+	.skippy {
+		float:left;
+		width:100%;
+
+		a {
+			display:block;
+			text-decoration:none;
+			padding-left:58px;
+			color:white;
+			height:54px;
+			width:230px;
+			border:1px solid white;
+			line-height:54px;
+			width:230px;
+			font-size:1rem;
+			margin:30px auto 0;
+			background:#2e394b image-url('double_arrow.png') no-repeat 18px center;
+			@include border-radius(27px);
+		}
+	}
+}
+
+#add-block-3 {
+	border-top:6px solid #85c9fa;
+	background:#f0f0f0;
+	height:100%;
+	min-height:100%;
+	width:520px;    
+	position:absolute;
+	right:0;
+	top:0;
+	z-index:3000;
+	@include box-shadow(3px 0px 10px #666);
+}
+
+
+.photo-widget {
+	float:left;
+	width:404px;
+	margin:0 58px;
+	border-top:1px solid #fff;
+	border-bottom:1px solid #fff;
+	padding:2px 0;
+
+	ul {
+		border-top:1px solid #fff;
+		border-bottom:1px solid #fff;
+		height:298px;
+
+		li {
+			display:block;
+			height:298px;
+			width:50%;
+			float:left;
+
+			a {
+				display:block;
+				padding-top:212px;
+				padding-bottom:40px;
+				font-size:0.85rem;
+				color:white;
+				text-decoration:none;
+				text-align:center;
+			}
+		}
+
+		li:first-child a{
+			background:image-url('photo_bt.png') no-repeat center 76px;
+		}
+
+		li:last-child a{
+			background:image-url('folder_bt.png') no-repeat center 76px;
+		}
+	}
+}
+
+.points-list {
+	float:left;
+	width:100%;
+
+	.categ {
+		text-align:center;
+		float:left;
+		width:100%;
+
+		.top {
+			background:#fbfbfb;
+			border-top:1px solid #dedede;
+			border-bottom:1px solid #dedede;
+			height:29px;
+			line-height:29px;
+			font-size:0.9rem;
+
+			a {
+				color:#8b8b8b;
+				text-decoration:none;
+			}
+		}
+		.inner {
+			width:100%;
+			float:left;
+			background:white;
+
+			ul {
+				width:258px;
+				margin:21px auto 0;
+
+				li {
+					display:block;
+					width:86px;
+					height:90px;
+					float:left;
+
+					a {
+						display:block;
+						width:86px;
+						height:86px;
+						padding-top:60px;
+						color:#706f6f;
+						text-decoration:none;
+						background:image-url('_TEMP/bt1.png') no-repeat top center;
+					}
+
+					&.point1 a { background:image-url('_TEMP/bt1.png') no-repeat top center; }
+					&.point2 a { background:image-url('_TEMP/bt2.png') no-repeat top center; }
+					&.point3 a { background:image-url('_TEMP/bt3.png') no-repeat top center; }
+					&.point4 a { background:image-url('_TEMP/bt4.png') no-repeat top center; }
+				}
+			}
+		}
+	}
+
+	.seemore {
+		float:left;
+		width:100%;
+		text-align:center;
+		border-top:1px solid #dedede;
+
+		a {
+			color: black;
+		    display: block;
+		    font-size: 0.9rem;
+		    padding: 14px 0 30px;
+		    text-decoration: none;
+		    width: 100%;
+			background:image-url('down_arrow.png') no-repeat center 37px;
+		}
+	}
+}
+
 /* ============= SIDEBAR ============= */
 
 #sidebar {

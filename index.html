@@ -84,23 +84,90 @@
         </div>
 
 	    <!-- right sidebar -->
-	    <div id="sidebar">
+	    <!--<div id="sidebar">
 	      <section id="default-panel">
-		<h1>MAP</h1>
-		<div class="actions">
-		  <a href="/marker/detail/1">Signaler un problème</a>
-		  <a href="/marker/new">Ajouter un point d'intêret</a>
-		</div>
+    		<h1>MAP</h1>
+    		<div class="actions">
+    		  <a href="/marker/detail/1">Signaler un problème</a>
+    		  <a href="/marker/new">Ajouter un point d'intêret</a>
+    		</div>
 
-		<!-- login -->
-		<form name="loginForm" ng-submit="submit()" ng-controller="LoginCtrl">
-		  <input type="text" ng-model="username" required>
-		  <input type="password" ng-model="password" required>
-		  <button>Login</button>
-		</form>
+    		<!-- login -->
+    		<!--<form name="loginForm" ng-submit="submit()" ng-controller="LoginCtrl">
+    		  <input type="text" ng-model="username" required>
+    		  <input type="password" ng-model="password" required>
+    		  <button>Login</button>
+    		</form>
+          </section>
+	    </div>-->
 
-	      </section>
-	    </div>
+        <div id="add-panel">
+            <section id="add-block-1" class="add-panel-block disabled">
+                <div class="disabled-overlay">&nbsp;</div>
+                <h1>    
+                    <img src="images/steps/1.png" alt="1/4" />
+                    <span>Qualifiez votre<br /> point d'intérêt</span>
+                </h1>
+                <div class="points-list">
+                    <ul>
+                        <li class="categ">
+                            <div class="top"><a href="#">Les plus utilisés</a></div>
+                            <div class="inner">
+                                <ul>
+                                    <li class="point1"><a href="#">Point 1</a></li>
+                                    <li class="point2"><a href="#">Point 2</a></li>
+                                    <li class="point3"><a href="#">Point 3</a></li>
+                                    <li class="point4"><a href="#">Point 4</a></li>
+                                    <li class="point1"><a href="#">Point 1</a></li>
+                                    <li class="point2"><a href="#">Point 2</a></li>
+                                    <li class="point3"><a href="#">Point 3</a></li>
+                                    <li class="point4"><a href="#">Point 4</a></li>
+                                    <li class="point1"><a href="#">Point 1</a></li>
+                                    <li class="point2"><a href="#">Point 2</a></li>
+                                    <li class="point3"><a href="#">Point 3</a></li>
+                                    <li class="point4"><a href="#">Point 4</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul> 
+                    <div class="seemore">
+                        <a href="#">Voir tous les points</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="add-block-2" class="add-panel-block disabled">
+                <div class="disabled-overlay">&nbsp;</div>
+                <h1>    
+                    <img src="images/steps/2w.png" alt="2/4" />
+                    <span>Ajouter votre<br /> photo ou vidéo</span>
+                </h1>
+                <div class="photo-widget">
+                   <ul>
+                        <li><a href="#">Prendre une photo</a></li>
+                        <li><a href="#">Accéder à votre galerie</a></li>
+                   </ul>
+                </div>
+                <div class="skippy">
+                    <a href="#">Passer cette étape</a>
+                </div>
+            </section>
+
+            <section id="add-block-3" class="add-panel-block">
+                <div class="disabled-overlay">&nbsp;</div>
+                <h1>    
+                    <img src="images/steps/3.png" alt="3/4" />
+                    <span>Entrez votre<br /> titre et description</span>
+                </h1>
+                <div class="info-form">
+                    <form method="post" action="#">
+                        <input type="text" name="title" placeholder="Titre de votre poi ..." />
+                        <textarea name="desc">Description de votre poi</textarea>
+                        <a href="#" class="locate">Localiser votre Poi</a>
+                    </form>
+                </div>
+            </section>
+        </div>
 	    
 
         </div>
