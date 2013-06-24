@@ -107,6 +107,11 @@ div#background-map {
 			background:image-url('toolbar/discu_active.png') no-repeat center 17px;
 		}
 	}
+
+	li.temp a {
+		height:20px;
+		line-height:20px;
+	}
 }
 
 /* TODO : adapter à la version finale */
@@ -543,6 +548,163 @@ body > footer {
 	top:0;
 	z-index:3000;
 	@include box-shadow(3px 0px 10px #666);
+
+	h1 {
+		border-bottom:1px solid #dedede;
+	}
+}
+
+#add-block-4 {
+	border-top:6px solid #f8933c;
+	background:none;
+	height:auto;
+	width:380px;    
+	position:absolute;
+	right:150px;
+	top:25px;
+	z-index:4000;
+	@include box-shadow(3px 0px 10px #666);
+
+	h1 {
+		padding:12px 0 15px 26px;
+		background:white;
+		margin:0 0 4px;
+
+		span {
+			width:260px;
+		}
+	}
+}
+
+.adress-form {
+	width:100%;
+	float:left;
+	background:white;
+
+	.adress-find {
+		margin:10px 0 15px 0;
+		float:left;
+
+		a {	
+			display:block;
+			height:100px;
+			float:left;
+			width:108px;
+			text-align:center;
+			padding:68px 25px 0;
+			color:#8b8b8b;
+			text-decoration:none;
+
+			&.find1 {
+				background:image-url('adress1.png') no-repeat center 8px;
+			}
+			&.find2 {
+				background:image-url('adress2.png') no-repeat center 2px;
+			}
+			&.find3 {
+				background:image-url('adress3.png') no-repeat center 12px;
+			}
+		}
+
+		span {
+			display:block;
+			float:left;
+			width:26px;
+			height:100px;
+			text-indent:-999em;
+			background:image-url('adress_ou.png') no-repeat center center;
+		}
+	}
+
+	form {
+		p {
+			border-top:1px solid #f5f5f5;
+			border-bottom:1px solid #f5f5f5;
+			padding:20px 12px;
+			float:left;
+			width:100%;
+
+			input[type="text"] {
+				width:288px;
+				padding:0 10px 0 55px;
+				height:32px;
+				border:1px solid #dedede;
+				float:left;
+				font-size:0.8rem;
+				background:image-url('adress_field_left.png') no-repeat center left;
+				font-style:italic;
+				color:#8b8b8b;
+				margin:0 12px 0 0;
+				@include border-radius(5px);
+			}
+		}
+
+		a.valid {
+			display:block;
+			text-decoration:none;
+			color:white;
+			height:50px;
+			width:230px;
+			line-height:50px;
+			width:230px;
+			font-size:1rem;
+			margin:20px 0 30px 72px;
+			background:#2e394b;
+			float:left;
+			text-align:center;
+			@include border-radius(25px);
+		}
+	}
+}
+
+.info-form {
+	border-top:1px solid white;
+	float:left;
+	width:100%;
+	padding:28px 56px;
+
+	input[type="text"] {
+		width:408px;
+		height:40px;
+		padding:0 20px;
+		line-height:40px;
+		font-style:italic;
+		font-size:0.8rem;
+		border:1px solid #dedede;
+		color:#8b8b8b;
+		margin:0 0 18px;
+		font-family:Raleway,sans-serif;
+		@include border-radius(5px);
+	}
+
+	textarea {
+		height:238px;
+		padding:20px;
+		width:408px;
+		font-style:italic;
+		font-size:0.8rem;
+		border:1px solid #dedede;
+		color:#8b8b8b;
+		margin:0 0 20px;
+		line-height:1.2rem;
+		font-family:Raleway,sans-serif;
+		@include border-radius(5px);
+	}
+
+	a.locate {
+		display:block;
+		text-decoration:none;
+		padding-left:58px;
+		color:white;
+		height:54px;
+		width:230px;
+		line-height:54px;
+		width:230px;
+		font-size:1rem;
+		margin:10px auto 0;
+		background:#2e394b image-url('locate_ico.png') no-repeat 18px center;
+		@include border-radius(27px);
+	}
 }
 
 
@@ -583,6 +745,23 @@ body > footer {
 		li:last-child a{
 			background:image-url('folder_bt.png') no-repeat center 76px;
 		}
+	}
+}
+
+.photo-selected {
+	.preview { 
+		text-align:center;
+
+		img {
+			display:inline;
+			max-width:520px;
+		}
+	}
+
+	a.trash {
+		display:block;
+		margin:20px auto 0;
+		width:61px;
 	}
 }
 
