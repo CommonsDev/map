@@ -82,7 +82,7 @@ class MapMarkerNewCtrl
                 marker.tile_layer = "/api/scout/v0/tilelayer/1"
                 marker.created_by = "/api/account/v0/profile/1"
 
-                marker.$save()
+                # marker.$save()
                 console.debug("new marker")
 
 

@@ -24,6 +24,9 @@
         <script src="scripts/vendor/sly.js"></script>
         <script src="scripts/vendor/moment.min.js"></script>
 
+	<!-- webrtc -->
+
+
 	<!-- leaflet -->
 	<script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js" type="text/javascript"></script>
 	
@@ -45,17 +48,6 @@
 	<!-- main app -->
 	<script src="scripts/app.js"></script>
 
-    <script>
-        $(document).ready(function(){
-            $('.add-panel-block').hide();
-            $('#toolbar .temp a').click(function(){
-                panel = $(this).attr('href');
-                console.log(panel);
-                $('.add-panel-block').hide();
-                $(panel).show().css('right',0);
-            });
-        })
-    </script>
     </head>
     <body>
         <div id="page">
@@ -86,7 +78,7 @@
         <div id="toolbar">
             <ul>
                 <li class="item1"><a href="#">Accueil</a></li>
-                <li class="item2"><a href="#">Ajouter</a></li>
+                <li class="item2"><a href="/marker/new">Ajouter</a></li>
                 <li class="item3"><a href="#">Rechercher</a></li>
                 <li class="item4"><a href="#">Sélection</a></li>
                 <li class="item5"><a href="#">Discussions</a></li>
@@ -117,102 +109,6 @@
           </section>
 	    </div>-->
 
-        <!-- ADD disabled class on add-panel-block to activate the overlay -->
-        <div id="add-panel">
-            <section id="add-block-1" class="add-panel-block">
-                <div class="disabled-overlay">&nbsp;</div>
-                <h1>    
-                    <img src="images/steps/1.png" alt="1/4" />
-                    <span>Qualifiez votre<br /> point d'intérêt</span>
-                </h1>
-                <div class="points-list">
-                    <ul>
-                        <li class="categ">
-                            <div class="top"><a href="#">Les plus utilisés</a></div>
-                            <div class="inner">
-                                <ul>
-                                    <li class="point1"><a href="#">Point 1</a></li>
-                                    <li class="point2"><a href="#">Point 2</a></li>
-                                    <li class="point3"><a href="#">Point 3</a></li>
-                                    <li class="point4"><a href="#">Point 4</a></li>
-                                    <li class="point1"><a href="#">Point 1</a></li>
-                                    <li class="point2"><a href="#">Point 2</a></li>
-                                    <li class="point3"><a href="#">Point 3</a></li>
-                                    <li class="point4"><a href="#">Point 4</a></li>
-                                    <li class="point1"><a href="#">Point 1</a></li>
-                                    <li class="point2"><a href="#">Point 2</a></li>
-                                    <li class="point3"><a href="#">Point 3</a></li>
-                                    <li class="point4"><a href="#">Point 4</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul> 
-                    <div class="seemore">
-                        <a href="#">Voir tous les points</a>
-                    </div>
-                </div>
-            </section>
-
-            <section id="add-block-2" class="add-panel-block">
-                <div class="disabled-overlay">&nbsp;</div>
-                <h1>    
-                    <img src="images/steps/2w.png" alt="2/4" />
-                    <span>Ajouter votre<br /> photo ou vidéo</span>
-                </h1>
-                <div class="photo-widget">
-                   <ul>
-                        <li><a href="#">Prendre une photo</a></li>
-                        <li><a href="#">Accéder à votre galerie</a></li>
-                   </ul>
-                </div>
-                <div class="skippy">
-                    <a href="#">Passer cette étape</a>
-                </div>
-                <!--<div class="photo-selected">
-                    <div class="preview">
-                        <img src="images/_TEMP/photo.jpg" alt="" />
-                    </div>
-                    <a href="#" class="trash"><img src="images/trash_bt.png" alt="effacer" /></a>
-                </div>-->
-            </section>
-
-            <section id="add-block-3" class="add-panel-block">
-                <div class="disabled-overlay">&nbsp;</div>
-                <h1>    
-                    <img src="images/steps/3.png" alt="3/4" />
-                    <span>Entrez votre<br /> titre et description</span>
-                </h1>
-                <div class="info-form">
-                    <form method="post" action="#">
-                        <input type="text" name="title" placeholder="Titre de votre poi ..." />
-                        <textarea name="desc" placeholder="Description de votre poi"></textarea>
-                        <a href="#" class="locate">Localiser votre Poi</a>
-                    </form>
-                </div>
-            </section>
-
-            <section id="add-block-4" class="add-panel-block">
-                <div class="disabled-overlay">&nbsp;</div>
-                <h1>    
-                    <img src="images/steps/4.png" alt="4/4" />
-                    <span>Localisez<br /> votre Point</span>
-                </h1>
-                <div class="adress-form">
-                    <div class="adress-find">
-                        <a class="find1" href="#">Entrez l'adresse</a> <span>ou</span>
-                        <a class="find2" href="#">Déplacez le point</a> <span>ou</span>
-                        <a class="find3" href="#">Géolocalisez- vous</a>
-                    </div>
-                    <form method="post" action="#">
-                        <p>
-                            <input type="text" name="title" placeholder="Adresse du point ..." />
-                            <a href="#" class="search"><img src="images/adress_search.png" alt="Chercher" /></a>
-                        </p>
-                        <a href="#" class="valid">Valider la position</a>
-                    </form>
-                </div>
-            </section>
-        </div>
 	    
 
         </div>

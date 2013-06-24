@@ -26,7 +26,7 @@ app.config(['$locationProvider', '$routeProvider', 'moduleTemplateBaseUrl', func
 							  controller: 'MapMarkerDetailCtrl'
 						      })
 						.when('/marker/new', {
-							  templateUrl: moduleTemplateBaseUrl + 'new.html',
+							  templateUrl: moduleTemplateBaseUrl + 'marker_new.html',
 							  controller: 'MapMarkerNewCtrl'
 						      })
 					       .otherwise({redirectTo: '/'});
