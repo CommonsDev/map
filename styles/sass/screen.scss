@@ -493,7 +493,7 @@ body > footer {
 	min-height:100%;
 	width:505px;    
 	position:absolute;
-	right:1025px;
+	right:0;
 	top:0;
 	z-index:1000;
 }
@@ -505,7 +505,7 @@ body > footer {
 	min-height:100%;
 	width:520px;    
 	position:absolute;
-	right:520px;
+	right:0;
 	top:0;
 	z-index:2000;
 	@include box-shadow(3px 0px 10px #666);
@@ -560,7 +560,7 @@ body > footer {
 	height:auto;
 	width:380px;    
 	position:absolute;
-	right:150px;
+	right:0;
 	top:25px;
 	z-index:4000;
 	@include box-shadow(3px 0px 10px #666);
@@ -762,6 +762,40 @@ body > footer {
 		display:block;
 		margin:20px auto 0;
 		width:61px;
+	}
+
+	a.accept {
+		display:block;
+		float:left;
+		text-decoration:none;
+		color:white;
+		height:50px;
+		width:230px;
+		line-height:50px;
+		width:180px;
+		font-size:1rem;
+		margin:20px 0 30px 24px;
+		background:#2e394b;
+		float:left;
+		text-align:center;
+		@include border-radius(25px);
+	}
+
+	a.discard {
+		display:block;
+		float:left;
+		text-decoration:none;
+		color:white;
+		height:50px;
+		width:230px;
+		line-height:50px;
+		width:180px;
+		font-size:1rem;
+		margin:20px 0 30px 72px;
+		background:#2e394b;
+		float:left;
+		text-align:center;
+		@include border-radius(25px);
 	}
 }
 

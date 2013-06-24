@@ -1,6 +1,6 @@
 <!-- ADD disabled class on add-panel-block to activate the overlay -->
 <div id="add-panel">
-  <section id="add-block-1" class="add-panel-block">
+  <section id="add-block-1" class="add-panel-block" ngShow="true">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/1.png" alt="1/4" />
@@ -12,8 +12,14 @@
           <div class="top"><a href="#">Les plus utilisés</a></div>
           <div class="inner">
             <ul>
-              <li class="point1"><a href="#">Point 1</a></li>
-              <li class="point2"><a href="#">Point 2</a></li>
+              <li class="point1"><input type="radio" name="point" val="1" id="point1" /><label for="point1">Point 1</label></li>
+              <li class="point1"><input type="radio" name="point" val="2" id="point2" /><label for="point2">Point 2</label></li>
+              <li class="point1"><input type="radio" name="point" val="3" id="point3" /><label for="point3">Point 3</label></li>
+              <li class="point1"><input type="radio" name="point" val="4" id="point4" /><label for="point4">Point 4</label></li>
+              <li class="point1"><input type="radio" name="point" val="5" id="point5" /><label for="point5">Point 5</label></li>
+              <li class="point1"><input type="radio" name="point" val="6" id="point6" /><label for="point6">Point 6</label></li>
+              <li class="point1"><input type="radio" name="point" val="7" id="point7" /><label for="point7">Point 7</label></li>
+              <!--<li class="point2"><a href="#">Point 2</a></li>
               <li class="point3"><a href="#">Point 3</a></li>
               <li class="point4"><a href="#">Point 4</a></li>
               <li class="point1"><a href="#">Point 1</a></li>
@@ -23,7 +29,7 @@
               <li class="point1"><a href="#">Point 1</a></li>
               <li class="point2"><a href="#">Point 2</a></li>
               <li class="point3"><a href="#">Point 3</a></li>
-              <li class="point4"><a href="#">Point 4</a></li>
+              <li class="point4"><a href="#">Point 4</a></li>-->
             </ul>
           </div>
         </li>
@@ -34,13 +40,14 @@
     </div>
   </section>
 
-  <section id="add-block-2" class="add-panel-block">
+  <section id="add-block-2" class="add-panel-block" ngShow="false">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/2w.png" alt="2/4" />
       <span>Ajouter votre<br /> photo ou vidéo</span>
     </h1>
-    <div class="photo-widget">
+
+    <!--<div class="photo-widget">
       <ul>
         <li><a href="#">Prendre une photo</a></li>
         <li><a href="#">Accéder à votre galerie</a></li>
@@ -48,16 +55,29 @@
     </div>
     <div class="skippy">
       <a href="#">Passer cette étape</a>
-    </div>
+    </div>-->
+
+
+
     <!--<div class="photo-selected">
         <div class="preview">
           <img src="images/_TEMP/photo.jpg" alt="" />
         </div>
         <a href="#" class="trash"><img src="images/trash_bt.png" alt="effacer" /></a>
     </div>-->
+
+
+    
+    <div class="photo-selected">
+        <div class="preview">
+          <img src="images/_TEMP/photo.jpg" alt="" />
+        </div>
+        <a href="#" class="discard">Annuler</a>
+        <a href="#" class="accept">Valider</a>
+    </div>
   </section>
 
-  <section id="add-block-3" class="add-panel-block">
+  <section id="add-block-3" class="add-panel-block" ngShow="false">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/3.png" alt="3/4" />
@@ -72,7 +92,7 @@
     </div>
   </section>
 
-  <section id="add-block-4" class="add-panel-block">
+  <section id="add-block-4" class="add-panel-block" ngShow="false">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/4.png" alt="4/4" />
@@ -94,13 +114,11 @@
     </div>
   </section>
 </div>
-<script>
-  $(document).ready(function(){
+<script type="text/javascript">
     $('.add-panel-block').hide();
     $('#toolbar .temp a').click(function(){
-      panel = $(this).attr('href');
+      panel = $(this).attr('data-target');
       $('.add-panel-block').hide();
-      $(panel).show().css('right', 0);
+      $(panel).show();
     });
-  })
 </script>
