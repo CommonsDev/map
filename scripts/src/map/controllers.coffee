@@ -11,7 +11,7 @@ class MapDetailCtrl
 
                 @$scope.tilelayers =
                         truc:
-                                url_template: 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg'
+                                url_template: 'http://tile.openstreetmap.org/{z}/{x}/{y}.png'
                                 attrs:
                                         zoom: 4
 
@@ -74,6 +74,33 @@ class MapMarkerDetailCtrl
 
 class MapMarkerNewCtrl
         constructor: (@$scope, @Marker) ->
+                width = 320
+                height = 240
+
+                video = document.querySelector("#video")
+                video.addEventListener("canplay", ((ev) ->
+                         unless streaming
+                                 height = video.videoHeight / (video.videoWidth / width)
+                                 video.setAttribute("width", width)
+                                 video.setAttribute("height", height)
+                                 canvas.setAttribute("width", width)
+                                 canvas.setAttribute("height", height)
+                                 streaming = true
+                         ),
+                false)
+
+                @$scope.captureInProgress = false
+                @$scope.previewInProgress = false
+
+                # add functions to scope
+                @$scope.takePicture = this.takePicture
+                @$scope.grabCamera = this.grabCamera
+                @$scope.cancelGrabCamera = this.cancelGrabCamera
+                @$scope.submitForm = this.submitForm
+                @$scope.imageInputChanged = this.imageInputChanged
+
+
+        submitForm: =>
                 marker = new @Marker()
                 marker.title = 'A TITLE'
                 marker.position = {}
@@ -84,6 +111,92 @@ class MapMarkerNewCtrl
 
                 # marker.$save()
                 console.debug("new marker")
+
+                console.debug(@$scope.new_marker_form)
+
+
+        imageInputChanged: =>
+                """
+                When the user picked a picture from her hardrive (or camera on Mobile devices)
+                """
+                console.debug("YOUPI")
+                file = @$scope.file_input
+                if not file.type.match(/image.*/)
+                        console.debug("Unknown type #{file.type}")
+                        return
+
+                photo = document.querySelector("#selected-photo")
+                photo.setAttribute("src", data)
+
+                photo.classList.add("obj")
+                photo.file = file
+
+                reader = new FileReader()
+                reader.onload = (aImg) ->
+                        return (e) ->
+                                photo.src = e.target.result
+                reader.readAsDataURL(file)
+
+                @$scope.previewInProgress = true
+
+        grabCamera: =>
+                """
+                Setup and grab the camera in a canvas
+                """
+                console.debug("Initializing webcam...")
+
+                video = document.querySelector("#video")
+                canvas = document.querySelector("#canvas")
+
+                navigator.getMedia = (navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia or navigator.msGetUserMedia)
+
+                navigator.getMedia(
+                        video: true
+                        audio: false
+                        , ((stream) =>
+                                if navigator.mozGetUserMedia
+                                        video.mozSrcObject = stream
+                                else
+                                        vendorURL = window.URL or window.webkitURL
+                                        video.src = vendorURL.createObjectURL(stream)
+                                video.play()
+                                console.debug("Webcam grab in progress...")
+                                @$scope.captureInProgress = true
+                                @$scope.$apply()
+                        ), (err) =>
+                                console.log("An error occured! " + err)
+                )
+
+
+
+        cancelGrabCamera: =>
+                """
+                Release handle on camera
+                """
+                console.debug('Disabling camera...')
+                video = document.querySelector("#video")
+                video.src = ""
+                @$scope.captureInProgress = false
+
+        takePicture: =>
+                width = 320
+                height = 240
+
+                canvas.width = width
+                canvas.height = height
+                canvas.getContext("2d").drawImage(video, 0, 0, width, height)
+                data = canvas.toDataURL("image/png")
+
+                photo = document.querySelector("#selected-photo")
+                photo.setAttribute("src", data)
+
+                video = document.querySelector("#video")
+                video.src = ""
+
+                @$scope.captureInProgress = false
+                @$scope.previewInProgress = true
+
+
 
 
 # Controller declarations
