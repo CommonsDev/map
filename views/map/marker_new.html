@@ -1,6 +1,6 @@
 <!-- ADD disabled class on add-panel-block to activate the overlay -->
 <div id="add-panel">
-  <section id="add-block-1" class="add-panel-block" ngShow="true">
+  <section id="add-block-1" class="add-panel-block">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/1.png" alt="1/4" />
@@ -40,7 +40,7 @@
     </div>
   </section>
 
-  <section id="add-block-2" class="add-panel-block" ngShow="false">
+  <section id="add-block-2" class="add-panel-block">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/2w.png" alt="2/4" />
@@ -67,7 +67,7 @@
     </div>-->
 
 
-    
+
     <div class="photo-selected">
         <div class="preview">
           <img src="images/_TEMP/photo.jpg" alt="" />
@@ -77,7 +77,7 @@
     </div>
   </section>
 
-  <section id="add-block-3" class="add-panel-block" ngShow="false">
+  <section id="add-block-3" class="add-panel-block">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/3.png" alt="3/4" />
@@ -92,7 +92,7 @@
     </div>
   </section>
 
-  <section id="add-block-4" class="add-panel-block" ngShow="false">
+  <section id="add-block-4" class="add-panel-block">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/4.png" alt="4/4" />
@@ -115,7 +115,7 @@
   </section>
 </div>
 <script type="text/javascript">
-    $('.add-panel-block').hide();
+    //$('.add-panel-block').hide();
     $('#toolbar .temp a').click(function(){
       panel = $(this).attr('data-target');
       $('.add-panel-block').hide();

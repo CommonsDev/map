@@ -493,7 +493,7 @@ body > footer {
 	min-height:100%;
 	width:505px;    
 	position:absolute;
-	right:0;
+	right:520px;
 	top:0;
 	z-index:1000;
 }
@@ -836,8 +836,9 @@ body > footer {
 					height:90px;
 					float:left;
 
-					a {
+					label {
 						display:block;
+						cursor:pointer;
 						width:86px;
 						height:86px;
 						padding-top:60px;
@@ -846,10 +847,12 @@ body > footer {
 						background:image-url('_TEMP/bt1.png') no-repeat top center;
 					}
 
-					&.point1 a { background:image-url('_TEMP/bt1.png') no-repeat top center; }
-					&.point2 a { background:image-url('_TEMP/bt2.png') no-repeat top center; }
-					&.point3 a { background:image-url('_TEMP/bt3.png') no-repeat top center; }
-					&.point4 a { background:image-url('_TEMP/bt4.png') no-repeat top center; }
+					input[type="radio"] { display:none; }
+
+					&.point1 label { background:image-url('_TEMP/bt1.png') no-repeat top center; }
+					&.point2 label { background:image-url('_TEMP/bt2.png') no-repeat top center; }
+					&.point3 label { background:image-url('_TEMP/bt3.png') no-repeat top center; }
+					&.point4 label { background:image-url('_TEMP/bt4.png') no-repeat top center; }
 				}
 			}
 		}
