@@ -1,5 +1,7 @@
 <!-- ADD disabled class on add-panel-block to activate the overlay -->
 <div id="add-panel">
+  <form name="new_marker_form" ng-submit="submitForm()">
+
   <section id="add-block-1" class="add-panel-block" ngShow="true">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
@@ -47,33 +49,30 @@
       <span>Ajouter votre<br /> photo ou vidéo</span>
     </h1>
 
-    <!--<div class="photo-widget">
+    <div ng-show="!captureInProgress && !previewInProgress" class="photo-widget">
       <ul>
-        <li><a href="#">Prendre une photo</a></li>
-        <li><a href="#">Accéder à votre galerie</a></li>
+        <li><button ng-click="grabCamera()">Prendre une photo</button></li>
+        <li>Accéder à votre galerie<input type="file" accept="image/*;capture=camera" ng-model="file_input" ng-change="imageInputChanged()"></input></li>
       </ul>
+      <div class="skippy">
+	<a href="#">Passer cette étape</a>
+      </div>
     </div>
-    <div class="skippy">
-      <a href="#">Passer cette étape</a>
-    </div>-->
 
-
-
-    <!--<div class="photo-selected">
+    <div ng-show="previewInProgress" class="photo-selected">
         <div class="preview">
-          <img src="images/_TEMP/photo.jpg" alt="" />
+          <img src="images/_TEMP/photo.jpg" id="selected-photo" alt="" />
         </div>
         <a href="#" class="trash"><img src="images/trash_bt.png" alt="effacer" /></a>
-    </div>-->
+    </div>
 
-
-    
-    <div class="photo-selected">
+    <div ng-show="captureInProgress" class="photo-selected">
         <div class="preview">
-          <img src="images/_TEMP/photo.jpg" alt="" />
+	  <video id="video"></video>
+	  <canvas id="canvas"></canvas>
         </div>
-        <a href="#" class="discard">Annuler</a>
-        <a href="#" class="accept">Valider</a>
+        <button ng-click="cancelGrabCamera()" class="discard">Annuler</a>
+        <button ng-click="takePicture()" class="accept">Valider</button>
     </div>
   </section>
 
@@ -84,7 +83,6 @@
       <span>Entrez votre<br /> titre et description</span>
     </h1>
     <div class="info-form">
-      <form method="post" action="#">
         <input type="text" name="title" placeholder="Titre de votre poi ..." />
         <textarea name="desc" placeholder="Description de votre poi"></textarea>
         <a href="#" class="locate">Localiser votre Poi</a>
@@ -110,12 +108,13 @@
           <a href="#" class="search"><img src="images/adress_search.png" alt="Chercher" /></a>
         </p>
         <a href="#" class="valid">Valider la position</a>
-      </form>
     </div>
   </section>
+  </form>
 </div>
 <script type="text/javascript">
     $('.add-panel-block').hide();
+
     $('#toolbar .temp a').click(function(){
       panel = $(this).attr('data-target');
       $('.add-panel-block').hide();
