@@ -73,9 +73,13 @@ class MapMarkerDetailCtrl
 
 
 class MapMarkerNewCtrl
-        constructor: (@$scope, @Marker) ->
+        constructor: (@$scope, @Marker, @geolocation) ->
                 width = 320
                 height = 240
+
+                @geolocation.position().then((pos)=>
+                        console.debug(pos.coords)
+                )
 
                 video = document.querySelector("#video")
                 video.addEventListener("canplay", ((ev) ->
@@ -89,38 +93,51 @@ class MapMarkerNewCtrl
                          ),
                 false)
 
+                # The possible new marker
+                @$scope.marker = new @Marker()
+
+                # Wizard Steps
                 @$scope.captureInProgress = false
                 @$scope.previewInProgress = false
 
-                # add functions to scope
+                # add functions and variable to scope
                 @$scope.takePicture = this.takePicture
+                @$scope.skipPicture  = this.skipPicture
                 @$scope.grabCamera = this.grabCamera
                 @$scope.cancelGrabCamera = this.cancelGrabCamera
                 @$scope.submitForm = this.submitForm
-                @$scope.imageInputChanged = this.imageInputChanged
-
+                @$scope.pictureChanged = this.pictureChanged
+                @$scope.geolocateMarker = this.geolocateMarker
 
         submitForm: =>
-                marker = new @Marker()
-                marker.title = 'A TITLE'
-                marker.position = {}
-                marker.position.coordinates = [30.0, 50.0]
-                marker.position.type = "Point"
-                marker.tile_layer = "/api/scout/v0/tilelayer/1"
-                marker.created_by = "/api/account/v0/profile/1"
+                """
+                Submit the form to create a new point
+                """
+                # Position
+                @$scope.marker.position = {}
+                @$scope.marker.position.coordinates = [30.0, 50.0]
+                @$scope.marker.position.type = "Point"
 
-                # marker.$save()
-                console.debug("new marker")
+                @$scope.marker.tile_layer = "/api/scout/v0/tilelayer/1"
+                @$scope.marker.created_by = "/api/account/v0/profile/1"
 
-                console.debug(@$scope.new_marker_form)
+                @$scope.marker.$save(=>
+                        console.debug("new marker saved")
+                )
 
+        skipPicture: =>
+                """
+                Button callback for 'Skip adding picture'
+                """
+                @$scope.captureInProgress = false
+                @$scope.previewInProgress = false
 
-        imageInputChanged: =>
+        pictureChanged: (field) =>
                 """
                 When the user picked a picture from her hardrive (or camera on Mobile devices)
                 """
-                console.debug("YOUPI")
-                file = @$scope.file_input
+                console.debug(field)
+                file = field
                 if not file.type.match(/image.*/)
                         console.debug("Unknown type #{file.type}")
                         return
@@ -196,6 +213,11 @@ class MapMarkerNewCtrl
                 @$scope.captureInProgress = false
                 @$scope.previewInProgress = true
 
+        geolocateMarker: =>
+                pos_promise = @geolocation.position().then(=>
+                        console.debug('yo')
+                )
+
 
 
 
@@ -203,4 +225,4 @@ class MapMarkerNewCtrl
 module.controller("MapDetailCtrl", ['$scope', 'Map', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', "Map", MapNewCtrl])
 module.controller("MapMarkerDetailCtrl", ['$scope', '$routeParams', 'Marker', MapMarkerDetailCtrl])
-module.controller("MapMarkerNewCtrl", ['$scope', 'Marker', MapMarkerNewCtrl])
+module.controller("MapMarkerNewCtrl", ['$scope', 'Marker', 'geolocation', MapMarkerNewCtrl])
