@@ -1,8 +1,7 @@
 <!-- ADD disabled class on add-panel-block to activate the overlay -->
 <div id="add-panel">
   <form name="new_marker_form" ng-submit="submitForm()">
-
-  <section id="add-block-1" class="add-panel-block">
+  <section id="add-block-1" class="add-panel-block" ng-hide="point">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/1.png" alt="1/4" />
@@ -14,13 +13,13 @@
           <div class="top"><a href="#">Les plus utilisés</a></div>
           <div class="inner">
             <ul>
-              <li class="point1"><input type="radio" name="point" val="1" id="point1" /><label for="point1">Point 1</label></li>
-              <li class="point1"><input type="radio" name="point" val="2" id="point2" /><label for="point2">Point 2</label></li>
-              <li class="point1"><input type="radio" name="point" val="3" id="point3" /><label for="point3">Point 3</label></li>
-              <li class="point1"><input type="radio" name="point" val="4" id="point4" /><label for="point4">Point 4</label></li>
-              <li class="point1"><input type="radio" name="point" val="5" id="point5" /><label for="point5">Point 5</label></li>
-              <li class="point1"><input type="radio" name="point" val="6" id="point6" /><label for="point6">Point 6</label></li>
-              <li class="point1"><input type="radio" name="point" val="7" id="point7" /><label for="point7">Point 7</label></li>
+              <li class="point1"><input type="radio" ng-model="point" val="1" id="point1" /><label for="point1">Point 1</label></li>
+              <li class="point1"><input type="radio" ng-model="point" val="2" id="point2" /><label for="point2">Point 2</label></li>
+              <li class="point1"><input type="radio" ng-model="point" val="3" id="point3" /><label for="point3">Point 3</label></li>
+              <li class="point1"><input type="radio" ng-model="point" val="4" id="point4" /><label for="point4">Point 4</label></li>
+              <li class="point1"><input type="radio" ng-model="point" val="5" id="point5" /><label for="point5">Point 5</label></li>
+              <li class="point1"><input type="radio" ng-model="point" val="6" id="point6" /><label for="point6">Point 6</label></li>
+              <li class="point1"><input type="radio" ng-model="point" val="7" id="point7" /><label for="point7">Point 7</label></li>
               <!--<li class="point2"><a href="#">Point 2</a></li>
               <li class="point3"><a href="#">Point 3</a></li>
               <li class="point4"><a href="#">Point 4</a></li>
