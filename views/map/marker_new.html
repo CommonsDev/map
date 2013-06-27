@@ -2,7 +2,7 @@
 <div id="add-panel">
   <ng-form name="new_marker_form">
 
-  <section id="add-block-1" class="add-panel-block">
+  <section id="add-block-1" class="add-panel-block" ng-show="!marker.category">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/1.png" alt="1/4" />
@@ -14,13 +14,13 @@
           <div class="top"><a href="#">Les plus utilisés</a></div>
           <div class="inner">
             <ul>
-              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="1" id="point1" /><label for="point1">Point 1</label></li>
-              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="2" id="point2" /><label for="point2">Point 2</label></li>
-              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="3" id="point3" /><label for="point3">Point 3</label></li>
-              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="4" id="point4" /><label for="point4">Point 4</label></li>
-              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="5" id="point5" /><label for="point5">Point 5</label></li>
-              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="6" id="point6" /><label for="point6">Point 6</label></li>
-              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="7" id="point7" /><label for="point7">Point 7</label></li>
+              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="1" id="point1" /><label for="point1">Point 1</label></li>
+              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="2" id="point2" /><label for="point2">Point 2</label></li>
+              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="3" id="point3" /><label for="point3">Point 3</label></li>
+              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="4" id="point4" /><label for="point4">Point 4</label></li>
+              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="5" id="point5" /><label for="point5">Point 5</label></li>
+              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="6" id="point6" /><label for="point6">Point 6</label></li>
+              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="7" id="point7" /><label for="point7">Point 7</label></li>
             </ul>
           </div>
         </li>
@@ -31,13 +31,14 @@
     </div>
   </section>
 
-  <section id="add-block-2" class="add-panel-block">
+  <section id="add-block-2" class="add-panel-block" ng-show="marker.category">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/2w.png" alt="2/4" />
       <span>Ajouter votre<br /> photo ou vidéo</span>
     </h1>
 
+    <!-- picture upload -->
     <div ng-show="!captureInProgress && !previewInProgress" class="photo-widget">
       <ul>
         <!-- <li><button ng-click="grabCamera()">Prendre une photo</button></li> -->
@@ -48,13 +49,15 @@
       </div>
     </div>
 
-    <div ng-show="{{ marker.picture }}" class="photo-selected">
+    <!-- picture preview -->
+    <div ng-show="previewInProgress" class="photo-selected">
         <div class="preview">
-          <img src="images/_TEMP/photo.jpg" id="selected-photo" alt="" />
+          <img src="images/_TEMP/photo.jpg" id="selected-photo" alt="preview" />
         </div>
         <a href="#" class="trash"><img src="images/trash_bt.png" alt="effacer" /></a>
     </div>
 
+    <!-- picture being taken -->
     <div ng-show="captureInProgress" class="photo-selected">
         <div class="preview">
 	  <video id="video"></video>
@@ -65,7 +68,7 @@
     </div>
   </section>
 
-  <section id="add-block-3" class="add-panel-block">
+  <section id="add-block-3" class="add-panel-block" ng-show="previewInProgress">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/3.png" alt="3/4" />
@@ -78,7 +81,7 @@
     </div>
   </section>
 
-  <section id="add-block-4" class="add-panel-block">
+  <section id="add-block-4" class="add-panel-block" ng-show="marker.title && marker.description">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/4.png" alt="4/4" />
@@ -100,7 +103,7 @@
   </form>
 </div>
 <script type="text/javascript">
-    $('.add-panel-block').hide();
+    //$('.add-panel-block').hide();
     $('#toolbar .temp a').click(function(){
       panel = $(this).attr('data-target');
       $('.add-panel-block').hide();

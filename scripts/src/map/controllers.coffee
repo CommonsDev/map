@@ -1,7 +1,7 @@
 module = angular.module('map.controllers', [])
 
 class MapDetailCtrl
-        constructor: (@$scope, @Map) ->
+        constructor: (@$scope, @Map, @geolocation) ->
                 icon = L.icon({
                         iconUrl: '/images/pointer.png'
                         shadowUrl: null,
@@ -20,17 +20,24 @@ class MapDetailCtrl
                         lng: 0
                         zoom: 1
 
+                @geolocation.position().then((position) =>
+                        @$scope.markers['my_position'] =
+                                lat: position.coords.latitude
+                                lng: position.coords.longitude
+                        console.debug("User is at (#{position.coords.latitude}, #{position.coords.longitude})")
+                )
 
                 @$scope.markers = {}
 
                 @$scope.map = @Map.get({mapId: 1}, (aMap, getResponseHeaders) => # FIXME: HARDCODED VALUE
                         # Locate user using HTML5 Api or use map center
                         if aMap.locate
-                                navigator.geolocation.getCurrentPosition((position) =>
+                                @geolocation.position().then((position) =>
                                         @$scope.center =
                                                 lat: position.coords.latitude
                                                 lng: position.coords.longitude
                                                 zoom: aMap.zoom
+                                        console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
                                 )
                         else
                                 @$scope.center =
@@ -77,10 +84,6 @@ class MapMarkerNewCtrl
                 width = 320
                 height = 240
 
-                @geolocation.position().then((pos)=>
-                        console.debug(pos.coords)
-                )
-
                 video = document.querySelector("#video")
                 video.addEventListener("canplay", ((ev) ->
                          unless streaming
@@ -93,10 +96,13 @@ class MapMarkerNewCtrl
                          ),
                 false)
 
-                # The possible new marker
+                # The new marker we'll submit if everything is OK
                 @$scope.marker = new @Marker()
 
                 # Wizard Steps
+                @$scope.steps = {
+
+                        }
                 @$scope.captureInProgress = false
                 @$scope.previewInProgress = false
 
@@ -136,25 +142,32 @@ class MapMarkerNewCtrl
                 """
                 When the user picked a picture from her hardrive (or camera on Mobile devices)
                 """
-                console.debug(field)
-                file = field
-                if not file.type.match(/image.*/)
+                file = field.files[0]
+
+                if not file
+                        console.debug("Picture now empty")
+                        return
+
+                # Make sure we have an image and the browser supports HTML5
+                if typeof(FileReader) == "undefined" || not (/image/i).test(file.type)
                         console.debug("Unknown type #{file.type}")
                         return
 
-                photo = document.querySelector("#selected-photo")
-                photo.setAttribute("src", data)
+                # Prepare preview placeholder
+                preview = document.querySelector("#selected-photo")
+                #preview.classList.add("obj")
+                #preview.file = file
 
-                photo.classList.add("obj")
-                photo.file = file
-
+                # Read the preview from the file
                 reader = new FileReader()
-                reader.onload = (aImg) ->
-                        return (e) ->
-                                photo.src = e.target.result
+                reader.onload = (e) =>
+                        preview.setAttribute("src", e.target.result)
+
                 reader.readAsDataURL(file)
 
+                console.debug("Step: preview picture")
                 @$scope.previewInProgress = true
+                @$scope.$apply()
 
         grabCamera: =>
                 """
@@ -222,7 +235,7 @@ class MapMarkerNewCtrl
 
 
 # Controller declarations
-module.controller("MapDetailCtrl", ['$scope', 'Map', MapDetailCtrl])
+module.controller("MapDetailCtrl", ['$scope', 'Map', 'geolocation', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', "Map", MapNewCtrl])
 module.controller("MapMarkerDetailCtrl", ['$scope', '$routeParams', 'Marker', MapMarkerDetailCtrl])
 module.controller("MapMarkerNewCtrl", ['$scope', 'Marker', 'geolocation', MapMarkerNewCtrl])
