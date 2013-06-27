@@ -40,10 +40,12 @@
 
     <!-- picture upload -->
     <div ng-show="!captureInProgress && !previewInProgress" class="photo-widget">
-      <ul>
-        <!-- <li><button ng-click="grabCamera()">Prendre une photo</button></li> -->
-        <li><input type="file" accept="image/*;capture=camera" name="picture" onchange="angular.element(this).scope().pictureChanged(this)"></input></li>
-      </ul>
+      <div class="wrap-widgets">
+        <ul>
+          <!-- <li><button ng-click="grabCamera()">Prendre une photo</button></li> -->
+          <li><input type="file" accept="image/*;capture=camera" name="picture" onchange="angular.element(this).scope().pictureChanged(this)"></input></li>
+        </ul>
+      </div>
       <div class="skippy">
 	<button ng-click="skipPicture()">Passer cette étape</button>
       </div>

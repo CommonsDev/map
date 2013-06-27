@@ -519,10 +519,11 @@ body > footer {
 		float:left;
 		width:100%;
 
-		a {
+		button {
 			display:block;
 			text-decoration:none;
 			padding-left:58px;
+			font-family:Raleway,sans-serif;
 			color:white;
 			height:54px;
 			width:230px;
@@ -531,6 +532,7 @@ body > footer {
 			width:230px;
 			font-size:1rem;
 			margin:30px auto 0;
+			text-align:left;
 			background:#2e394b image-url('double_arrow.png') no-repeat 18px center;
 			@include border-radius(27px);
 		}
@@ -601,9 +603,21 @@ body > footer {
 			&.find2 {
 				background:image-url('adress2.png') no-repeat center 2px;
 			}
-			&.find3 {
-				background:image-url('adress3.png') no-repeat center 12px;
-			}
+		}
+
+		button.find3 {
+			background:image-url('adress3.png') no-repeat center 12px;
+			display:block;
+			height:100px;
+			float:left;
+			width:108px;
+			text-align:center;
+			padding:59px 25px 0;
+			color:#8b8b8b;
+			font-size:0.75rem;
+			text-decoration:none;
+			font-family:Raleway,sans-serif;
+			border:0;
 		}
 
 		span {
@@ -616,44 +630,44 @@ body > footer {
 		}
 	}
 
-	form {
-		p {
-			border-top:1px solid #f5f5f5;
-			border-bottom:1px solid #f5f5f5;
-			padding:20px 12px;
-			float:left;
-			width:100%;
+	p {
+		border-top:1px solid #f5f5f5;
+		border-bottom:1px solid #f5f5f5;
+		padding:20px 12px;
+		float:left;
+		width:100%;
 
-			input[type="text"] {
-				width:288px;
-				padding:0 10px 0 55px;
-				height:32px;
-				border:1px solid #dedede;
-				float:left;
-				font-size:0.8rem;
-				background:image-url('adress_field_left.png') no-repeat center left;
-				font-style:italic;
-				color:#8b8b8b;
-				margin:0 12px 0 0;
-				@include border-radius(5px);
-			}
-		}
-
-		a.valid {
-			display:block;
-			text-decoration:none;
-			color:white;
-			height:50px;
-			width:230px;
-			line-height:50px;
-			width:230px;
-			font-size:1rem;
-			margin:20px 0 30px 72px;
-			background:#2e394b;
+		input[type="text"] {
+			width:288px;
+			padding:0 10px 0 55px;
+			height:32px;
+			border:1px solid #dedede;
 			float:left;
-			text-align:center;
-			@include border-radius(25px);
+			font-size:0.8rem;
+			background:image-url('adress_field_left.png') no-repeat center left;
+			font-style:italic;
+			color:#8b8b8b;
+			margin:0 12px 0 0;
+			@include border-radius(5px);
 		}
+	}
+
+	button.valid {
+		display:block;
+		text-decoration:none;
+		color:white;
+		height:50px;
+		width:230px;
+		line-height:50px;
+		width:230px;
+		font-size:1rem;
+		margin:20px 0 30px 72px;
+		background:#2e394b;
+		float:left;
+		text-align:center;
+		border:0;
+		font-family:Raleway,sans-serif;
+		@include border-radius(25px);
 	}
 }
 
@@ -691,7 +705,7 @@ body > footer {
 		@include border-radius(5px);
 	}
 
-	a.locate {
+	button.locate {
 		display:block;
 		text-decoration:none;
 		padding-left:58px;
@@ -699,9 +713,12 @@ body > footer {
 		height:54px;
 		width:230px;
 		line-height:54px;
+		border:0;
+		font-family:Raleway,sans-serif;
 		width:230px;
 		font-size:1rem;
 		margin:10px auto 0;
+		text-align:left;
 		background:#2e394b image-url('locate_ico.png') no-repeat 18px center;
 		@include border-radius(27px);
 	}
@@ -712,9 +729,12 @@ body > footer {
 	float:left;
 	width:404px;
 	margin:0 58px;
-	border-top:1px solid #fff;
-	border-bottom:1px solid #fff;
-	padding:2px 0;
+
+	.wrap-widgets {
+		border-top:1px solid #fff;
+		border-bottom:1px solid #fff;
+		padding:2px 0;
+	}
 
 	ul {
 		border-top:1px solid #fff;
@@ -735,6 +755,10 @@ body > footer {
 				color:white;
 				text-decoration:none;
 				text-align:center;
+			}
+
+			input[type="file"] {
+				margin-top:45px;
 			}
 		}
 
