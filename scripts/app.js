@@ -1,9 +1,9 @@
 config = {
     templateBaseUrl: '/views/',
-    REST_URI: 'http://192.168.2.168\\:8000/api/'
+    REST_URI: 'http://localhost\\:8000/api/'
 }
 
-angular.module('map', ['map.controllers', 'map.services', 'leaflet-directive']);
+angular.module('map', ['map.controllers', 'map.services', 'leaflet-directive', 'ngGeolocation']);
 angular.module('common', ['common.filters', 'common.controllers']);
 
 app = angular.module('gup', ['common', 'map']);

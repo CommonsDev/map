@@ -1,6 +1,6 @@
 <!-- ADD disabled class on add-panel-block to activate the overlay -->
 <div id="add-panel">
-  <form name="new_marker_form" ng-submit="submitForm()">
+  <ng-form name="new_marker_form">
 
   <section id="add-block-1" class="add-panel-block">
     <div class="disabled-overlay">&nbsp;</div>
@@ -14,24 +14,13 @@
           <div class="top"><a href="#">Les plus utilisés</a></div>
           <div class="inner">
             <ul>
-              <li class="point1"><input type="radio" name="point" val="1" id="point1" /><label for="point1">Point 1</label></li>
-              <li class="point1"><input type="radio" name="point" val="2" id="point2" /><label for="point2">Point 2</label></li>
-              <li class="point1"><input type="radio" name="point" val="3" id="point3" /><label for="point3">Point 3</label></li>
-              <li class="point1"><input type="radio" name="point" val="4" id="point4" /><label for="point4">Point 4</label></li>
-              <li class="point1"><input type="radio" name="point" val="5" id="point5" /><label for="point5">Point 5</label></li>
-              <li class="point1"><input type="radio" name="point" val="6" id="point6" /><label for="point6">Point 6</label></li>
-              <li class="point1"><input type="radio" name="point" val="7" id="point7" /><label for="point7">Point 7</label></li>
-              <!--<li class="point2"><a href="#">Point 2</a></li>
-              <li class="point3"><a href="#">Point 3</a></li>
-              <li class="point4"><a href="#">Point 4</a></li>
-              <li class="point1"><a href="#">Point 1</a></li>
-              <li class="point2"><a href="#">Point 2</a></li>
-              <li class="point3"><a href="#">Point 3</a></li>
-              <li class="point4"><a href="#">Point 4</a></li>
-              <li class="point1"><a href="#">Point 1</a></li>
-              <li class="point2"><a href="#">Point 2</a></li>
-              <li class="point3"><a href="#">Point 3</a></li>
-              <li class="point4"><a href="#">Point 4</a></li>-->
+              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="1" id="point1" /><label for="point1">Point 1</label></li>
+              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="2" id="point2" /><label for="point2">Point 2</label></li>
+              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="3" id="point3" /><label for="point3">Point 3</label></li>
+              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="4" id="point4" /><label for="point4">Point 4</label></li>
+              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="5" id="point5" /><label for="point5">Point 5</label></li>
+              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="6" id="point6" /><label for="point6">Point 6</label></li>
+              <li class="point1"><input type="radio" ng-model="form_data.category" name="point" val="7" id="point7" /><label for="point7">Point 7</label></li>
             </ul>
           </div>
         </li>
@@ -51,15 +40,15 @@
 
     <div ng-show="!captureInProgress && !previewInProgress" class="photo-widget">
       <ul>
-        <li><button ng-click="grabCamera()">Prendre une photo</button></li>
-        <li>Accéder à votre galerie<input type="file" accept="image/*;capture=camera" ng-model="file_input" ng-change="imageInputChanged()"></input></li>
+        <!-- <li><button ng-click="grabCamera()">Prendre une photo</button></li> -->
+        <li><input type="file" accept="image/*;capture=camera" name="picture" onchange="angular.element(this).scope().pictureChanged(this)"></input></li>
       </ul>
       <div class="skippy">
-	<a href="#">Passer cette étape</a>
+	<button ng-click="skipPicture()">Passer cette étape</button>
       </div>
     </div>
 
-    <div ng-show="previewInProgress" class="photo-selected">
+    <div ng-show="{{ marker.picture }}" class="photo-selected">
         <div class="preview">
           <img src="images/_TEMP/photo.jpg" id="selected-photo" alt="" />
         </div>
@@ -83,10 +72,9 @@
       <span>Entrez votre<br /> titre et description</span>
     </h1>
     <div class="info-form">
-        <input type="text" name="title" placeholder="Titre de votre poi ..." />
-        <textarea name="desc" placeholder="Description de votre poi"></textarea>
-        <a href="#" class="locate">Localiser votre Poi</a>
-      </form>
+        <input type="text" name="title" ng-model="marker.title" placeholder="Titre de votre poi ..." />
+        <textarea name="desc" ng-model="marker.description" placeholder="Description de votre poi"></textarea>
+        <button ng-click="" class="locate">Localiser votre Poi</button>
     </div>
   </section>
 
@@ -100,13 +88,13 @@
       <div class="adress-find">
         <a class="find1" href="#">Entrez l'adresse</a> <span>ou</span>
         <a class="find2" href="#">Déplacez le point</a> <span>ou</span>
-        <a class="find3" href="#">Géolocalisez- vous</a>
+        <button class="find3" ng-click="geolocateMarker()">Géolocalisez-vous</a>
       </div>
         <p>
           <input type="text" name="title" placeholder="Adresse du point ..." />
           <a href="#" class="search"><img src="images/adress_search.png" alt="Chercher" /></a>
         </p>
-        <a href="#" class="valid">Valider la position</a>
+        <button ng-click="submitForm()" class="valid">Valider la position</button>
     </div>
   </section>
   </form>
