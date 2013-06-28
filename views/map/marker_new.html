@@ -1,8 +1,9 @@
 <!-- ADD disabled class on add-panel-block to activate the overlay -->
 <div id="add-panel">
-  <ng-form name="new_marker_form">
+  <ng-form ng-switch="wizardStep" name="new_marker_form">
 
-  <section id="add-block-1" class="add-panel-block" ng-show="!marker.category">
+  <!-- category -->
+  <section id="add-block-1" class="add-panel-block" ng-switch-when="category">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/1.png" alt="1/4" />
@@ -14,13 +15,10 @@
           <div class="top"><a href="#">Les plus utilisés</a></div>
           <div class="inner">
             <ul>
-              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="1" id="point1" /><label for="point1">Point 1</label></li>
-              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="2" id="point2" /><label for="point2">Point 2</label></li>
-              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="3" id="point3" /><label for="point3">Point 3</label></li>
-              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="4" id="point4" /><label for="point4">Point 4</label></li>
-              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="5" id="point5" /><label for="point5">Point 5</label></li>
-              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="6" id="point6" /><label for="point6">Point 6</label></li>
-              <li class="point1"><input type="radio" ng-model="marker.category" name="point" val="7" id="point7" /><label for="point7">Point 7</label></li>
+              <li ng-repeat="cat in [1, 2, 3, 4, 5]" class="category">
+		<input type="radio" name="category" ng-click="$parent.$parent.wizardStep = wizardSteps[1]" ng-model="marker.category" ng-value="{{ cat }}" id="cat{{ cat }}" />
+		<label for="cat{{cat}}">Cat {{ cat }}</label>
+	      </li>
             </ul>
           </div>
         </li>
@@ -31,7 +29,8 @@
     </div>
   </section>
 
-  <section id="add-block-2" class="add-panel-block" ng-show="marker.category">
+  <!-- picture -->
+  <section id="add-block-2" class="add-panel-block" ng-switch-when="picture">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/2w.png" alt="2/4" />
@@ -47,7 +46,7 @@
         </ul>
       </div>
       <div class="skippy">
-	<button ng-click="skipPicture()">Passer cette étape</button>
+	<button ng-click="$parent.wizardStep = wizardSteps[2]">Passer cette étape</button>
       </div>
     </div>
 
@@ -56,7 +55,8 @@
         <div class="preview">
           <img src="images/_TEMP/photo.jpg" id="selected-photo" alt="preview" />
         </div>
-        <a href="#" class="trash"><img src="images/trash_bt.png" alt="effacer" /></a>
+        <button ng-click="pictureDelete()" class="trash"><img src="images/trash_bt.png" alt="effacer" /></button>
+        <button ng-click="$parent.wizardStep = wizardSteps[2]" class="accept"><img src="images/OK_bt.png" alt="valider" /></button>
     </div>
 
     <!-- picture being taken -->
@@ -70,20 +70,26 @@
     </div>
   </section>
 
-  <section id="add-block-3" class="add-panel-block" ng-show="previewInProgress">
+  <!-- info -->
+  <section id="add-block-3" class="add-panel-block" ng-switch-when="info">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/3.png" alt="3/4" />
       <span>Entrez votre<br /> titre et description</span>
     </h1>
     <div class="info-form">
-        <input type="text" name="title" ng-model="marker.title" placeholder="Titre de votre poi ..." />
-        <textarea name="desc" ng-model="marker.description" placeholder="Description de votre poi"></textarea>
-        <button ng-click="" class="locate">Localiser votre Poi</button>
+      <ng-form name="infoForm">
+        <input type="text" name="title" ng-model="marker.title" placeholder="Titre de votre poi ..." required/>
+        <textarea name="desc" ng-model="marker.description" placeholder="Description de votre poi" required></textarea>
+        <button ng-click="$parent.wizardStep = wizardSteps[3]" ng-disabled="!infoForm.$valid" class="locate">Localiser votre Poi</button>
+      </ng-form>
+
     </div>
   </section>
 
-  <section id="add-block-4" class="add-panel-block" ng-show="marker.title && marker.description">
+
+  <!-- location -->
+  <section id="add-block-4" class="add-panel-block" ng-switch-when="location">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
       <img src="images/steps/4.png" alt="4/4" />
@@ -91,9 +97,9 @@
     </h1>
     <div class="adress-form">
       <div class="adress-find">
-        <a class="find1" href="#">Entrez l'adresse</a> <span>ou</span>
-        <a class="find2" href="#">Déplacez le point</a> <span>ou</span>
-        <button class="find3" ng-click="geolocateMarker()">Géolocalisez-vous</a>
+        <div class="find1">Entrez l'adresse</div> <span>ou</span>
+        <div class="find2">Déplacez le point</div> <span>ou</span>
+        <div class="find3">Géolocalisez-vous</div>
       </div>
         <p>
           <input type="text" name="title" placeholder="Adresse du point ..." />
@@ -102,6 +108,7 @@
         <button ng-click="submitForm()" class="valid">Valider la position</button>
     </div>
   </section>
+
   </form>
 </div>
 <script type="text/javascript">

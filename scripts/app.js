@@ -3,8 +3,8 @@ config = {
     REST_URI: 'http://localhost\\:8000/api/'
 }
 
-angular.module('map', ['map.controllers', 'map.services', 'leaflet-directive', 'ngGeolocation']);
-angular.module('common', ['common.filters', 'common.controllers']);
+angular.module('map', ['map.controllers', 'map.services', 'leaflet-directive']);
+angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
 
 app = angular.module('gup', ['common', 'map']);
 

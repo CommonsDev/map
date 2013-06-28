@@ -20,25 +20,31 @@ class MapDetailCtrl
                         lng: 0
                         zoom: 1
 
-                @geolocation.position().then((position) =>
-                        @$scope.markers['my_position'] =
-                                lat: position.coords.latitude
-                                lng: position.coords.longitude
-                        console.debug("User is at (#{position.coords.latitude}, #{position.coords.longitude})")
-                )
+
+
+
+
+                #.then((position) =>
+                #         @$scope.markers['my_position'] =
+                #                 lat: position.coords.latitude
+                #                lng: position.coords.longitude
+                #        console.debug("User is at (#{position.coords.latitude}, #{position.coords.longitude})")
+                #)
 
                 @$scope.markers = {}
 
                 @$scope.map = @Map.get({mapId: 1}, (aMap, getResponseHeaders) => # FIXME: HARDCODED VALUE
                         # Locate user using HTML5 Api or use map center
                         if aMap.locate
-                                @geolocation.position().then((position) =>
-                                        @$scope.center =
-                                                lat: position.coords.latitude
-                                                lng: position.coords.longitude
-                                                zoom: aMap.zoom
-                                        console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
-                                )
+                                @geolocation.watchPosition()
+
+                                #@geolocation.position().then((position) =>
+                                #        @$scope.center =
+                                #                lat: position.coords.latitude
+                                #                lng: position.coords.longitude
+                                #                zoom: aMap.zoom
+                                #        console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
+                                #)
                         else
                                 @$scope.center =
                                         lat: aMap.center.coordinates[0]
@@ -85,6 +91,7 @@ class MapMarkerNewCtrl
                 height = 240
 
                 video = document.querySelector("#video")
+                """
                 video.addEventListener("canplay", ((ev) ->
                          unless streaming
                                  height = video.videoHeight / (video.videoWidth / width)
@@ -95,14 +102,24 @@ class MapMarkerNewCtrl
                                  streaming = true
                          ),
                 false)
+                """
 
                 # The new marker we'll submit if everything is OK
                 @$scope.marker = new @Marker()
 
-                # Wizard Steps
-                @$scope.steps = {
+                # Geolocation
+                this.geolocateMarker()
 
-                        }
+                # Wizard Steps
+                @$scope.wizardSteps = [
+                        "category",
+                        "picture",
+                        "info",
+                        "location"
+                ]
+
+                @$scope.wizardStep = @$scope.wizardSteps[0]
+
                 @$scope.captureInProgress = false
                 @$scope.previewInProgress = false
 
@@ -113,6 +130,7 @@ class MapMarkerNewCtrl
                 @$scope.cancelGrabCamera = this.cancelGrabCamera
                 @$scope.submitForm = this.submitForm
                 @$scope.pictureChanged = this.pictureChanged
+                @$scope.pictureDelete = this.pictureDelete
                 @$scope.geolocateMarker = this.geolocateMarker
 
         submitForm: =>
@@ -137,6 +155,12 @@ class MapMarkerNewCtrl
                 """
                 @$scope.captureInProgress = false
                 @$scope.previewInProgress = false
+
+        pictureDelete: =>
+                preview = document.querySelector("#selected-photo")
+                preview.src = ""
+                @$scope.previewInProgress = false
+                @$scope.marker.image = null
 
         pictureChanged: (field) =>
                 """
@@ -227,8 +251,12 @@ class MapMarkerNewCtrl
                 @$scope.previewInProgress = true
 
         geolocateMarker: =>
-                pos_promise = @geolocation.position().then(=>
-                        console.debug('yo')
+                pos_promise = @geolocation.lookupAddress("3 Chemin de la cluse, 62126 Wimille").then((pos)=>
+                        console.debug("Found pos #{pos}")
+                )
+
+                pos_promise = @geolocation.resolveLatLng(42.2128, 71.0342).then((address)=>
+                        console.debug("Resolved to: #{address.formatted_address}")
                 )
 
 
