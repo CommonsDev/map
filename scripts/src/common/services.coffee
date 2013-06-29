@@ -1,5 +1,5 @@
 services = angular.module("common.services", [])
-services.constant("options", {enableHighAccuracy: true})
+services.constant("options", {enableHighAccuracy: false})
 
 class GeolocationService
         """

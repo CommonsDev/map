@@ -106,6 +106,9 @@ class MapMarkerNewCtrl
 
                 # The new marker we'll submit if everything is OK
                 @$scope.marker = new @Marker()
+                @$scope.marker.position =
+                        coordinates: null
+                        type: "Point"
 
                 # Geolocation
                 this.geolocateMarker()
@@ -132,16 +135,12 @@ class MapMarkerNewCtrl
                 @$scope.pictureChanged = this.pictureChanged
                 @$scope.pictureDelete = this.pictureDelete
                 @$scope.geolocateMarker = this.geolocateMarker
+                @$scope.lookupAddress = this.lookupAddress
 
         submitForm: =>
                 """
                 Submit the form to create a new point
                 """
-                # Position
-                @$scope.marker.position = {}
-                @$scope.marker.position.coordinates = [30.0, 50.0]
-                @$scope.marker.position.type = "Point"
-
                 @$scope.marker.tile_layer = "/api/scout/v0/tilelayer/1"
                 @$scope.marker.created_by = "/api/account/v0/profile/1"
 
@@ -251,15 +250,22 @@ class MapMarkerNewCtrl
                 @$scope.previewInProgress = true
 
         geolocateMarker: =>
-                pos_promise = @geolocation.lookupAddress("3 Chemin de la cluse, 62126 Wimille").then((pos)=>
-                        console.debug("Found pos #{pos}")
+                console.debug("Getting user position...")
+                p = @geolocation.position().then((pos) =>
+                        console.debug("Resolving #{pos.coords.latitude}, #{pos.coords.longitude}")
+                        @$scope.marker.position.coordinates = [pos.coords.latitute, pos.coords.longitude]
+                        pro = @geolocation.resolveLatLng(pos.coords.latitute, pos.coords.longitude).then((address)=>
+                                console.debug(address)
+                                @$scope.marker.position.address = address.formatted_address
+                        )
                 )
 
-                pos_promise = @geolocation.resolveLatLng(42.2128, 71.0342).then((address)=>
-                        console.debug("Resolved to: #{address.formatted_address}")
+        lookupAddress: =>
+                console.debug("looking up #{@$scope.marker.position.address}")
+                pos_promise = @geolocation.lookupAddress(@$scope.marker.position.address).then((coords)=>
+                        console.debug("Found pos #{coords}")
+                        @$scope.marker.position.coordinates = angular.copy(coords)
                 )
-
-
 
 
 # Controller declarations
