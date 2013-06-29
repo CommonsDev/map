@@ -1,6 +1,10 @@
 module = angular.module('map.controllers', [])
 
 class MapDetailCtrl
+        addMarker: (name, aMarker) =>
+                console.debug("creating marker #{name}...")
+                @$scope.markers[name] = aMarker
+
         constructor: (@$scope, @Map, @geolocation) ->
                 icon = L.icon({
                         iconUrl: '/images/pointer.png'
@@ -13,21 +17,29 @@ class MapDetailCtrl
                         truc:
                                 url_template: 'http://tile.openstreetmap.org/{z}/{x}/{y}.png'
                                 attrs:
-                                        zoom: 4
+                                        zoom: 12
 
                 @$scope.center =
-                        lat: 0
-                        lng: 0
-                        zoom: 1
+                        lat: 1.0
+                        lng: 1.0
+                        zoom: 8
 
 
+                @$scope.$on('map:createMarker', (event, args) =>
+                        this.addMarker(args.name, args.marker)
+                )
+
+                @$scope.$on('map:setCenter', (event, args) =>
+                        console.debug("setting center to #{args.latitude}, #{args.longitude}, #{args.zoom}")
+                        @$scope.center =
+                                lat: args.latitude
+                                lng: args.longitude
+                                zoom: args.zoom
+                )
 
 
 
                 #.then((position) =>
-                #         @$scope.markers['my_position'] =
-                #                 lat: position.coords.latitude
-                #                lng: position.coords.longitude
                 #        console.debug("User is at (#{position.coords.latitude}, #{position.coords.longitude})")
                 #)
 
@@ -36,7 +48,7 @@ class MapDetailCtrl
                 @$scope.map = @Map.get({mapId: 1}, (aMap, getResponseHeaders) => # FIXME: HARDCODED VALUE
                         # Locate user using HTML5 Api or use map center
                         if aMap.locate
-                                @geolocation.watchPosition()
+                                # @geolocation.watchPosition()
 
                                 #@geolocation.position().then((position) =>
                                 #        @$scope.center =
@@ -56,7 +68,7 @@ class MapDetailCtrl
                                 @$scope.tilelayers[layer.name] =
                                                 url_template: 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg'
                                                 attrs:
-                                                        zoom: 4
+                                                        zoom: 12
 
                                 for marker in layer.markers
                                         @$scope.markers[marker.id] =
@@ -86,7 +98,7 @@ class MapMarkerDetailCtrl
 
 
 class MapMarkerNewCtrl
-        constructor: (@$scope, @Marker, @geolocation) ->
+        constructor: (@$scope, @$rootScope, @Marker, @geolocation) ->
                 width = 320
                 height = 240
 
@@ -111,7 +123,7 @@ class MapMarkerNewCtrl
                         type: "Point"
 
                 # Geolocation
-                this.geolocateMarker()
+                # this.geolocateMarker()
 
                 # Wizard Steps
                 @$scope.wizardSteps = [
@@ -252,11 +264,40 @@ class MapMarkerNewCtrl
         geolocateMarker: =>
                 console.debug("Getting user position...")
                 p = @geolocation.position().then((pos) =>
-                        console.debug("Resolving #{pos.coords.latitude}, #{pos.coords.longitude}")
-                        @$scope.marker.position.coordinates = [pos.coords.latitute, pos.coords.longitude]
-                        pro = @geolocation.resolveLatLng(pos.coords.latitute, pos.coords.longitude).then((address)=>
-                                console.debug(address)
-                                @$scope.marker.position.address = address.formatted_address
+                        console.debug("Resolving #{pos.coords.latitude}")
+                        @$scope.marker.position.coordinates = [pos.coords.latitude, pos.coords.longitude]
+
+                        @$rootScope.$broadcast('map:setCenter',
+                                latitude: pos.coords.latitude
+                                longitude: pos.coords.longitude
+                                zoom: 15
+                        )
+
+
+                        if not @map_marker
+                                @map_marker =
+                                        lat: @$scope.marker.position.coordinates[0]
+                                        lng: @$scope.marker.position.coordinates[1]
+                                        draggable: true
+                                        attrs:
+                                                icon: L.icon({
+                                                        iconUrl: '/images/poi_localisation.png'
+                                                        shadowUrl: null,
+                                                        iconSize: new L.Point(65, 75)
+                                                        iconAnchor: new L.Point(4, 37)
+                                                        })
+
+                                @$rootScope.$broadcast('map:createMarker',
+                                        name: 'my_position'
+                                        marker: @map_marker
+                                )
+                        else
+                                @map_marker.lat = @$scope.marker.position.coordinates[0]
+                                @map_marker.lng = @$scope.marker.position.coordinates[1]
+
+
+                        pro = @geolocation.resolveLatLng(pos.coords.latitude, pos.coords.longitude).then((address)=>
+                                @$scope.marker.position.address = angular.copy(address.formatted_address)
                         )
                 )
 
@@ -265,6 +306,29 @@ class MapMarkerNewCtrl
                 pos_promise = @geolocation.lookupAddress(@$scope.marker.position.address).then((coords)=>
                         console.debug("Found pos #{coords}")
                         @$scope.marker.position.coordinates = angular.copy(coords)
+
+                        @$rootScope.$broadcast('map:setCenter',
+                                latitude: @$scope.marker.position.coordinates[0]
+                                longitude: @$scope.marker.position.coordinates[1]
+                                zoom: 15
+                        )
+
+                        @$rootScope.$broadcast('map:createMarker',
+                                name: 'my_position'
+                                marker:
+                                        lat: @$scope.marker.position.coordinates[0]
+                                        lng: @$scope.marker.position.coordinates[1]
+                                        draggable: true
+                                        attrs:
+                                                icon: L.icon({
+                                                        iconUrl: '/images/poi_localisation.png'
+                                                        shadowUrl: null,
+                                                        iconSize: new L.Point(65, 75)
+                                                        iconAnchor: new L.Point(4, 37)
+                                                        })
+
+                        )
+
                 )
 
 
@@ -272,4 +336,4 @@ class MapMarkerNewCtrl
 module.controller("MapDetailCtrl", ['$scope', 'Map', 'geolocation', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', "Map", MapNewCtrl])
 module.controller("MapMarkerDetailCtrl", ['$scope', '$routeParams', 'Marker', MapMarkerDetailCtrl])
-module.controller("MapMarkerNewCtrl", ['$scope', 'Marker', 'geolocation', MapMarkerNewCtrl])
+module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'Marker', 'geolocation', MapMarkerNewCtrl])
