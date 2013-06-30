@@ -21,6 +21,14 @@ body {
   	overflow:hidden;
 }
 
+button {
+	cursor:pointer;
+
+	&[disabled="disabled"] {
+		@include opacity(0.3);
+	}
+}
+
 /* ============= PAGE ============= */
 
 #page {
@@ -635,7 +643,7 @@ body > footer {
 		margin:10px 0 15px 0;
 		float:left;
 
-		a {	
+		div {	
 			display:block;
 			height:100px;
 			float:left;
@@ -686,20 +694,42 @@ body > footer {
 		width:100%;
 
 		input[type="text"] {
-			width:288px;
-			padding:0 10px 0 55px;
+			width:240px;
+			padding:0 10px 0 10px;
 			height:32px;
 			border:1px solid #dedede;
 			float:left;
 			font-size:0.8rem;
-			background:image-url('adress_field_left.png') no-repeat center left;
 			font-style:italic;
 			color:#8b8b8b;
-			margin:0 12px 0 0;
-			@include border-radius(5px);
+			margin:0 5px 0 0;
+			position:relative;
+			left:-3px;
+			border-left:0;
+			@include border-radius(0 5px 5px 0);
 		}
 	}
+	button.search1 {
+		border: 0 none;
+	    float: left;
+	    margin: 0;
+	    padding: 0;
+	    background:none;
+	    position:relative;
+	    z-index:4000;
 
+	    img {
+	    	display:block;
+	    	margin:0;
+	    }
+	}
+
+	button.search2 {
+		padding:0;
+		margin:0;
+		border:0;
+		background:none;
+	}
 	button.valid {
 		display:block;
 		text-decoration:none;
@@ -832,15 +862,15 @@ body > footer {
 	}
 
 	.trash {
-		display:block;
-		margin:20px auto 0;
-		width:61px;
-		border:0;
+		background: none repeat scroll 0 0 transparent;
+	    border: 0 none;
+	    display: block;
+	    margin: 20px auto 0;
+	    width: 74px;
 	}
 
-	a.accept {
+	.accept {
 		display:block;
-		float:left;
 		text-decoration:none;
 		color:white;
 		height:50px;
@@ -848,10 +878,10 @@ body > footer {
 		line-height:50px;
 		width:180px;
 		font-size:1rem;
-		margin:20px 0 30px 24px;
+		margin:15px auto;
 		background:#2e394b;
-		float:left;
 		text-align:center;
+		border:1px solid white;
 		@include border-radius(25px);
 	}
 

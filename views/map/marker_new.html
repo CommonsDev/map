@@ -56,7 +56,7 @@
           <img src="images/_TEMP/photo.jpg" id="selected-photo" alt="preview" />
         </div>
         <button ng-click="pictureDelete()" class="trash"><img src="images/trash_bt.png" alt="effacer" /></button>
-        <button ng-click="$parent.wizardStep = wizardSteps[2]" class="accept"><img src="images/OK_bt.png" alt="valider" /></button>
+        <button ng-click="$parent.wizardStep = wizardSteps[2]" class="accept">Valider</button>
     </div>
 
     <!-- picture being taken -->
@@ -102,9 +102,9 @@
         <div class="find3">Géolocalisez-vous</div>
       </div>
         <p>
+          <button ng-click="geolocateMarker()" class="search1"><img src="images/adress_field_left.png" alt="geoloc" /></button>
           <input type="text" name="address" ng-model="marker.position.address" placeholder="Adresse du point ..." />
-          <button ng-click="lookupAddress()" class="search"><img src="images/adress_search.png" alt="Chercher" /></a>
-          <button ng-click="geolocateMarker()" class="search"><img src="images/adress_search.png" alt="geoloc" /></a>
+          <button ng-click="lookupAddress()" class="search2"><img src="images/adress_search.png" alt="Chercher" /></button>
         </p>
         <button ng-disabled="!marker.position.coordinates" ng-click="submitForm()" class="valid">Valider la position</button>
     </div>
