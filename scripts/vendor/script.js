@@ -32,7 +32,7 @@ $(document).ready(function(){
 			card.find('.supports-list').children('ul').children('li').each(function(i){
 				$(this).delay(150*i).effect("bounce",1000);
 			});
-			widgets.css('top',card.css('top')).css('left',card.width() + 32);	
+			widgets.css('top',card.css('top')).css('left',card.width() + 140);	
 			widgets.height(wH).width(0);
 
 			availableW=wW - card.width() - offset.left;
