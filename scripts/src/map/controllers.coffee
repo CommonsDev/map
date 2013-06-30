@@ -98,7 +98,7 @@ class MapMarkerDetailCtrl
 
 
 class MapMarkerNewCtrl
-        constructor: (@$scope, @$rootScope, @Marker, @geolocation) ->
+        constructor: (@$scope, @$rootScope, @$location, @Marker, @geolocation) ->
                 width = 320
                 height = 240
 
@@ -158,6 +158,7 @@ class MapMarkerNewCtrl
 
                 @$scope.marker.$save(=>
                         console.debug("new marker saved")
+                        @$location.path("/")
                 )
 
         skipPicture: =>
@@ -336,4 +337,4 @@ class MapMarkerNewCtrl
 module.controller("MapDetailCtrl", ['$scope', 'Map', 'geolocation', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', "Map", MapNewCtrl])
 module.controller("MapMarkerDetailCtrl", ['$scope', '$routeParams', 'Marker', MapMarkerDetailCtrl])
-module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'Marker', 'geolocation', MapMarkerNewCtrl])
+module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', '$location', 'Marker', 'geolocation', MapMarkerNewCtrl])
