@@ -21,12 +21,15 @@ class MapService
                                 attrs:
                                         zoom: 12
 
+        getCurrentLayer: =>
+                return @tilelayers[Object.keys(@tilelayers)[0]] # XXX Hacky
+
         addMarker: (name, aMarker) =>
                 console.debug("adding marker #{name}...")
                 @markers[name] = aMarker
 
         load: (slug) =>
-                @map = @Map.get({slug: slug}, (aMap, getResponseHeaders) => # FIXME: HARDCODED VALUE
+                @map = @Map.get({slug: slug}, (aMap, getResponseHeaders) =>
                         # Locate user using HTML5 Api or use map center
                         if aMap.locate
                                 # @geolocation.watchPosition()
@@ -39,17 +42,21 @@ class MapService
                                 #        console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
                                 #)
                         else
-                                @center.lat = aMap.center.coordinates[0]
-                                @center.lng = aMap.center.coordinates[1]
-                                @center.zoom = aMap.zoom
+                                @center =
+                                        lat: aMap.center.coordinates[0]
+                                        lng: aMap.center.coordinates[1]
+                                        zoom: aMap.zoom
 
-                        # Add every marker (FIXME: Should handle layers)
+                        # Add every layer
                         for layer in aMap.tile_layers
-                                @tilelayers[layer.name] =
-                                                url_template: 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg'
-                                                attrs:
-                                                        zoom: 12
+                                @tilelayers[layer.id] =
+                                        name: layer.name
+                                        uri: layer.resource_uri
+                                        url_template: layer.url_template
+                                        attrs:
+                                                zoom: 12
 
+                                # Add its markers
                                 for marker in layer.markers
                                         this.addMarker(marker.id,
                                                 href: "/marker/detail/#{ marker.id }"

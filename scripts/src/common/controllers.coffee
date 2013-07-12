@@ -6,7 +6,10 @@ class LoginCtrl
         """
         constructor: (@$scope, @$http, @$cookies, @authService) ->
                 # set authorization header if already logged in
-                @$http.defaults.headers.common['Authorization'] = "ApiKey #{@$cookies.username}:#{@$cookies.key}"
+                if @$cookies.username and @$cookies.key
+                        console.debug("Already logged in.")
+                        @$http.defaults.headers.common['Authorization'] = "ApiKey #{@$cookies.username}:#{@$cookies.key}"
+                        @authService.loginConfirmed()
 
                 # On login required
                 @$scope.$on('event:auth-loginRequired', =>

@@ -89,6 +89,7 @@ class MapMarkerNewCtrl
                 @$scope.geolocateMarker = this.geolocateMarker
                 @$scope.lookupAddress = this.lookupAddress
 
+                # Use debounce to prevent multiple calls
                 @$scope.on_marker_preview_moved = @debounce(this.on_marker_preview_moved)
 
                 # Cursor move callback
@@ -101,13 +102,15 @@ class MapMarkerNewCtrl
                 """
                 Submit the form to create a new point
                 """
-                @$scope.marker.tile_layer = "/api/scout/v0/tilelayer/1"
-                @$scope.marker.created_by = "/api/account/v0/profile/1"
+                # XXX Hacky
+                @$scope.marker.tile_layer = @MapService.getCurrentLayer().uri
 
                 @$scope.marker.$save(=>
                         console.debug("new marker saved")
                         @$location.path("/")
                 )
+
+                # XXX Need to post picture
 
         skipPicture: =>
                 """
@@ -213,6 +216,9 @@ class MapMarkerNewCtrl
 
 
         on_marker_preview_moved: =>
+                """
+                When the marker was moved
+                """
                 pro = @geolocation.resolveLatLng(@$scope.marker_preview.lat, @$scope.marker_preview.lng).then((address)=>
                         console.debug("Found address match: #{address.formatted_address}")
                         @$scope.marker.position.address = angular.copy(address.formatted_address)
@@ -235,14 +241,12 @@ class MapMarkerNewCtrl
                                 lng: @$scope.marker_preview.lng
                                 zoom: 20
 
-
-                        pro = @geolocation.resolveLatLng(pos.coords.latitude, pos.coords.longitude).then((address)=>
-                                console.debug("Found address match: #{address.formatted_address}")
-                                @$scope.marker.position.address = angular.copy(address.formatted_address)
-                        )
                 )
 
         lookupAddress: =>
+                """
+                Given an address, find lat/lng
+                """
                 console.debug("looking up #{@$scope.marker.position.address}")
                 pos_promise = @geolocation.lookupAddress(@$scope.marker.position.address).then((coords)=>
                         console.debug("Found pos #{coords}")
@@ -253,13 +257,6 @@ class MapMarkerNewCtrl
                                 lat: @$scope.marker.position.coordinates[0]
                                 lng: @$scope.marker.position.coordinates[1]
                                 zoom: 15
-
-                        # Focus on new location
-                        @MapService.center =
-                                lat: @$scope.marker_preview.lat
-                                lng: @$scope.marker_preview.lng
-                                zoom: 20
-
 
                         # Update preview marker position
                         @$scope.marker_preview.lat = @$scope.marker.position.coordinates[0]
