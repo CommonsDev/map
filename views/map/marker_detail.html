@@ -3,20 +3,15 @@
     <header>
       <a href="javascript:void(0)" class="card-like" title="je supporte"><img src="/images/card_like.png" alt="support" /></a>
       <div class="minipic">
-        <svg height="184" width="248" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
-          <image mask="url(#mask1)" height="184" width="248" xlink:href="{{ MEDIA_URI }}{{ marker.picture || '/static/images/_TEMP/default.png' }}"/> <!-- pb w/ angular+xlink -->
-        </svg>
+          <img height="184" width="248" ng-src="{{ MEDIA_URI }}{{ marker.picture }}" alt="{{ marker.title }}"/>
       </div>
       <div class="bigpic">
-        <!--<svg height="282" width="378" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
-          <image mask="url(#mask2)" height="282" width="378" xlink:href="/images/_TEMP/prima_big.jpg"/>
-        </svg>-->
-        <img ng-src="{{ MEDIA_URI }}{{ marker.picture || '/static/images/_TEMP/default.png' }}" height="282" width="378" alt="{{ marker.title }}"/>
+        <img ng-src="{{ MEDIA_URI }}{{ marker.picture }}" height="282" width="378" alt="{{ marker.title }}"/>
       </div>
       <div class="author">
         <img src="/images/_TEMP/dave.png" alt="Dave" />
-        <em>Davy Grohlton</em>
-        <span>Jeudi 23 Avril 2013</span>
+        <em>{{ marker.created_by.username }}</em>
+        <span>{{ marker.created_on | fromNow }}</span>
       </div>
     </header>
     <div class="inner">

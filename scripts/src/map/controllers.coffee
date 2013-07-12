@@ -42,6 +42,8 @@ class MapMarkerNewCtrl
                 false)
                 """
 
+                @$scope.uploads = {}
+
                 # The new marker we'll submit if everything is OK
                 @$scope.marker = new @Marker()
                 @$scope.marker.position =
@@ -84,7 +86,6 @@ class MapMarkerNewCtrl
                 @$scope.grabCamera = this.grabCamera
                 @$scope.cancelGrabCamera = this.cancelGrabCamera
                 @$scope.submitForm = this.submitForm
-                @$scope.pictureChanged = this.pictureChanged
                 @$scope.pictureDelete = this.pictureDelete
                 @$scope.geolocateMarker = this.geolocateMarker
                 @$scope.lookupAddress = this.lookupAddress
@@ -105,12 +106,19 @@ class MapMarkerNewCtrl
                 # XXX Hacky
                 @$scope.marker.tile_layer = @MapService.getCurrentLayer().uri
 
+                # Prepare file upload
+                if @$scope.uploads.picture
+                        console.debug(@$scope.uploads.picture)
+                        @$scope.marker.picture =
+                                name: @$scope.uploads.picture.file.name
+                                file: @$scope.uploads.picture.dataURL.replace(/^data:image\/(png|jpg|jpeg);base64,/, "")
+                                content_type: @$scope.uploads.picture.file.type
+
                 @$scope.marker.$save(=>
                         console.debug("new marker saved")
                         @$location.path("/")
                 )
 
-                # XXX Need to post picture
 
         skipPicture: =>
                 """
@@ -120,42 +128,12 @@ class MapMarkerNewCtrl
                 @$scope.previewInProgress = false
 
         pictureDelete: =>
-                #preview = document.querySelector("#selected-photo")
-                #preview.src = ""
-                @$scope.marker.image = null
+                """
+                Callback when one decide to delete the uploaded picture
+                """
+                @$scope.marker.picture = null
+                @$scope.uploads.picture = null
                 @$scope.previewInProgress = false
-                @$scope.marker.image = null
-
-        pictureChanged: (field) =>
-                """
-                When the user picked a picture from her hardrive (or camera on Mobile devices)
-                """
-                file = field.files[0]
-
-                if not file
-                        console.debug("Picture now empty")
-                        return
-
-                # Make sure we have an image and the browser supports HTML5
-                if typeof(FileReader) == "undefined" || not (/image/i).test(file.type)
-                        console.debug("Unknown type #{file.type}")
-                        return
-
-                # Prepare preview placeholder
-                preview = document.querySelector("#selected-photo")
-                #preview.classList.add("obj")
-                #preview.file = file
-
-                # Read the preview from the file
-                reader = new FileReader()
-                reader.onload = (e) =>
-                        preview.setAttribute("src", e.target.result)
-
-                reader.readAsDataURL(file)
-
-                console.debug("Step: preview picture")
-                @$scope.previewInProgress = true
-                @$scope.$apply()
 
         grabCamera: =>
                 """
@@ -203,7 +181,7 @@ class MapMarkerNewCtrl
                 canvas.width = width
                 canvas.height = height
                 canvas.getContext("2d").drawImage(video, 0, 0, width, height)
-                data = canvas.toDataURL("image/png")
+                data = canvas.toDataURL("image/jpg")
 
                 photo = document.querySelector("#selected-photo")
                 photo.setAttribute("src", data)
