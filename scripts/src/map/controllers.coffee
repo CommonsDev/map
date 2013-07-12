@@ -50,9 +50,11 @@ class MapMarkerNewCtrl
                         coordinates: null
                         type: "Point"
 
-                # Preview the nextr marker
+                # Preview the next marker
                 @$scope.marker_preview =
                         draggable: true
+                        lat: @MapService.center.lat
+                        lng: @MapService.center.lng
                         attrs:
                                 icon: L.icon(
                                         iconUrl: '/images/poi_localisation.png'
