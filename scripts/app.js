@@ -14,8 +14,7 @@ app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
 app.config(['$locationProvider', '$routeProvider', 'moduleTemplateBaseUrl', function($locationProvider, $routeProvider, moduleTemplateBaseUrl){
 					   $locationProvider.html5Mode(true);
 					   $routeProvider
-					       .when('/', {
-							
+					       .when('/:slug', {
 						     })
 					       .when('/new', {
 							 templateUrl: moduleTemplateBaseUrl + 'new.html',

@@ -38,11 +38,13 @@
     </h1>
 
     <!-- picture upload -->
-    <div ng-show="!captureInProgress && !previewInProgress" class="photo-widget">
+    <div ng-hide="marker.picture" class="photo-widget">
       <div class="wrap-widgets">
         <ul>
           <!-- <li><button ng-click="grabCamera()">Prendre une photo</button></li> -->
-          <li><input type="file" accept="image/*;capture=camera" name="picture" onchange="angular.element(this).scope().pictureChanged(this)"></input></li>
+          <li>
+	    <input type="file" image="marker.picture" resize-max-height="300" resize-max-width="250" resize-quality="0.7"  accept="image/*;capture=camera" name="picture"></input>
+	  </li>
         </ul>
       </div>
       <div class="skippy">
@@ -51,9 +53,9 @@
     </div>
 
     <!-- picture preview -->
-    <div ng-show="previewInProgress" class="photo-selected">
+    <div ng-show="marker.picture" class="photo-selected">
         <div class="preview">
-          <img src="images/_TEMP/photo.jpg" id="selected-photo" alt="preview" />
+          <img ng-src="{{marker.picture.resized.dataURL}}" id="selected-photo" alt="preview" />
         </div>
         <button ng-click="pictureDelete()" class="trash"><img src="images/trash_bt.png" alt="effacer" /></button>
         <button ng-click="$parent.wizardStep = wizardSteps[2]" class="accept">Valider</button>

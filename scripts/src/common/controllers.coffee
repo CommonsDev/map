@@ -1,6 +1,9 @@
 module = angular.module('common.controllers', ['http-auth-interceptor', 'ngCookies'])
 
 class LoginCtrl
+        """
+        Login a user
+        """
         constructor: (@$scope, @$http, @$cookies, @authService) ->
                 # set authorization header if already logged in
                 @$http.defaults.headers.common['Authorization'] = "ApiKey #{@$cookies.username}:#{@$cookies.key}"

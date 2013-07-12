@@ -1,5 +1,5 @@
 services = angular.module("common.services", [])
-services.constant("options", {enableHighAccuracy: false})
+services.constant("options", {enableHighAccuracy: true})
 
 class GeolocationService
         """
@@ -82,6 +82,24 @@ class GeolocationService
                 return deferred.promise
 
 
+
+
+services.factory('debounce', ['$timeout', ($timeout) ->
+        return (fn, timeout, apply) -> # debounce fn
+            timeout = angular.isUndefined(timeout) ? 0 : timeout
+            apply = angular.isUndefined(apply) ? true : apply # !!default is true! most suitable to my experience
+            nthCall = 0
+            return -> # intercepting fn
+                that = this
+                argz = arguments
+                nthCall++
+                later = ((version) ->
+                    return ->
+                        if (version is nthCall)
+                            return fn.apply(that, argz)
+                )(nthCall)
+                return $timeout(later, timeout, apply)
+])
 
 
 
