@@ -70,9 +70,9 @@ class GeolocationService
                 @geocoder.geocode({'latLng': latlng},
                         (results, status) =>
                                 if status == google.maps.GeocoderStatus.OK
-                                        if results[1]
+                                        if results[0]
                                                 @$rootScope.$apply(->
-                                                        deferred.resolve(angular.copy(results[1]))
+                                                        deferred.resolve(angular.copy(results[0]))
                                                 )
                                 else
                                         @$rootScope.$apply( ->

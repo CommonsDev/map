@@ -93,7 +93,7 @@ class MapMarkerNewCtrl
                 @$scope.lookupAddress = this.lookupAddress
 
                 # Use debounce to prevent multiple calls
-                @$scope.on_marker_preview_moved = @debounce(this.on_marker_preview_moved)
+                @$scope.on_marker_preview_moved = @debounce(this.on_marker_preview_moved, 2)
 
                 # Cursor move callback
                 @$scope.$watch('marker_preview.lat + marker_preview.lng', =>
@@ -116,8 +116,19 @@ class MapMarkerNewCtrl
                                 file: @$scope.uploads.picture.dataURL.replace(/^data:image\/(png|jpg|jpeg);base64,/, "")
                                 content_type: @$scope.uploads.picture.file.type
 
-                @$scope.marker.$save(=>
+                @$scope.marker.$save((marker) =>
                         console.debug("new marker saved")
+
+                        # Delete temp marker
+                        @MapService.removeMarker('marker_preview')
+
+                        # Create new marker
+                        @MapService.addMarker(marker.id,
+                                href: "/marker/detail/#{ marker.id }"
+                                lat: marker.position.coordinates[0]
+                                lng: marker.position.coordinates[1]
+                        )
+
                         @$location.path("/")
                 )
 
@@ -197,8 +208,12 @@ class MapMarkerNewCtrl
 
         on_marker_preview_moved: =>
                 """
-                When the marker was moved
+                When the marker was moved, update position and geocode
                 """
+                # Update marker position
+                console.debug("pos set @#{@$scope.marker.position.coordinates}")
+                @$scope.marker.position.coordinates = [@$scope.marker_preview.lat, @$scope.marker_preview.lng]
+
                 pro = @geolocation.resolveLatLng(@$scope.marker_preview.lat, @$scope.marker_preview.lng).then((address)=>
                         console.debug("Found address match: #{address.formatted_address}")
                         @$scope.marker.position.address = angular.copy(address.formatted_address)
@@ -209,11 +224,8 @@ class MapMarkerNewCtrl
                 console.debug("Getting user position...")
                 p = @geolocation.position().then((pos) =>
                         console.debug("Resolving #{pos.coords.latitude}")
-                        @$scope.marker.position.coordinates = [pos.coords.latitude, pos.coords.longitude]
-
-                        # Update preview marker position
-                        @$scope.marker_preview.lat = @$scope.marker.position.coordinates[0]
-                        @$scope.marker_preview.lng = @$scope.marker.position.coordinates[1]
+                        @$scope.marker_preview.lat = pos.coords.latitude
+                        @$scope.marker_preview.lng = pos.coords.longitude
 
                         # Focus on new location
                         @MapService.center =
@@ -230,17 +242,17 @@ class MapMarkerNewCtrl
                 console.debug("looking up #{@$scope.marker.position.address}")
                 pos_promise = @geolocation.lookupAddress(@$scope.marker.position.address).then((coords)=>
                         console.debug("Found pos #{coords}")
-                        @$scope.marker.position.coordinates = angular.copy(coords)
+
+                        # move preview marker
+                        @$scope.marker_preview.lat = coords[0]
+                        @$scope.marker_preview.lng = coords[1]
 
                         # Focus on new position
                         @MapService.center =
-                                lat: @$scope.marker.position.coordinates[0]
-                                lng: @$scope.marker.position.coordinates[1]
+                                lat: @$scope.marker_preview.lat
+                                lng: @$scope.marker_preview.lng
                                 zoom: 15
 
-                        # Update preview marker position
-                        @$scope.marker_preview.lat = @$scope.marker.position.coordinates[0]
-                        @$scope.marker_preview.lng = @$scope.marker.position.coordinates[1]
                 )
 
 

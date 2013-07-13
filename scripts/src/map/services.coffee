@@ -22,11 +22,30 @@ class MapService
                                         zoom: 12
 
         getCurrentLayer: =>
+                """
+                Return the current map layer
+                """
                 return @tilelayers[Object.keys(@tilelayers)[0]] # XXX Hacky
 
         addMarker: (name, aMarker) =>
+                """
+                Given marker data, add it
+                """
                 console.debug("adding marker #{name}...")
+                if not aMarker.attrs
+                        aMarker.attrs = {}
+                if not aMarker.attrs.icon
+                        aMarker.attrs.icon = @icon
+
                 @markers[name] = aMarker
+
+        removeMarker: (name) =>
+                """
+                Given a name (key), remove it from the marker list
+                """
+                console.debug("removing marker #{name}")
+                delete @markers[name]
+
 
         load: (slug) =>
                 @map = @Map.get({slug: slug}, (aMap, getResponseHeaders) =>
@@ -62,8 +81,6 @@ class MapService
                                                 href: "/marker/detail/#{ marker.id }"
                                                 lat: marker.position.coordinates[0]
                                                 lng: marker.position.coordinates[1]
-                                                attrs:
-                                                        icon: @icon
                                         )
 
                 )
