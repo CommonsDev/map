@@ -101,3 +101,7 @@ services.factory('Map', ['$resource', '$rootScope', ($resource, $rootScope) ->
 services.factory('Marker', ['$resource', '$rootScope', ($resource, $rootScope) ->
         return $resource("#{$rootScope.CONFIG.REST_URI}scout/v0/marker/:markerId?format=json", {markerId: "@id"})
 ])
+
+services.factory('MarkerCategory', ['$resource', '$rootScope', ($resource, $rootScope) ->
+        return $resource("#{$rootScope.CONFIG.REST_URI}scout/v0/marker_category/?format=json")
+])

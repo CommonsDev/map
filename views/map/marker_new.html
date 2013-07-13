@@ -10,14 +10,14 @@
       <span>Qualifiez votre<br /> point d'intérêt</span>
     </h1>
     <div class="points-list">
-      <ul>
+      <ul ng-show="is_marker_categories_loaded">
         <li class="categ">
           <div class="top"><a href="#">Les plus utilisés</a></div>
           <div class="inner">
             <ul>
-              <li ng-repeat="cat in [1, 2, 3, 4, 5]" class="category">
-		<input type="radio" name="category" ng-click="$parent.$parent.wizardStep = wizardSteps[1]" ng-model="marker.category" ng-value="{{ cat }}" id="cat{{ cat }}" />
-		<label for="cat{{cat}}">Cat {{ cat }}</label>
+              <li ng-repeat="cat in marker_categories" class="category">
+		<input type="radio" name="category" ng-click="$parent.$parent.wizardStep = wizardSteps[1]" ng-model="marker.category" ng-value="{{ cat.id }}" id="cat{{ cat.id }}" />
+		<label for="cat{{cat.id}}">{{ cat.name }}</label>
 	      </li>
             </ul>
           </div>

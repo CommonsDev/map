@@ -24,7 +24,7 @@ class MapMarkerDetailCtrl
 
 
 class MapMarkerNewCtrl
-        constructor: (@$scope, @$rootScope, @debounce, @$location, @MapService, @Marker, @geolocation) ->
+        constructor: (@$scope, @$rootScope, @debounce, @$location, @MapService, @Marker, @MarkerCategory, @geolocation) ->
                 width = 320
                 height = 240
 
@@ -41,6 +41,12 @@ class MapMarkerNewCtrl
                          ),
                 false)
                 """
+
+                # Load marker categories
+                @$scope.is_marker_categories_loaded = false
+                @$scope.marker_categories = @MarkerCategory.query((categories, getResponseHeaders) =>
+                        @$scope.is_marker_categories_loaded = true
+                )
 
                 @$scope.uploads = {}
 
@@ -116,6 +122,7 @@ class MapMarkerNewCtrl
                                 file: @$scope.uploads.picture.dataURL.replace(/^data:image\/(png|jpg|jpeg);base64,/, "")
                                 content_type: @$scope.uploads.picture.file.type
 
+                # Now save the marker
                 @$scope.marker.$save((marker) =>
                         console.debug("new marker saved")
 
@@ -260,4 +267,4 @@ class MapMarkerNewCtrl
 module.controller("MapDetailCtrl", ['$scope', '$routeParams', 'MapService', 'Map', 'geolocation', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', "Map", MapNewCtrl])
 module.controller("MapMarkerDetailCtrl", ['$scope', '$routeParams', 'Marker', MapMarkerDetailCtrl])
-module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$location', 'MapService', 'Marker', 'geolocation', MapMarkerNewCtrl])
+module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$location', 'MapService', 'Marker', 'MarkerCategory', 'geolocation', MapMarkerNewCtrl])
