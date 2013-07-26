@@ -10,15 +10,18 @@ class LoginCtrl
                         console.debug("Already logged in.")
                         @$http.defaults.headers.common['Authorization'] = "ApiKey #{@$cookies.username}:#{@$cookies.key}"
                         @authService.loginConfirmed()
+                @$scope.loginrequired = false
 
                 # On login required
                 @$scope.$on('event:auth-loginRequired', =>
+                        @$scope.loginrequired = true
                         console.debug("Login required")
                 )
 
                 # On login successful
                 @$scope.$on('event:auth-loginConfirmed', =>
                         console.debug("Login OK")
+                        @$scope.loginrequired = false
                 )
 
                 # Add methods to scope

@@ -1,8 +1,22 @@
 <!-- ADD disabled class on add-panel-block to activate the overlay -->
 <div id="add-panel">
-  <ng-form ng-switch="wizardStep" name="new_marker_form" data-ng-animate="'wave'">
 
-  <!-- category -->
+  <ng-form name="new_marker_form">
+  <div id="intercalar">
+    <ul>
+      <li class="loc"><button title="Localisation" ng-click="selected=1">1 : Localisation</button></li>
+      <li class="quali"><button title="Qualification" ng-click="selected=2">2 : Qualification</button></li>
+      <li class="photo"><button title="Photo" ng-click="selected=3">3 : Photo</button></li>
+      <li class="desc"><button title="Description" ng-click="selected=4">4 : Description</button></li>
+    </ul>
+
+    <span class="caption" ng-show="selected==1">Localisez votre point d'intêret</span>
+    <span class="caption" ng-show="selected==2">Qualifiez votre point d'intêret</span>
+    <span class="caption" ng-show="selected==3">Ajoutez une photo ou vidéo</span>
+    <span class="caption" ng-show="selected==4">Entrez votre description</span>
+  </div>
+  
+  <!--
   <section id="add-block-1" class="add-panel-block" ng-switch-when="category">
     <div class="disabled-overlay">&nbsp;</div>
     <h1>    
@@ -28,13 +42,86 @@
       </div>
     </div>
   </section>
+  -->
+<!-- location -->
+  <section id="add-block-1" class="add-panel-block" ng-show="selected==1" data-ng-animate="'wave'">
+    <h1>    
+      <img src="images/steps/1.png" alt="1/4" />
+      <strong>Localisez<br /> votre Point d'intérêt</strong>
+      <span>Entrez une adresse, placez ou géolocalisez-vous<br /> pour définir la position du point</span>
+    </h1>
+    <div class="adress-form">
+        <div class="find find1">
+          <label for="adress-field">Entrez l'adresse</label>
+          <input type="text" name="address" ng-model="marker.position.address" placeholder="Adresse du point ..." />
+          <button ng-click="lookupAddress()" class="search2"><img src="images/adress_search.png" alt="Chercher" /></button>
+        </div>
+        <div class="find find2">
+            <span>Géolocalisez-vous</span>
+            <button ng-click="geolocateMarker()" class="search1">Géolocalisez-vous </button>
+        </div>
+        <div class="find find3">
+            <span>Placer le point sur la carte</span>
+            <em>Déplacez le point à l'endroit souhaité sur la carte.</em>
+        </div>
+        <div class="adress-block">
+         {{ marker.position.address }}
+        </div>
+        <button ng-disabled="!marker.position.coordinates" ng-click="submitForm()" class="valid">Valider la position</button>
+    </div>
+  </section>
+
+
+  <!-- category -->
+  <section id="add-block-2" class="add-panel-block" ng-show="selected==2" data-ng-animate="'wave'">
+    <h1>    
+      <img src="images/steps/2.png" alt="2/4" />
+      <strong>Qualifiez<br />  votre point d'intérêt</strong>
+      <span>Séléctionnez la nature du point<br /> dans les listes ci-dessous</span>
+    </h1>
+    <div class="content-tabs">
+        <ul class="tabs">
+            <li class="active"><a href="#points-list">Les plus utilisés</a></li>
+            <li><a href="#">Tous les points</a></li>
+        </ul>
+        <!-- BLOC POINTS FREQUENTS -->
+        <div class="points-list">
+          <div ng-show="is_marker_categories_loaded">
+            <div class="inner">
+              <ul>
+                <li ng-repeat="cat in marker_categories" class="category">
+                  <input type="radio" name="category" ng-click="$parent.$parent.wizardStep = wizardSteps[1]" ng-model="marker.category" ng-value="{{ cat.id }}" id="cat{{ cat.id }}" />
+                  <label for="cat{{cat.id}}">{{ cat.name }}</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- BLOC POINTS PAR CATEGORIES -->
+        <div class="points-list-categ" style="display:none">
+          <ul ng-show="is_marker_categories_loaded">
+            <li class="categ">
+              <div class="top">Intêret</div>
+              <div class="inner">
+                <ul>
+                  <li ng-repeat="cat in marker_categories" class="category">
+                    <input type="radio" name="category" ng-click="$parent.$parent.wizardStep = wizardSteps[1]" ng-model="marker.category" ng-value="{{ cat.id }}" id="cat{{ cat.id }}" />
+                    <label for="cat{{cat.id}}">{{ cat.name }}</label>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+    </div>
+  </section>
 
   <!-- picture -->
-  <section id="add-block-2" class="add-panel-block" ng-switch-when="picture">
-    <div class="disabled-overlay">&nbsp;</div>
+  <section id="add-block-3" class="add-panel-block" ng-show="selected==3" data-ng-animate="'wave'">
     <h1>    
-      <img src="images/steps/2w.png" alt="2/4" />
-      <span>Ajouter votre<br /> photo ou vidéo</span>
+      <img src="images/steps/3.png" alt="3/4" />
+      <strong>Ajoutez<br />  une photo ou vidéo</strong>
+      <span>Prenez une photo / vidéo ou sélectionnez-en une<br /> dans votre répertoire</span>
     </h1>
 
     <!-- picture upload -->
@@ -47,9 +134,9 @@
 	  </li>
         </ul>
       </div>
-      <div class="skippy">
-	<button ng-click="$parent.wizardStep = wizardSteps[2]">Passer cette étape</button>
-      </div>
+      <!--<div class="skippy">
+	        <button ng-click="$parent.wizardStep = wizardSteps[2]">Passer cette étape</button>
+      </div>-->
     </div>
 
     <!-- picture preview -->
@@ -58,7 +145,6 @@
           <img ng-src="{{uploads.picture.resized.dataURL}}" id="selected-photo" alt="preview" />
         </div>
         <button ng-click="pictureDelete()" class="trash"><img src="images/trash_bt.png" alt="effacer" /></button>
-        <button ng-click="$parent.wizardStep = wizardSteps[2]" class="accept">Valider</button>
     </div>
 
     <!-- picture being taken -->
@@ -73,42 +159,19 @@
   </section>
 
   <!-- info -->
-  <section id="add-block-3" class="add-panel-block" ng-switch-when="info">
-    <div class="disabled-overlay">&nbsp;</div>
+  <section id="add-block-4" class="add-panel-block" ng-show="selected==4" data-ng-animate="'wave'">
     <h1>    
-      <img src="images/steps/3.png" alt="3/4" />
-      <span>Entrez votre<br /> titre et description</span>
+      <img src="images/steps/4.png" alt="4/4" />
+      <strong>Entrez<br />  votre description</strong>
+      <span>Donnez un titre à votre point d'intérêt et entrez <br />votre description</span>
     </h1>
     <div class="info-form">
       <ng-form name="infoForm">
         <input type="text" name="title" ng-model="marker.title" placeholder="Titre de votre poi ..." required/>
         <textarea name="desc" ng-model="marker.description" placeholder="Description de votre poi" required></textarea>
-        <button ng-click="$parent.wizardStep = wizardSteps[3]" ng-disabled="!infoForm.$valid" class="locate">Localiser votre Poi</button>
+        <button ng-click="$parent.wizardStep = wizardSteps[3]" ng-disabled="!infoForm.$valid" class="locate">Finaliser le point</button>
       </ng-form>
 
-    </div>
-  </section>
-
-
-  <!-- location -->
-  <section id="add-block-4" class="add-panel-block" ng-switch-when="location">
-    <div class="disabled-overlay">&nbsp;</div>
-    <h1>    
-      <img src="images/steps/4.png" alt="4/4" />
-      <span>Localisez<br /> votre Point</span>
-    </h1>
-    <div class="adress-form">
-      <div class="adress-find">
-        <div class="find1">Entrez l'adresse</div> <span>ou</span>
-        <div class="find3">Géolocalisez-vous</div><span>ou</span>
-        <div class="find2">Déplacez le point</div> 
-      </div>
-        <p>
-          <button ng-click="geolocateMarker()" class="search1"><img src="images/adress_field_left.png" alt="geoloc" /></button>
-          <input type="text" name="address" ng-model="marker.position.address" placeholder="Adresse du point ..." />
-          <button ng-click="lookupAddress()" class="search2"><img src="images/adress_search.png" alt="Chercher" /></button>
-        </p>
-        <button ng-disabled="!marker.position.coordinates" ng-click="submitForm()" class="valid">Valider la position</button>
     </div>
   </section>
 

@@ -1,6 +1,6 @@
 config = {
     templateBaseUrl: '/views/',
-    REST_URI: 'http://localhost\\:8000/api/'
+    REST_URI: 'http://carpe.local\\:8000/api/'
 }
 
 angular.module('map', ['map.controllers', 'map.services', 'leaflet-directive']);
