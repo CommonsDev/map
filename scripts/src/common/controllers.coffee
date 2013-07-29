@@ -28,9 +28,8 @@ class LoginCtrl
                 @$scope.submit = this.submit
 
         submit: =>
-                console.debug('submitting login like a mofo')
-                console.debug("#{@$rootScope.CONFIG.REST_URI}account/v0/user/login/")
-                @$http.post("http://carpe.local:8000/account/v0/user/login/", JSON.stringify( # XXX HARDCODED
+                console.debug('submitting login...')
+                @$http.post("http://carpe.local:8000/api/account/v0/user/login/", JSON.stringify( # XXX HARDCODED
                         username: @$scope.username
                         password: @$scope.password
                 )).success((data) =>
