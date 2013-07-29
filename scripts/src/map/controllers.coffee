@@ -83,7 +83,8 @@ class MapMarkerNewCtrl
                         "location"
                 ]
 
-                @$scope.wizardStep = @$scope.wizardSteps[0]
+                @$scope.wizard =
+                    step: 1
 
                 @$scope.captureInProgress = false
                 @$scope.previewInProgress = false

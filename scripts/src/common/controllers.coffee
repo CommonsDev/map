@@ -4,7 +4,7 @@ class LoginCtrl
         """
         Login a user
         """
-        constructor: (@$scope, @$http, @$cookies, @authService) ->
+        constructor: (@$scope, @$rootScope, @$http, @$cookies, @authService) ->
                 # set authorization header if already logged in
                 if @$cookies.username and @$cookies.key
                         console.debug("Already logged in.")
@@ -28,7 +28,9 @@ class LoginCtrl
                 @$scope.submit = this.submit
 
         submit: =>
-                @$http.post('http://localhost:8000/api/account/v0/user/login/', JSON.stringify( # XXX HARDCODED
+                console.debug('submitting login like a mofo')
+                console.debug("#{@$rootScope.CONFIG.REST_URI}account/v0/user/login/")
+                @$http.post("http://carpe.local:8000/account/v0/user/login/", JSON.stringify( # XXX HARDCODED
                         username: @$scope.username
                         password: @$scope.password
                 )).success((data) =>
@@ -41,6 +43,6 @@ class LoginCtrl
                         @$scope.errorMsg = data.reason
                 )
 
-LoginCtrl.$inject = ['$scope', "$http", "$cookies", "authService"]
+LoginCtrl.$inject = ['$scope', '$rootScope', "$http", "$cookies", "authService"]
 
 module.controller("LoginCtrl", LoginCtrl)

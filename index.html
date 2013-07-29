@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" ng-app="gup">
+<html ng-app="gup">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -113,11 +113,11 @@
 	    
 
         </div>
-        <div id="wrap-login" ng-show="loginrequired">
+        <div ng-controller="LoginCtrl" id="wrap-login" ng-show="loginrequired">
             <div id="inner-login">
                 <div class="left">
                     <div class="title">Entrez votre identifiant pour vous connecter</div>
-            		<form name="loginForm" ng-submit="submit()" ng-controller="LoginCtrl">
+            		<form name="loginForm">
                       <p>
                           <label for="login-field">Email</label>
             		      <input id="login-field" type="text" ng-model="username" placeholder="Votre ou numéro machin..." required>
@@ -126,7 +126,7 @@
                           <label for="pass-field">Password</label>
             		      <input id="pass-field" type="password" ng-model="password" placeholder="Votre mot de passe..." required>
                       </p>
-            		  <button class="submit">Login</button>
+            		  <button ng-click="submit()" class="submit">Login</button>
                       <a class="forgotten" href="#">Mot de passe oublié ?</a>
             		</form>
                 </div>
