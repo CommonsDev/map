@@ -1,7 +1,7 @@
 services = angular.module('map.services', ['ngResource'])
 
 class MapService
-        constructor: (@Map) ->
+        constructor: (@$compile, @Map) ->
                 @icon = L.icon({
                         iconUrl: '/images/pointer.png'
                         shadowUrl: null,
@@ -47,7 +47,7 @@ class MapService
                 delete @markers[name]
 
 
-        load: (slug) =>
+        load: (slug, scope) =>
                 @map = @Map.get({slug: slug}, (aMap, getResponseHeaders) =>
                         # Locate user using HTML5 Api or use map center
                         if aMap.locate
@@ -77,20 +77,21 @@ class MapService
 
                                 # Add its markers
                                 for marker in layer.markers
+                                        html = "<a href='#/marker/detail/#{marker.id}'>#{marker.title}</a>"
                                         this.addMarker(marker.id,
-                                                href: "/marker/detail/#{ marker.id }"
+                                                message: html
                                                 lat: marker.position.coordinates[0]
                                                 lng: marker.position.coordinates[1]
-                                        )
+                                                )
 
                 )
 
 
 
 # Services
-services.factory('MapService', ['Map', (Map) ->
+services.factory('MapService', ['$compile', 'Map', ($compile, Map) ->
         console.debug('constructing new map srv')
-        return new MapService(Map)
+        return new MapService($compile, Map)
 ])
 
 # Models

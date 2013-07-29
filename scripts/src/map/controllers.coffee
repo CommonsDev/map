@@ -5,7 +5,7 @@ class MapDetailCtrl
                 @$scope.MapService = @MapService
 
                 # XXX: move that
-                @MapService.load("amap")
+                @MapService.load("amap", @$scope)
 
 
 class MapNewCtrl
