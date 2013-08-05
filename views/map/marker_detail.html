@@ -1,10 +1,6 @@
 <article>
-  <section class="card" ng-show="!isLoading">
+  <section class="card active" ng-show="!isLoading">
     <header>
-      <a href="javascript:void(0)" class="card-like" title="je supporte"><img src="/images/card_like.png" alt="support" /></a>
-      <div class="minipic">
-          <img height="184" width="248" ng-src="{{ MEDIA_URI }}{{ marker.picture }}" alt="{{ marker.title }}"/>
-      </div>
       <div class="bigpic">
         <img ng-src="{{ MEDIA_URI }}{{ marker.picture }}" height="282" width="378" alt="{{ marker.title }}"/>
       </div>
@@ -15,8 +11,6 @@
       </div>
     </header>
     <div class="inner">
-      <span class="date">{{ marker.created_on | fromNow }}</span>
-      <h1>{{ marker.title }}</h1>
       <p>
         Grand place, centre ville <br />
         59000 Lille.
@@ -28,11 +22,6 @@
       </ul>
     </div>
     <footer>
-      <ul class="icons">
-        <li class="supports" title="29 supports">29</li>
-        <li class="comments" title="12 commentaires">12</li>
-        <li class="polls" title="2 sondages">2</li>
-      </ul>
       <div class="supports-list">
         <span>4 supports</span>
         <ul>
@@ -54,9 +43,9 @@
           </p>
         </div>
       </section>
-      <section class="forum">
+      <!-- <section class="forum">
         <img src="/images/_TEMP/forum.jpg" alt="" />
-      </section>
+      </section> -->
     </div>
   </div>
 </article>

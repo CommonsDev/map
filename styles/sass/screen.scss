@@ -34,6 +34,14 @@ button {
 	}
 }
 
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+    border: none;
+}
+
 /* ============= PAGE ============= */
 
 #page {
@@ -72,6 +80,7 @@ div#background-map {
 		font-size:0.7rem;
 		text-decoration:none;
 		line-height:125px;
+		outline:0 !important;
 
 		&:hover {
 			color:#85c9fa;
@@ -121,6 +130,20 @@ div#background-map {
 		}
 	}
 
+	li.itemuser {
+		position:absolute;
+		bottom:0;
+		left:0;
+
+		a { 
+			background:image-url('toolbar/ico_account.png') no-repeat center 15px;
+
+			&:hover {
+				background:image-url('toolbar/ico_account_active.png') no-repeat center 15px;
+			}
+		}
+	}
+
 	li.temp a {
 		height:20px;
 		line-height:20px;
@@ -151,13 +174,15 @@ div.marker {
 .card {	
 	width:248px;
 	position:absolute;
-	top:-50px;
+	top:0;
 	left:140px;
 	z-index:1000;
 
 	&.active {
 		top:0;
 		width:378px;
+		height:100%;
+		min-height:100%;
 
 		header {
 			height:282px;
@@ -189,10 +214,18 @@ div.marker {
 				font-size:0.9rem;
 				margin-top:15px;
 			}
+
+			.social {
+				display:block;
+			}
 		}
 
 		footer {
-			height:135px;
+			bottom: 0;
+		    height: 135px;
+		    left: 0;
+		    position: absolute;
+		    width: 100%;
 
 			.icons {
 				display:none;
@@ -202,7 +235,7 @@ div.marker {
 				display:block;
 
 				li {
-					display:none;
+					display:block;
 				}
 			}
 		}
@@ -387,8 +420,8 @@ div.marker {
 	z-index:1000;
 	position:absolute;
 	overflow:hidden;
-	/*height:100%;
-	min-height:100%;*/
+	height:100%;
+	min-height:100%;
 	display: none;
 
 	.slidee {
@@ -426,6 +459,12 @@ div.marker {
 		background:white;
 		padding:20px;
 	}
+}
+
+.card.active ~ .widgets {
+	left:518px;
+	top:0;
+	display:block;
 }
 
 
@@ -473,15 +512,17 @@ body > footer {
 	height:100%;
 	min-height:100%;
 	position:fixed;
-	width:548px;
+	width:510px;
 	top:0;
 	right:0;
+	background:rgba(255,255,255,1);
+	overflow:hidden;
 	@include box-shadow(3px 0px 10px #666);
 }
 
 #intercalar {
 	position:absolute;
-	left:0;
+	right:510px;
 	top:0;
 	height:100%;
 	min-height:100%;
@@ -976,7 +1017,7 @@ body > footer {
 		@include border-radius(5px);
 	}
 
-	button.locate {
+	button {
 		background:#f36b56;
 		display:block;
 		border:0;
@@ -994,25 +1035,26 @@ body > footer {
 
 // FIN PANEL - 4 DESCRIPTION
 
-.wave-hide, .wave-show {
-  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+.wave-enter, .wave-leave {
+  @include transition(all 0.3s ease);
 }
 
-.wave-hide {
-  opacity:1;
-}
-.wave-hide.wave-hide-active {
-  opacity:0;
+.wave-enter {
+  right:-510px !important;
+  z-index:1001 !important;
 }
 
-.wave-show {
-  opacity:0;
+.wave-enter-active {
+	right:0 !important;
+} 
+
+.wave-leave {
+  right:0 !important;
+  z-index:999 !important;
 }
-.wave-show.wave-show-active {
-  opacity:1;
+
+.wave-leave-active {
+  right:-510px !important;
 }
 
 
@@ -1206,6 +1248,7 @@ body > footer {
 		left:50%;
 		margin:0 -29px;
 		background:image-url('login/close.png') no-repeat top left;
+		outline:0;
 		text-indent:-9999em;
 	}
 }

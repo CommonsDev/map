@@ -1,25 +1,24 @@
 <!-- ADD disabled class on add-panel-block to activate the overlay -->
+<div id="intercalar" ng-switch="wizard.step">
+  <ul>
+    <li class="loc"><button title="Localisation" ng-click="wizard.step=1">1 : Localisation</button></li>
+    <li class="quali"><button title="Qualification" ng-disabled="!marker.position.coordinates" ng-click="wizard.step=2">2 : Qualification</button></li>
+    <li class="photo"><button title="Photo" ng-disabled="!marker.category" ng-click="wizard.step=3">3 : Photo</button></li>
+    <li class="desc"><button title="Description" ng-disabled="!marker.category" ng-click="wizard.step=4">4 : Description</button></li>
+  </ul>
+
+  <span class="caption" ng-switch-when="1">Localisez votre point d'intêret</span>
+  <span class="caption" ng-switch-when="2">Qualifiez votre point d'intêret</span>
+  <span class="caption" ng-switch-when="3">Ajoutez une photo ou vidéo</span>
+  <span class="caption" ng-switch-when="4">Entrez votre description</span>
+</div>
+
 <div id="add-panel">
-
   <ng-form name="new_marker_form">
-
-    <div id="intercalar" ng-switch="wizard.step">
-      <ul>
-        <li class="loc"><button title="Localisation" ng-click="wizard.step=1">1 : Localisation</button></li>
-        <li class="quali"><button title="Qualification" ng-disabled="!marker.position.coordinates" ng-click="wizard.step=2">2 : Qualification</button></li>
-        <li class="photo"><button title="Photo" ng-disabled="!marker.category" ng-click="wizard.step=3">3 : Photo</button></li>
-        <li class="desc"><button title="Description" ng-disabled="!marker.category" ng-click="wizard.step=4">4 : Description</button></li>
-      </ul>
-
-      <span class="caption" ng-switch-when="1">Localisez votre point d'intêret</span>
-      <span class="caption" ng-switch-when="2">Qualifiez votre point d'intêret</span>
-      <span class="caption" ng-switch-when="3">Ajoutez une photo ou vidéo</span>
-      <span class="caption" ng-switch-when="4">Entrez votre description</span>
-    </div>
   
-    <div ng-switch="wizard.step">
+    <div ng-switch="wizard.step" data-ng-animate="'wave'">
     <!-- location -->
-      <section id="add-block-1" class="add-panel-block" ng-switch-when="1" data-ng-animate="'wave'">
+      <section id="add-block-1" class="add-panel-block" ng-switch-when="1">
         <h1>    
           <img src="images/steps/1.png" alt="1/4" />
           <strong>Localisez<br /> votre Point d'intérêt</strong>
@@ -48,7 +47,7 @@
 
 
       <!-- category -->
-      <section id="add-block-2" class="add-panel-block" ng-switch-when="2" data-ng-animate="'wave'">
+      <section id="add-block-2" class="add-panel-block" ng-switch-when="2">
         <h1>    
           <img src="images/steps/2.png" alt="2/4" />
           <strong>Qualifiez<br />  votre point d'intérêt</strong>
@@ -92,7 +91,7 @@
       </section>
 
       <!-- picture -->
-      <section id="add-block-3" class="add-panel-block" ng-switch-when="3" data-ng-animate="'wave'">
+      <section id="add-block-3" class="add-panel-block" ng-switch-when="3">
         <h1>    
           <img src="images/steps/3.png" alt="3/4" />
           <strong>Ajoutez<br />  une photo ou vidéo</strong>
@@ -134,7 +133,7 @@
       </section>
 
       <!-- info -->
-      <section id="add-block-4" class="add-panel-block" ng-switch-when="4" data-ng-animate="'wave'">
+      <section id="add-block-4" class="add-panel-block" ng-switch-when="4">
         <h1>    
           <img src="images/steps/4.png" alt="4/4" />
           <strong>Entrez<br />  votre description</strong>

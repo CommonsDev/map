@@ -12,7 +12,7 @@ app = angular.module('gup', ['common', 'map']);
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
 
 app.config(['$locationProvider', '$routeProvider', 'moduleTemplateBaseUrl', function($locationProvider, $routeProvider, moduleTemplateBaseUrl){
-					   $locationProvider.html5Mode(true);
+					   $locationProvider.html5Mode(false);
 					   $routeProvider
 					       .when('/:slug', {
 						     })

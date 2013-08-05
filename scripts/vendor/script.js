@@ -13,8 +13,12 @@ $(document).ready(function(){
 		e.preventDefault();
 	});
 
+	wH = $(window).height();
+	wW = $(window).width();
+	$('.card.active .inner').height(wH - 308 - 135);
+
 	//CARD ACTIVE (FIXME: If only one can be active, shouldn't it be better to select it using its ID instead of class? //@glibersat)
-	$('.card .inner').click(function(){
+	/*$('.card .inner').click(function(){
 		card = $(this).parent('.card');
 		widgets = card.siblings('.widgets');
 
@@ -55,7 +59,7 @@ $(document).ready(function(){
 			easing: 'easeOutExpo'
 		}).init();
 
-		frame.on('change',function(){
+		/*frame.on('change',function(){
 			widgets.width(wW -card.width());
 			if(frame.pos.dest == 0) {
 				card.parents('.marker').animate({left:'20%'},500);
@@ -66,8 +70,8 @@ $(document).ready(function(){
 					widgets.width(wW -card.width() - offset.left); 
 				});
 			}
-		});
-	});
+		});*/
+	//});
 	//WINDOW RESIZE
 	$(window).resize(function(){
 		//$('.card').hide().removeClass('active');
