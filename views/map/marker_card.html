@@ -1,22 +1,24 @@
-<article>
-  <section class="card" ng-show="!isLoading">
+<article class="leaflet-popup" ng-show="!isLoading">
+  <section class="card">
     <header>
-      <a href="javascript:void(0)" class="card-like" title="je supporte"><img src="/images/card_like.png" alt="support" /></a>
+      <a href="javascript:void(0)" class="card-like" title="like"><img src="/images/card_like.png" alt="support" /></a>
       <div class="minipic">
-          <img height="184" width="248" ng-src="{{ MEDIA_URI }}{{ marker.picture }}" alt="{{ marker.title }}"/>
+        <img height="184" width="248" ng-src="{{ MEDIA_URI }}{{ marker.data.picture }}" alt="{{ marker.data.title }}"/>
       </div>
       <div class="author">
         <img src="/images/_TEMP/dave.png" alt="Dave" />
-        <em>{{ marker.created_by.username }}</em>
+        <em>{{ marker.data.created_by.username }}</em>
       </div>
     </header>
     <div class="inner">
-      <span class="date">{{ marker.created_on | fromNow }}</span>
-      <h1>{{ marker.title }}</h1>
-      <p>
-        Grand place, centre ville <br />
-        59000 Lille.
-      </p>
+      <a ng-href="#/marker/detail/{{ marker.data.id }}">
+	<span class="date">{{ marker.data.created_on | fromNow }}</span>
+	<h1>{{ marker.data.title }}</h1>
+	<p>
+          Grand place, centre ville <br />
+          59000 Lille.
+	</p>
+      </a>
     </div>
     <footer>
       <ul class="icons">
@@ -27,4 +29,4 @@
     </footer>
   </section>
 </article>
-<script src="/scripts/vendor/script.js">
+

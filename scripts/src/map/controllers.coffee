@@ -58,15 +58,15 @@ class MapMarkerNewCtrl
 
                 # Preview the next marker
                 @$scope.marker_preview =
-                        draggable: true
                         lat: @MapService.center.lat
                         lng: @MapService.center.lng
-                        attrs:
+                        options:
+                                draggable: true
                                 icon: L.icon(
                                         iconUrl: '/images/poi_localisation.png'
                                         shadowUrl: null,
-                                        iconSize: new L.Point(65, 75)
-                                        iconAnchor: new L.Point(4, 37)
+                                        iconSize: [65, 75]
+                                        iconAnchor: [4, 37]
                                 )
 
                 @MapService.addMarker('marker_preview', @$scope.marker_preview)
@@ -76,13 +76,6 @@ class MapMarkerNewCtrl
                 # this.geolocateMarker()
 
                 # Wizard Steps
-                @$scope.wizardSteps = [
-                        "category",
-                        "picture",
-                        "info",
-                        "location"
-                ]
-
                 @$scope.wizard =
                     step: 1
 
@@ -132,9 +125,9 @@ class MapMarkerNewCtrl
 
                         # Create new marker
                         @MapService.addMarker(marker.id,
-                                href: "/marker/detail/#{ marker.id }"
                                 lat: marker.position.coordinates[0]
                                 lng: marker.position.coordinates[1]
+                                data: marker
                         )
 
                         @$location.path("/")

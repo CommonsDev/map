@@ -5,8 +5,8 @@ class MapService
                 @icon = L.icon({
                         iconUrl: '/images/pointer.png'
                         shadowUrl: null,
-                        iconSize: new L.Point(61, 61)
-                        iconAnchor: new L.Point(4, 56)
+                        iconSize: [61, 61]
+                        iconAnchor: [4, 56]
                 })
 
                 @markers = {}
@@ -32,10 +32,10 @@ class MapService
                 Given marker data, add it
                 """
                 console.debug("adding marker #{name}...")
-                if not aMarker.attrs
-                        aMarker.attrs = {}
-                if not aMarker.attrs.icon
-                        aMarker.attrs.icon = @icon
+                if not aMarker.options
+                        aMarker.options = {}
+                if not aMarker.options.icon
+                        aMarker.options.icon = @icon
 
                 @markers[name] = aMarker
 
@@ -77,12 +77,11 @@ class MapService
 
                                 # Add its markers
                                 for marker in layer.markers
-                                        html = "<a href='#/marker/detail/#{marker.id}'>#{marker.title}</a>"
                                         this.addMarker(marker.id,
-                                                message: html
                                                 lat: marker.position.coordinates[0]
                                                 lng: marker.position.coordinates[1]
-                                                )
+                                                data: marker
+                                        )
 
                 )
 
