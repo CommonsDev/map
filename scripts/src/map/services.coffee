@@ -1,7 +1,7 @@
 services = angular.module('map.services', ['ngResource'])
 
 class MapService
-        constructor: (@$compile, @Map) ->
+        constructor: (@$compile, @Restangular) ->
                 @icon = L.icon({
                         iconUrl: '/images/pointer.png'
                         shadowUrl: null,
@@ -48,7 +48,7 @@ class MapService
 
 
         load: (slug, scope) =>
-                @map = @Map.get({slug: slug}, (aMap, getResponseHeaders) =>
+                @map = @Restangular.one('scout/map', slug).get().then((aMap) =>
                         # Locate user using HTML5 Api or use map center
                         if aMap.locate
                                 # @geolocation.watchPosition()
@@ -88,20 +88,7 @@ class MapService
 
 
 # Services
-services.factory('MapService', ['$compile', 'Map', ($compile, Map) ->
+services.factory('MapService', ['$compile', 'Restangular', ($compile, Restangular) ->
         console.debug('constructing new map srv')
-        return new MapService($compile, Map)
-])
-
-# Models
-services.factory('Map', ['$resource', '$rootScope', ($resource, $rootScope) ->
-        return $resource("#{$rootScope.CONFIG.REST_URI}scout/v0/map/:slug?format=json", {slug: "@slug"})
-])
-
-services.factory('Marker', ['$resource', '$rootScope', ($resource, $rootScope) ->
-        return $resource("#{$rootScope.CONFIG.REST_URI}scout/v0/marker/:markerId?format=json", {markerId: "@id"})
-])
-
-services.factory('MarkerCategory', ['$resource', '$rootScope', ($resource, $rootScope) ->
-        return $resource("#{$rootScope.CONFIG.REST_URI}scout/v0/marker_category/?format=json")
+        return new MapService($compile, Restangular)
 ])

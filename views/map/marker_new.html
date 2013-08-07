@@ -27,7 +27,7 @@
         <div class="adress-form">
             <div class="find find1">
               <label for="adress-field">Entrez l'adresse</label>
-              <input type="text" name="address" ng-model="marker.position.address" placeholder="Adresse du point ..." />
+              <input type="text" name="address" ng-model="marker.address" placeholder="Adresse du point ..." />
               <button ng-click="lookupAddress()" class="search2"><img src="images/adress_search.png" alt="Chercher" /></button>
             </div>
             <div class="find find2">
@@ -39,7 +39,7 @@
                 <em>Déplacez le point à l'endroit souhaité sur la carte.</em>
             </div>
             <div class="adress-block">
-             {{ marker.position.address }}
+             {{ marker.address }}
             </div>
             <button ng-disabled="!marker.position.coordinates" ng-click="wizard.step=2" class="valid">Valider la position</button>
         </div>

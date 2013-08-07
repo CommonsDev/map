@@ -87,32 +87,6 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
               )
 
 
-            if attrs.markers isnt `undefined`
-              markers_dict = []
-              createAndLinkMarker = (mkey, $scope) ->
-                markerData = $scope.markers[mkey]
-                marker = new L.marker($scope.markers[mkey], markerData.attrs)
-
-                if markerData.href
-                  marker.on('click', =>
-                    $location.path(markerData.href)
-                    $scope.$apply()
-                  )
-
-
-                if markerData.message
-                  $scope.$watch("markers." + mkey + ".message", (newValue) ->
-                    marker.bindPopup(markerData.message)
-                  )
-
-                # Focus
-                $scope.$watch("markers." + mkey + ".focus", (newValue) ->
-                  if newValue
-                    if markerData.callback
-                      markerData.callback(marker, markerData)
-                    else if markerData.message
-                      marker.openPopup()
-                )
 
                 $scope.$watch("markers." + mkey + ".draggable", (newValue, oldValue) ->
                   if newValue is false
@@ -120,31 +94,6 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                   else if newValue is true
                     marker.dragging.enable()
                 )
-
-                # Dragging events
-                dragging_marker = false
-
-
-                return marker
-
-              # end of create and link marker
-
-              # Marker watches
-              $scope.$watch("markers", ((newMarkerList) ->
-                # find deleted markers
-                for delkey of markers_dict
-                  unless $scope.markers[delkey]
-                    map.removeLayer(markers_dict[delkey])
-                    delete markers_dict[delkey]
-
-                # add new markers
-                for mkey of $scope.markers
-                  if markers_dict[mkey] is `undefined`
-                    marker = createAndLinkMarker(mkey, $scope)
-                    map.addLayer(marker)
-                    markers_dict[mkey] = marker
-                ), true
-              )
 
 
             if attrs.path
