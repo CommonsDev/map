@@ -38,7 +38,6 @@
       }
  
       function error(response) {
-	  console.debug("login required?");
         if (response.status === 401 && !response.config.ignoreAuthModule) {
           var deferred = $q.defer();
           httpBuffer.append(response.config, deferred);

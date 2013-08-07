@@ -1,0 +1,60 @@
+<!-- Définition des masques svg pour les illustrations -->
+<svg height="184" width="248" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <mask id="mask1">
+    <image width="248" height="184" xlink:href="images/mask.png"></image>
+  </mask>
+</svg>
+<!--
+    <svg height="282" width="378" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+      <mask id="mask2">
+        <image width="378" height="282" xlink:href="images/mask_big.png"></image>
+      </mask>
+    </svg>-->
+
+
+<!-- Fin de définition -->
+
+<!-- background map -->
+<div>
+  <leaflet center="MapService.center" tilelayers="MapService.tilelayers" id="background-map">
+    <div ng-repeat="marker in MapService.markers">
+      <leaflet-marker marker="marker">
+	<div ng-include src="'views/map/marker_card.html'"></div>
+      </leaflet-marker>
+    </div>
+  </leaflet>
+  
+</div>
+
+<!-- left sidebar -->
+<div id="toolbar">
+  <ul>
+    <li class="item1"><a href="#/{{ $stateParams.slug }}">Accueil</a></li>
+    <li class="item2"><a href="#/{{ $stateParams.slug }}/marker/new">Ajouter</a></li>
+    <!--
+    <li class="item3"><a href="#">Rechercher</a></li>
+    <li class="item4"><a href="#">Sélection</a></li>
+    <li class="item5"><a href="#">Discussions</a></li>
+    -->
+  </ul>
+</div>
+
+<!-- overlay panel app -->
+<div id="overlay-panel" ui-view>
+</div>
+
+
+<!-- right sidebar -->
+<!--
+    <div id="sidebar">
+      <section id="default-panel">
+    	<h1>MAP</h1>
+    	<div class="actions">
+    	  <a href="/marker/detail/1">Signaler un problème</a>
+    	  <a href="/marker/new">Ajouter un point d'intêret</a>
+    	</div>
+
+      </section>
+    </div>
+    -->
+
