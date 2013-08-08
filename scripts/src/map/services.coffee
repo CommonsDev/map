@@ -1,4 +1,4 @@
-services = angular.module('map.services', ['ngResource'])
+services = angular.module('map.services', ['restangular'])
 
 class MapService
         constructor: (@$compile, @Restangular) ->
@@ -21,6 +21,8 @@ class MapService
                                 attrs:
                                         zoom: 12
 
+                @map = null
+
         getCurrentLayer: =>
                 """
                 Return the current map layer
@@ -31,7 +33,7 @@ class MapService
                 """
                 Given marker data, add it
                 """
-                console.debug("adding marker #{name}...")
+                # console.debug("adding marker #{name}...")
                 if not aMarker.options
                         aMarker.options = {}
                 if not aMarker.options.icon
@@ -48,7 +50,9 @@ class MapService
 
 
         load: (slug, scope) =>
-                @map = @Restangular.one('scout/map', slug).get().then((aMap) =>
+                @Restangular.one('scout/map', slug).get().then((aMap) =>
+                        @map = aMap
+
                         # Locate user using HTML5 Api or use map center
                         if aMap.locate
                                 # @geolocation.watchPosition()

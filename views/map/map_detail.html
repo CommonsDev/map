@@ -29,8 +29,8 @@
 <!-- left sidebar -->
 <div id="toolbar">
   <ul>
-    <li class="item1"><a href="#/{{ $stateParams.slug }}">Accueil</a></li>
-    <li class="item2"><a href="#/{{ $stateParams.slug }}/marker/new">Ajouter</a></li>
+    <li class="item1"><button ng-click="goHome()">Accueil</button></li>
+    <li class="item2"><button ng-click="goMarkerNew()">Ajouter</button></li>
     <!--
     <li class="item3"><a href="#">Rechercher</a></li>
     <li class="item4"><a href="#">Sélection</a></li>

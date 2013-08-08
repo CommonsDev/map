@@ -11,7 +11,7 @@
       </div>
     </header>
     <div class="inner">
-      <a ng-href="#/marker/{{ marker.data.id }}">
+      <a ng-href="#/{{ $stateParams.slug }}/marker/{{ marker.data.id }}">
 	<span class="date">{{ marker.data.created_on | fromNow }}</span>
 	<h1>{{ marker.data.title }}</h1>
 	<p>

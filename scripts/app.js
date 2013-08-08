@@ -5,13 +5,26 @@ config = {
 angular.module('map', ['map.controllers', 'map.services', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
 
-app = angular.module('unisson_map', ['common', 'map', 'restangular', 'ui.state']);
+app = angular.module('unisson_map', ['common', 'map', 'ui.state']);
 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
 
 app.config(function(RestangularProvider) {
-	       RestangularProvider.setBaseUrl("http://carpe.local\\:8000/api/v0");
+	       RestangularProvider.setBaseUrl("http://carpe.local:8000/api/v0");
+
+	       /* Tastypie patch */
+	       RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
+							    var newResponse;
+							    if (operation === "getList") {
+								newResponse = response.objects;
+								newResponse.metadata = response.meta;
+							    } else {
+								newResponse = response;
+							    }
+							    return newResponse;
+							});
+
 	   });
 
 app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'moduleTemplateBaseUrl', 

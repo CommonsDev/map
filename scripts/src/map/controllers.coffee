@@ -1,16 +1,37 @@
-module = angular.module('map.controllers', ['imageupload'])
+module = angular.module('map.controllers', ['imageupload', 'restangular'])
 
 class MapDetailCtrl
-        constructor: (@$scope, @$stateParams, @MapService, @geolocation) ->
+        """
+        Base controller for interacting with a map
+        """
+        constructor: (@$scope, @$stateParams, @$location, @MapService, @geolocation) ->
                 @$scope.MapService = @MapService
                 @$scope.$stateParams = @$stateParams
 
                 # Load map once the page has loaded
                 console.debug("loading map...")
-                @MapService.load(@$stateParams.slug, @$scope)
+                if @$stateParams.slug
+                        @MapService.load(@$stateParams.slug, @$scope)
+
+                @$scope.goMarkerNew = this.goMarkerNew
+                @$scope.goHome = this.goHome
+                @$scope.goMarkerDetail = this.goMarkerDetail
+
+        goHome: =>
+                @$location.url("/#{@$stateParams.slug}")
+
+        goMarkerNew: =>
+                @$location.url("/#{@$stateParams.slug}/marker/new")
+
+        goMarkerDetail: =>
+                console.debug("go!")
+                @$location.url("/#{@$stateParams.slug}/marker/#{id}")
 
 
 class MapNewCtrl
+        """
+        Create a new map
+        """
         constructor: (@$scope, @$location, @Restangular) ->
                 @$scope.form =
                         name: ''
@@ -24,12 +45,18 @@ class MapNewCtrl
                 @$scope.create = this.create
 
         create: =>
+                """
+                Create a new map and redirect to the newly created map url
+                """
                 console.debug("creating map #{@$scope.form.name}")
                 @Restangular.all('scout/map').post(@$scope.form).then((map) =>
                         @$location.url("/#{map.slug}")
                 )
 
 class MapMarkerDetailCtrl
+        """
+        Show the full page of a given Marker
+        """
         constructor: (@$scope, @$routeParams, @Restangular) ->
                 @$scope.isLoading = true
 
@@ -41,6 +68,9 @@ class MapMarkerDetailCtrl
 
 
 class MapMarkerNewCtrl
+        """
+        Wizard to create a new marker
+        """
         constructor: (@$scope, @$rootScope, @debounce, @$location, @MapService, @Restangular, @geolocation) ->
                 width = 320
                 height = 240
@@ -231,11 +261,15 @@ class MapMarkerNewCtrl
                 """
                 When the marker was moved, update position and geocode
                 """
-                # Update marker position
-                console.debug("pos set @#{@$scope.marker.position.coordinates}")
-                @$scope.marker.position.coordinates = [@$scope.marker_preview.lat, @$scope.marker_preview.lng]
+                if (not @$scope.marker_preview.lat) or (not @$scope.marker_preview.lng)
+                        return
 
-                pro = @geolocation.resolveLatLng(@$scope.marker_preview.lat, @$scope.marker_preview.lng).then((address)=>
+                # Update marker position
+                @$scope.marker.position.coordinates = [@$scope.marker_preview.lat, @$scope.marker_preview.lng]
+                console.debug("pos set @#{@$scope.marker.position.coordinates}")
+
+                # Resolve lat/lng to a human readable address
+                pro = @geolocation.resolveLatLng(@$scope.marker_preview.lat, @$scope.marker_preview.lng).then((address) =>
                         console.debug("Found address match: #{address.formatted_address}")
                         @$scope.marker.address = angular.copy(address.formatted_address)
                 )
@@ -278,7 +312,7 @@ class MapMarkerNewCtrl
 
 
 # Controller declarations
-module.controller("MapDetailCtrl", ['$scope', '$stateParams', 'MapService', 'geolocation', MapDetailCtrl])
+module.controller("MapDetailCtrl", ['$scope', '$stateParams', '$location', 'MapService', 'geolocation', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', '$location', 'Restangular', MapNewCtrl])
 module.controller("MapMarkerDetailCtrl", ['$scope', '$stateParams', 'Restangular', MapMarkerDetailCtrl])
 module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$location', 'MapService', 'Restangular', 'geolocation', MapMarkerNewCtrl])
