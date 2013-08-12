@@ -5,7 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Map</title>
         <meta name="description" content="">
-        <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0, target-densitydpi=device-dpi" />
+        <meta content='True' name='HandheldFriendly' />
+        <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
 	<base href="/">
 
         <link href='http://fonts.googleapis.com/css?family=Raleway:400,500,600,700' rel='stylesheet' type='text/css'>
@@ -87,9 +88,10 @@
             <ul>
                 <li class="item1"><a href="#">Accueil</a></li>
                 <li class="item2"><a href="#/marker/new">Ajouter</a></li>
-                <li class="item3"><a href="#">Rechercher</a></li>
+                <!--<li class="item3"><a href="#">Rechercher</a></li>
                 <li class="item4"><a href="#">Sélection</a></li>
                 <li class="item5"><a href="#">Discussions</a></li>
+                <li class="itemuser"><a href="#">Mon compte</a></li>-->
             </ul>
         </div>
 
@@ -137,7 +139,8 @@
                         <li><button class="facebook">Facebook</button></li>
                     </ul>
                 </div>
-                <a href="javascript:void(0)" class="close">Fermer</a>
+                <a href="javascript:void(0)" ng-click="loginrequired=false" class="close">Fermer</a> 
+                <!-- TODO: changer cette méthode de fermeture de l'overlay -->
             </div>
         </div>
         <!--
