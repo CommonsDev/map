@@ -4,7 +4,7 @@ class LoginCtrl
         """
         Login a user
         """
-        constructor: (@$scope, @$rootScope, @$http, @$cookies, @authService) ->
+        constructor: (@$scope, @$rootScope, @$http, @Restangular, @$cookies, @authService) ->
                 # set authorization header if already logged in
                 if @$cookies.username and @$cookies.key
                         console.debug("Already logged in.")
@@ -29,19 +29,19 @@ class LoginCtrl
 
         submit: =>
                 console.debug('submitting login...')
-                @$http.post("http://carpe.local:8000/api/account/v0/user/login/", JSON.stringify( # XXX HARDCODED
-                        username: @$scope.username
-                        password: @$scope.password
-                )).success((data) =>
-                        @$cookies.username = data.username
-                        @$cookies.key = data.key
-                        @$http.defaults.headers.common['Authorization'] = "ApiKey #{data.username}:#{data.key}"
-                        @authService.loginConfirmed()
-                ).error((data) =>
-                        console.debug("LoginController submit error: #{data.reason}")
-                        @$scope.errorMsg = data.reason
+                @Restangular.all('account/user').customPOST("login", {}, {},
+                                username: @$scope.username
+                                password: @$scope.password
+                        ).then((data) =>
+                                @$cookies.username = data.username
+                                @$cookies.key = data.key
+                                @$http.defaults.headers.common['Authorization'] = "ApiKey #{data.username}:#{data.key}"
+                                @authService.loginConfirmed()
+                        , (data) =>
+                                console.debug("LoginController submit error: #{data.reason}")
+                                @$scope.errorMsg = data.reason
                 )
 
-LoginCtrl.$inject = ['$scope', '$rootScope', "$http", "$cookies", "authService"]
+LoginCtrl.$inject = ['$scope', '$rootScope', "$http", "Restangular", "$cookies", "authService"]
 
 module.controller("LoginCtrl", LoginCtrl)

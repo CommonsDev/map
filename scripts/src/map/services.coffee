@@ -1,12 +1,12 @@
-services = angular.module('map.services', ['ngResource'])
+services = angular.module('map.services', ['restangular'])
 
 class MapService
-        constructor: (@$compile, @Map) ->
+        constructor: (@$compile, @Restangular) ->
                 @icon = L.icon({
                         iconUrl: '/images/pointer.png'
                         shadowUrl: null,
-                        iconSize: new L.Point(61, 61)
-                        iconAnchor: new L.Point(4, 56)
+                        iconSize: [61, 61]
+                        iconAnchor: [4, 56]
                 })
 
                 @markers = {}
@@ -21,6 +21,8 @@ class MapService
                                 attrs:
                                         zoom: 12
 
+                @map = null
+
         getCurrentLayer: =>
                 """
                 Return the current map layer
@@ -31,11 +33,11 @@ class MapService
                 """
                 Given marker data, add it
                 """
-                console.debug("adding marker #{name}...")
-                if not aMarker.attrs
-                        aMarker.attrs = {}
-                if not aMarker.attrs.icon
-                        aMarker.attrs.icon = @icon
+                # console.debug("adding marker #{name}...")
+                if not aMarker.options
+                        aMarker.options = {}
+                if not aMarker.options.icon
+                        aMarker.options.icon = @icon
 
                 @markers[name] = aMarker
 
@@ -48,7 +50,9 @@ class MapService
 
 
         load: (slug, scope) =>
-                @map = @Map.get({slug: slug}, (aMap, getResponseHeaders) =>
+                @Restangular.one('scout/map', slug).get().then((aMap) =>
+                        @map = aMap
+
                         # Locate user using HTML5 Api or use map center
                         if aMap.locate
                                 # @geolocation.watchPosition()
@@ -77,32 +81,18 @@ class MapService
 
                                 # Add its markers
                                 for marker in layer.markers
-                                        html = "<a href='#/marker/detail/#{marker.id}'>#{marker.title}</a>"
                                         this.addMarker(marker.id,
-                                                message: html
                                                 lat: marker.position.coordinates[0]
                                                 lng: marker.position.coordinates[1]
-                                                )
+                                                data: marker
+                                        )
 
                 )
 
 
 
 # Services
-services.factory('MapService', ['$compile', 'Map', ($compile, Map) ->
+services.factory('MapService', ['$compile', 'Restangular', ($compile, Restangular) ->
         console.debug('constructing new map srv')
-        return new MapService($compile, Map)
-])
-
-# Models
-services.factory('Map', ['$resource', '$rootScope', ($resource, $rootScope) ->
-        return $resource("#{$rootScope.CONFIG.REST_URI}scout/v0/map/:slug?format=json", {slug: "@slug"})
-])
-
-services.factory('Marker', ['$resource', '$rootScope', ($resource, $rootScope) ->
-        return $resource("#{$rootScope.CONFIG.REST_URI}scout/v0/marker/:markerId?format=json", {markerId: "@id"})
-])
-
-services.factory('MarkerCategory', ['$resource', '$rootScope', ($resource, $rootScope) ->
-        return $resource("#{$rootScope.CONFIG.REST_URI}scout/v0/marker_category/?format=json")
+        return new MapService($compile, Restangular)
 ])

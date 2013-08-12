@@ -1,30 +1,77 @@
-module = angular.module('map.controllers', ['imageupload'])
+module = angular.module('map.controllers', ['imageupload', 'restangular'])
 
 class MapDetailCtrl
-        constructor: (@$scope, @$routeParams, @MapService, @Map, @geolocation) ->
+        """
+        Base controller for interacting with a map
+        """
+        constructor: (@$scope, @$stateParams, @$location, @MapService, @geolocation) ->
                 @$scope.MapService = @MapService
+                @$scope.$stateParams = @$stateParams
 
-                # XXX: move that
-                @MapService.load("amap", @$scope)
+                # Load map once the page has loaded
+                console.debug("loading map...")
+                if @$stateParams.slug
+                        @MapService.load(@$stateParams.slug, @$scope)
+
+                @$scope.goMarkerNew = this.goMarkerNew
+                @$scope.goHome = this.goHome
+                @$scope.goMarkerDetail = this.goMarkerDetail
+
+        goHome: =>
+                @$location.url("/#{@$stateParams.slug}")
+
+        goMarkerNew: =>
+                @$location.url("/#{@$stateParams.slug}/marker/new")
+
+        goMarkerDetail: =>
+                console.debug("go!")
+                @$location.url("/#{@$stateParams.slug}/marker/#{id}")
 
 
 class MapNewCtrl
-        constructor: (@$scope, @Map) ->
-                null
+        """
+        Create a new map
+        """
+        constructor: (@$scope, @$location, @Restangular) ->
+                @$scope.form =
+                        name: ''
+                        center:
+                                coordinates: [0, 0]
+                                type: 'Point'
+                        tile_layers: [
+                                {pk: 1}
+                        ]
 
+                @$scope.create = this.create
+
+        create: =>
+                """
+                Create a new map and redirect to the newly created map url
+                """
+                console.debug("creating map #{@$scope.form.name}")
+                @Restangular.all('scout/map').post(@$scope.form).then((map) =>
+                        @$location.url("/#{map.slug}")
+                )
 
 class MapMarkerDetailCtrl
-        constructor: (@$scope, @$routeParams, @Marker) ->
+        """
+        Show the full page of a given Marker
+        """
+        constructor: (@$scope, @$routeParams, @Restangular) ->
                 @$scope.isLoading = true
 
-                @$scope.marker = @Marker.get({markerId: @$routeParams.markerId}, (aMarker, getResponseHeaders) =>
+                @Restangular.one('scout/marker', @$routeParams.markerId).get().then((marker) =>
                         console.debug("marker loaded")
+                        @$scope.marker = angular.copy(marker)
                         @$scope.isLoading = false
                 )
 
 
 class MapMarkerNewCtrl
-        constructor: (@$scope, @$rootScope, @debounce, @$location, @MapService, @Marker, @MarkerCategory, @geolocation) ->
+        """
+        Wizard to create a new marker
+        """
+        constructor: (@$scope, @$rootScope, @debounce, @$location, @MapService, @Restangular, @geolocation) ->
                 width = 320
                 height = 240
 
@@ -44,29 +91,30 @@ class MapMarkerNewCtrl
 
                 # Load marker categories
                 @$scope.is_marker_categories_loaded = false
-                @$scope.marker_categories = @MarkerCategory.query((categories, getResponseHeaders) =>
+                @Restangular.all("scout/marker_category").getList().then((categories) =>
+                        @$scope.marker_categories = angular.copy(categories)
                         @$scope.is_marker_categories_loaded = true
                 )
 
                 @$scope.uploads = {}
 
                 # The new marker we'll submit if everything is OK
-                @$scope.marker = new @Marker()
+                @$scope.marker = {}
                 @$scope.marker.position =
                         coordinates: null
                         type: "Point"
 
                 # Preview the next marker
                 @$scope.marker_preview =
-                        draggable: true
                         lat: @MapService.center.lat
                         lng: @MapService.center.lng
-                        attrs:
+                        options:
+                                draggable: true
                                 icon: L.icon(
                                         iconUrl: '/images/poi_localisation.png'
                                         shadowUrl: null,
-                                        iconSize: new L.Point(65, 75)
-                                        iconAnchor: new L.Point(4, 37)
+                                        iconSize: [65, 75]
+                                        iconAnchor: [4, 37]
                                 )
 
                 @MapService.addMarker('marker_preview', @$scope.marker_preview)
@@ -76,13 +124,6 @@ class MapMarkerNewCtrl
                 # this.geolocateMarker()
 
                 # Wizard Steps
-                @$scope.wizardSteps = [
-                        "category",
-                        "picture",
-                        "info",
-                        "location"
-                ]
-
                 @$scope.wizard =
                     step: 1
 
@@ -124,7 +165,9 @@ class MapMarkerNewCtrl
                                 content_type: @$scope.uploads.picture.file.type
 
                 # Now save the marker
-                @$scope.marker.$save((marker) =>
+                console.debug("saving...")
+                console.debug(@$scope.marker)
+                @Restangular.all('scout/marker').post(@$scope.marker).then((marker) =>
                         console.debug("new marker saved")
 
                         # Delete temp marker
@@ -132,9 +175,9 @@ class MapMarkerNewCtrl
 
                         # Create new marker
                         @MapService.addMarker(marker.id,
-                                href: "/marker/detail/#{ marker.id }"
                                 lat: marker.position.coordinates[0]
                                 lng: marker.position.coordinates[1]
+                                data: angular.copy(marker)
                         )
 
                         @$location.path("/")
@@ -218,13 +261,17 @@ class MapMarkerNewCtrl
                 """
                 When the marker was moved, update position and geocode
                 """
-                # Update marker position
-                console.debug("pos set @#{@$scope.marker.position.coordinates}")
-                @$scope.marker.position.coordinates = [@$scope.marker_preview.lat, @$scope.marker_preview.lng]
+                if (not @$scope.marker_preview.lat) or (not @$scope.marker_preview.lng)
+                        return
 
-                pro = @geolocation.resolveLatLng(@$scope.marker_preview.lat, @$scope.marker_preview.lng).then((address)=>
+                # Update marker position
+                @$scope.marker.position.coordinates = [@$scope.marker_preview.lat, @$scope.marker_preview.lng]
+                console.debug("pos set @#{@$scope.marker.position.coordinates}")
+
+                # Resolve lat/lng to a human readable address
+                pro = @geolocation.resolveLatLng(@$scope.marker_preview.lat, @$scope.marker_preview.lng).then((address) =>
                         console.debug("Found address match: #{address.formatted_address}")
-                        @$scope.marker.position.address = angular.copy(address.formatted_address)
+                        @$scope.marker.address = angular.copy(address.formatted_address)
                 )
 
 
@@ -248,7 +295,7 @@ class MapMarkerNewCtrl
                 Given an address, find lat/lng
                 """
                 console.debug("looking up #{@$scope.marker.position.address}")
-                pos_promise = @geolocation.lookupAddress(@$scope.marker.position.address).then((coords)=>
+                pos_promise = @geolocation.lookupAddress(@$scope.marker.address).then((coords)=>
                         console.debug("Found pos #{coords}")
 
                         # move preview marker
@@ -265,7 +312,7 @@ class MapMarkerNewCtrl
 
 
 # Controller declarations
-module.controller("MapDetailCtrl", ['$scope', '$routeParams', 'MapService', 'Map', 'geolocation', MapDetailCtrl])
-module.controller("MapNewCtrl", ['$scope', "Map", MapNewCtrl])
-module.controller("MapMarkerDetailCtrl", ['$scope', '$routeParams', 'Marker', MapMarkerDetailCtrl])
-module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$location', 'MapService', 'Marker', 'MarkerCategory', 'geolocation', MapMarkerNewCtrl])
+module.controller("MapDetailCtrl", ['$scope', '$stateParams', '$location', 'MapService', 'geolocation', MapDetailCtrl])
+module.controller("MapNewCtrl", ['$scope', '$location', 'Restangular', MapNewCtrl])
+module.controller("MapMarkerDetailCtrl", ['$scope', '$stateParams', 'Restangular', MapMarkerDetailCtrl])
+module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$location', 'MapService', 'Restangular', 'geolocation', MapMarkerNewCtrl])

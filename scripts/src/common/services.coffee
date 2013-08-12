@@ -67,18 +67,19 @@ class GeolocationService
         resolveLatLng: (lat, lng) =>
                 deferred = @$q.defer()
                 latlng = new google.maps.LatLng(lat, lng)
-                @geocoder.geocode({'latLng': latlng},
-                        (results, status) =>
-                                if status == google.maps.GeocoderStatus.OK
-                                        if results[0]
-                                                @$rootScope.$apply(->
-                                                        deferred.resolve(angular.copy(results[0]))
-                                                )
-                                else
-                                        @$rootScope.$apply( ->
-                                                deferred.reject(status)
+
+                @geocoder.geocode({'latLng': latlng}, (results, status) =>
+                        if status == google.maps.GeocoderStatus.OK
+                                if results[0]
+                                        @$rootScope.$apply(->
+                                                deferred.resolve(angular.copy(results[0]))
                                         )
+                        else
+                                @$rootScope.$apply( ->
+                                        deferred.reject(status)
+                                )
                 )
+
                 return deferred.promise
 
 
