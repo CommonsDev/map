@@ -1,6 +1,21 @@
-new!
-
-<form>
-  <input ng-model="form.name" type="text"/>
-  <button ng-click="create()">create</button>
-</form>
+<div id="topbar">
+	<div class="wrap">
+		<button>Se connecter</button>
+	</div>
+</div>
+<section id="creamap">
+	<div class="intro">
+		<h1>Bienvenue sur la Carte de Gestion Urbaine de Proximité</h1>
+		<p>
+			Ce logiciel vous permettra de créer et de gérer les problématiques de vos citoyens par l'intermédiaire d'une carte géographique
+		</p>
+	</div>
+	<h2>Entrez le nom de votre ville</h2>
+	<form>
+		<p>
+		  <label for="url-field">www.gup.fr/</label>
+		  <input id="url-field" ng-model="form.name" type="text" />
+		</p>
+	  	<button ng-click="create()">Créez votre carte</button>
+	</form>
+</section>

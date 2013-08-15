@@ -3,7 +3,9 @@
     <header>
       <a href="javascript:void(0)" class="card-like" title="like"><img src="/images/card_like.png" alt="support" /></a>
       <div class="minipic">
-        <img height="184" width="248" ng-src="{{ MEDIA_URI }}{{ marker.data.picture }}" alt="{{ marker.data.title }}"/>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="248" height="184">
+        <image alt="{{ marker.data.title }}" xlink:href="{{ MEDIA_URI }}{{ marker.data.picture }}/images/_TEMP/prima.jpg" width="248" height="184" mask="url(#mask1)">
+        </svg>
       </div>
       <div class="author">
         <img src="/images/_TEMP/dave.png" alt="Dave" />
