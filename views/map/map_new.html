@@ -1,6 +1,7 @@
 <div id="topbar">
 	<div class="wrap">
-		<button>Se connecter</button>
+		<button ng-hide="username">Se connecter</button>
+		<button ng-show="username">{{ username }}</button>
 	</div>
 </div>
 <section id="creamap">
@@ -10,10 +11,10 @@
 			Ce logiciel vous permettra de créer et de gérer les problématiques de vos citoyens par l'intermédiaire d'une carte géographique
 		</p>
 	</div>
-	<h2>Entrez le nom de votre ville</h2>
+	<h2>Entrez le nom de votre carte</h2>
 	<form>
 		<p>
-		  <label for="url-field">www.gup.fr/</label>
+		  <label for="url-field">{{ $location.absUrl() }}/</label>
 		  <input id="url-field" ng-model="form.name" type="text" />
 		</p>
 	  	<button ng-click="create()">Créez votre carte</button>

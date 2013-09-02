@@ -49,7 +49,7 @@ class MapService
                 delete @markers[name]
 
 
-        load: (slug, scope) =>
+        load: (slug, scope, callback) =>
                 @Restangular.one('scout/map', slug).get().then((aMap) =>
                         @map = aMap
 
@@ -72,6 +72,7 @@ class MapService
 
                         # Add every layer
                         for layer in aMap.tile_layers
+                                console.debug("loading layer...")
                                 @tilelayers[layer.id] =
                                         name: layer.name
                                         uri: layer.resource_uri
@@ -87,12 +88,12 @@ class MapService
                                                 data: marker
                                         )
 
+                        callback(@map)
                 )
 
 
 
 # Services
 services.factory('MapService', ['$compile', 'Restangular', ($compile, Restangular) ->
-        console.debug('constructing new map srv')
         return new MapService($compile, Restangular)
 ])

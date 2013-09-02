@@ -5,7 +5,7 @@ config = {
 angular.module('map', ['map.controllers', 'map.services', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
 
-app = angular.module('unisson_map', ['common', 'map', 'ui.state']);
+app = angular.module('unisson_map', ['common', 'map', 'ui.router']);
 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
@@ -36,6 +36,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 		    .state('index', {
 			       url: '/',
 			       controller: 'MapNewCtrl',
+			       page_title: 'Bienvenue',
 			       templateUrl: moduleTemplateBaseUrl + 'map_new.html',
 			   })
 		    .state('map', {
@@ -79,4 +80,10 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 app.run(['$rootScope', function($rootScope) {
   $rootScope.MEDIA_URI = 'http://localhost:8000';
   $rootScope.CONFIG = config;
+
+  $rootScope.$on('$stateChangeSuccess', function (event, current, previous) {
+		     if ( current.page_title )
+			 $rootScope.page_title = current.page_title;
+		 });
+
 }]);
