@@ -2,7 +2,7 @@ config = {
     templateBaseUrl: '/views/',
 }
 
-angular.module('map', ['map.controllers', 'map.services', 'leaflet-directive']);
+angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
 
 app = angular.module('unisson_map', ['common', 'map', 'ui.router']);
@@ -49,31 +49,16 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 			       templateUrl: moduleTemplateBaseUrl + 'marker_new.html',
 			       controller: 'MapMarkerNewCtrl'
 			   })
+		    .state('map.layers', {
+			       url: '/layers',
+			       templateUrl: moduleTemplateBaseUrl + 'map_layers.html',
+			       // controller: 'MapMarkerNewCtrl'
+			   })
 		    .state('map.marker_detail', {
 			      url: '/marker/:markerId',
 			      templateUrl: moduleTemplateBaseUrl + 'marker_detail.html',
 			      controller: 'MapMarkerDetailCtrl'
 			   });
-
-		/*
-		$routeProvider
-		    .when('/', {
-			      templateUrl: moduleTemplateBaseUrl + 'map_new.html',
-			      controller: 'MapNewCtrl'
-			  })
-		    .when('/:slug', {
-			      templateUrl: moduleTemplateBaseUrl + 'map_detail.html'
-			  })
-		    .when('/marker/new', {
-			      templateUrl: moduleTemplateBaseUrl + 'marker_new.html',
-			      controller: 'MapMarkerNewCtrl'
-			  })
-		    .when('/marker/:markerId', {
-			      templateUrl: moduleTemplateBaseUrl + 'marker_detail.html',
-			      controller: 'MapMarkerDetailCtrl'
-			  })
-		    .otherwise({redirectTo: '/'});
-		 */
 	    }
 	   ]);
 

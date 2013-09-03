@@ -64,7 +64,7 @@
                 <div class="inner">
                   <ul>
                     <li ng-repeat="cat in marker_categories" class="category">
-                      <input type="radio" name="category" ng-click="wizard.step = 3" ng-model="marker.category" ng-value="{{ cat.id }}" id="cat{{ cat.id }}" />
+                      <input type="radio" name="category" ng-click="wizard.step = 3" ng-model="marker.category" ng-value="{{ cat.resource_uri }}" value="cat{{cat.id}}" id="cat{{ cat.id }}" />
                       <label for="cat{{cat.id}}">{{ cat.name }}</label>
                     </li>
                   </ul>

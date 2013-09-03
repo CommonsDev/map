@@ -4,7 +4,7 @@
       <a href="javascript:void(0)" class="card-like" title="like"><img src="/images/card_like.png" alt="support" /></a>
       <div class="minipic">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="248" height="184">
-        <image alt="{{ marker.data.title }}" xlink:href="{{ MEDIA_URI }}{{ marker.data.picture }}/images/_TEMP/prima.jpg" width="248" height="184" mask="url(#mask1)">
+        <image alt="{{ marker.data.title }}" xlink:href="/images/_TEMP/prima.jpg" width="248" height="184" mask="url(#mask1)">
         </svg>
       </div>
       <div class="author">
@@ -13,20 +13,20 @@
       </div>
     </header>
     <div class="inner">
-      <a ng-href="#/{{ $stateParams.slug }}/marker/{{ marker.data.id }}">
+      <a ui-sref="map.marker_detail({map: $stateParams.slug, markerId: marker.data.id})">
 	<span class="date">{{ marker.data.created_on | fromNow }}</span>
 	<h1>{{ marker.data.title }}</h1>
 	<p>
-          Grand place, centre ville <br />
+          FIXME Grand place, centre ville <br />
           59000 Lille.
 	</p>
       </a>
     </div>
     <footer>
       <ul class="icons">
-        <li class="supports" title="29 supports">29</li>
-        <li class="comments" title="12 commentaires">12</li>
-        <li class="polls" title="2 sondages">2</li>
+        <li class="supports" title="XX supports">XX</li>
+        <li class="comments" title="XX commentaires">XX</li>
+        <li class="polls" title="XX sondages">XX</li>
       </ul>
     </footer>
   </section>

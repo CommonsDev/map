@@ -75,6 +75,26 @@ class MapMarkerDetailCtrl
                 )
 
 
+class MapTileLayersCtrl
+        """
+        Changes the background layer of a map
+        """
+        constructor: (@$scope, @$routeParams, @Restangular, @MapService) ->
+                @$scope.form = {}
+
+                @$scope.$watch('form.selected_layer', (tile) =>
+                        console.debug("tilelayers changed")
+                        @MapService.tilelayers = {'layer': @$scope.layers[tile - 1]}
+                        console.debug(@MapService.tilelayers)
+                )
+
+                @Restangular.all("scout/tilelayer").getList().then((layers) =>
+                        console.debug("layers loaded")
+                        @$scope.layers = angular.copy(layers)
+                )
+
+
+
 class MapMarkerNewCtrl
         """
         Wizard to create a new marker
@@ -177,7 +197,7 @@ class MapMarkerNewCtrl
                                 content_type: @$scope.uploads.picture.file.type
 
                 # Use 'pk' for category
-                @$scope.marker.category = {'pk': @$scope.marker.category}
+                # @$scope.marker.category = {'pk': @$scope.marker.category}
 
                 # Now save the marker
                 console.debug("saving...")
@@ -331,4 +351,5 @@ class MapMarkerNewCtrl
 module.controller("MapDetailCtrl", ['$scope', '$rootScope', '$stateParams', '$location', 'MapService', 'geolocation', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', '$location', '$cookies', 'Restangular', MapNewCtrl])
 module.controller("MapMarkerDetailCtrl", ['$scope', '$stateParams', 'Restangular', MapMarkerDetailCtrl])
+module.controller("MapTileLayersCtrl", ['$scope', '$stateParams', 'Restangular', 'MapService', MapTileLayersCtrl])
 module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$state', '$location', 'MapService', 'Restangular', 'geolocation', MapMarkerNewCtrl])

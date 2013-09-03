@@ -52,11 +52,18 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
 
             maxZoom = $scope.maxZoom or 12
 
+            # Tile layers. XXX Should be a sub directive?
+            $scope.$watch("tilelayers", (layers, oldLayers) =>
+                # Remove current layers
+                $scope.map.eachLayer((layer) =>
+                    $scope.map.removeLayer(layer)
+                )
 
-            # Add tile layers
-            if $scope.tilelayers
-              for tile_name, tile_data of $scope.tilelayers
-                L.tileLayer(tile_data.url_template, tile_data.attrs).addTo($scope.map)
+                # Add new ones
+                for tile_name, tile_data of layers
+                    L.tileLayer(tile_data.url_template, tile_data.attrs).addTo($scope.map)
+            , true
+            )
 
 
 
@@ -187,8 +194,6 @@ module.directive("leafletPopup", ($timeout) ->
     return {
         restrict: 'CA'
         replace: false
-
-        require: '^leaflet'
 
         link: ($scope, $elem, attrs, ctrl) ->
             # Wait for dom to render

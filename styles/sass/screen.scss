@@ -74,7 +74,7 @@ div#background-map {
 		height:80px;
 		width:80px;
 		text-align:center;
-		color:#706f6f;
+		color:#eeeeee;
 		border:0;
 		border-top:1px solid #2e2f30;
 		border-bottom:1px solid black;
@@ -131,7 +131,31 @@ div#background-map {
 		}
 	}
 
-	li.itemuser {
+	li.item {
+		button { 
+			opacity: 0.8;
+
+			&:hover {
+			    opacity: 1.0;
+			}
+		}
+	}
+
+
+	li.item-layers {
+		button { 
+			background:image-url('toolbar/ico_layers.png') no-repeat center 15px;
+		}
+	}
+
+	li.item-share {
+		button { 
+			background:image-url('toolbar/ico_share.png') no-repeat center 15px;
+		}
+	}
+
+
+	li.item-user {
 		position:absolute;
 		bottom:0;
 		left:0;
