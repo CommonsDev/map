@@ -52,7 +52,14 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 		    .state('map.layers', {
 			       url: '/layers',
 			       templateUrl: moduleTemplateBaseUrl + 'map_layers.html',
-			       // controller: 'MapMarkerNewCtrl'
+			   })
+		    .state('map.share', {
+			       url: '/share',
+			       templateUrl: moduleTemplateBaseUrl + 'map_share.html',
+			   })
+		    .state('map.my_maps', {
+			       url: '/my_maps',
+			       templateUrl: moduleTemplateBaseUrl + 'map_mymaps.html',
 			   })
 		    .state('map.marker_detail', {
 			      url: '/marker/:markerId',

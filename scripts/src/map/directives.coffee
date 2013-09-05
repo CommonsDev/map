@@ -23,7 +23,7 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
         transclude: true
         scope:
             center: "=center"
-            tilelayers: "=tilelayers"
+            tilelayer: "=tilelayer"
             path: "=path"
             maxZoom: "@maxzoom"
 
@@ -34,34 +34,44 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
         link: ($scope, element, attrs, ctrl) ->
             $el = element[0]
 
-            $scope.map = new L.Map($el)
-
-            # Center
-            if attrs.center
-                console.debug("setting center to")
-                $scope.map.setView([$scope.center.lat, $scope.center.lng], $scope.center.zoom)
-            else
-                $scope.map.setView([0, 0], 1)
+            $scope.map = new L.Map($el,
+                zoomControl: false
+                zoomAnimation: false
+            )
 
             # Change callback
             $scope.$watch("center", ((center, oldValue) ->
+                    console.debug("map center changed")
                     $scope.map.setView([center.lat, center.lng], center.zoom)
                 ), true
             )
 
+            # Center
+            if not attrs.center
+                console.debug("setting default center")
+                $scope.map.setView([0, 0], 1)
+
+            # On "get_center" signal
+            $scope.$on('map.get_center', (event, callback) =>
+                center = $scope.map.getCenter()
+                zoom = $scope.map.getZoom()
+                callback(center, zoom)
+            )
 
             maxZoom = $scope.maxZoom or 12
 
             # Tile layers. XXX Should be a sub directive?
-            $scope.$watch("tilelayers", (layers, oldLayers) =>
+            $scope.$watch("tilelayer", (layer, oldLayer) =>
                 # Remove current layers
                 $scope.map.eachLayer((layer) =>
+                    console.debug("removed layer #{layer._url}")
                     $scope.map.removeLayer(layer)
                 )
 
                 # Add new ones
-                for tile_name, tile_data of layers
-                    L.tileLayer(tile_data.url_template, tile_data.attrs).addTo($scope.map)
+                if layer
+                    console.debug("installing new layer #{layer.url_template}")
+                    L.tileLayer(layer.url_template, layer.attrs).addTo($scope.map)
             , true
             )
 

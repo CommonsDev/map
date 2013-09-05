@@ -1,0 +1,32 @@
+<div id="intercalar" ng-controller="MapShareCtrl">
+  <div id="intercalar-panel">
+    <h1>Niveau de partage de cette carte</h1>
+    
+    <ul>
+      <li>
+	<input type="radio" name="security" ng-value="readonly" ng-model="form.security" id="readonly"/>
+        <label for="readonly">Consultatif</label><br/>
+	<em>Vous seul pouvez configurer la carte et ajouter des éléments.</em>
+      </li>
+
+      <li>
+	<input type="radio" name="security" ng-value="contributive" ng-model="form.security" id="contributive"/>
+        <label for="contributive">Contributif</label><br/>
+	<em>Vous seul pouvez configurer la carte mais chacun peut ajouter des éléments.</em>
+      </li>
+
+
+      <li>
+	<input type="radio" name="security" ng-value="public" ng-model="form.security" id="public"/>
+        <label for="public">Publique</label><br/>
+	<em>Tout le monde peut configurer la carte et ajouter des éléments.</em>
+      </li>
+
+    </ul>
+
+    Pour partager cette carte, envoyez ce lien :
+    <input type="text" length="125" value="{{ $location.protocol() + '://' + $location.host() + '/' + $state.href('map', {'map': map.slug}) }}"/>
+
+  </div>
+</div>
+

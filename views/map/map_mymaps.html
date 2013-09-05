@@ -1,0 +1,12 @@
+<div id="intercalar" ng-controller="MapMyMapsCtrl">
+  <div id="intercalar-panel">
+    <h1>Mes cartes</h1>
+    <form>
+      <ul>
+	<li ng-repeat="map in maps">
+          <a ui-sref="map({slug: map.slug})">{{ map.name }}</a>
+	</li>
+      </ul>
+    </form>
+  </div>
+</div>

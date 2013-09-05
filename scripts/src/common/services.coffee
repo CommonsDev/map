@@ -1,5 +1,5 @@
 services = angular.module("common.services", [])
-services.constant("options", {enableHighAccuracy: true})
+services.constant("options", {enableHighAccuracy: false})
 
 class GeolocationService
         """
@@ -29,16 +29,17 @@ class GeolocationService
                 )
                 return deferred.promise
 
-        watchPosition: =>
+        watchPosition: (callback) =>
                 """
                 watch current position of user
                 """
                 console.debug("Watching user location...")
-                @watchId = navigator.geolocation.watchPosition(
-                        (pos) =>
-                                @$rootScope.$apply(=>
-                                        @$rootScope.position = angular.copy(pos)
-                                )
+                @watchId = navigator.geolocation.watchPosition(callback, ->
+                        console.debug("error while getting position")
+                ,
+                        enableHighAccuracy: true,
+                        maximumAge: 1000,
+                        timeout: 3000
                 )
 
         cancelWatchPosition: =>

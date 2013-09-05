@@ -82,38 +82,11 @@ div#background-map {
 		text-decoration:none;
 		line-height:125px;
 		outline:0 !important;
-
-		&:hover {
-			color:#85c9fa;
-		}
 	}
 
 	li:first-child button { border-top: 0 }
 	li:last-child button { border-bottom: 0 }
 
-	li.item1 button { 
-		background:image-url('toolbar/home.png') no-repeat center 22px;
-
-		&:hover {
-			background:image-url('toolbar/home_active.png') no-repeat center 22px;
-		}
-	}
-
-	li.item2 button { 
-		background:image-url('toolbar/add.png') no-repeat center 15px;
-
-		&:hover {
-			background:image-url('toolbar/add_active.png') no-repeat center 15px;
-		}
-	}
-
-	li.item3 button { 
-		background:image-url('toolbar/search.png') no-repeat center 17px;
-
-		&:hover {
-			background:image-url('toolbar/search_active.png') no-repeat center 17px;
-		}
-	}
 
 	li.item4 button { 
 		background:image-url('toolbar/selec.png') no-repeat center 20px;
@@ -132,15 +105,28 @@ div#background-map {
 	}
 
 	li.item {
-		button { 
-			opacity: 0.8;
-
-			&:hover {
-			    opacity: 1.0;
-			}
+	    @include filter(grayscale(100%));
+	    button { 
+		opacity: 0.8;
+		
+		
+		&:hover {
+		    opacity: 1.0;
+		    color:#85c9fa;
 		}
+	    }
 	}
 
+	li.item-addpoi button { 
+		background:image-url('toolbar/ico_addpoi.png') no-repeat center 15px;
+	}
+
+
+	li.item-search {
+		button { 
+			background:image-url('toolbar/ico_search.png') no-repeat center 15px;
+		}
+	}
 
 	li.item-layers {
 		button { 
@@ -154,18 +140,17 @@ div#background-map {
 		}
 	}
 
-
-	li.item-user {
-		position:absolute;
-		bottom:0;
-		left:0;
-
+	li.item-setcenter {
 		button { 
-			background:image-url('toolbar/ico_account.png') no-repeat center 15px;
+			background:image-url('toolbar/ico_setcenter.png') no-repeat center 15px;
+		}
+	}
 
-			&:hover {
-				background:image-url('toolbar/ico_account_active.png') no-repeat center 15px;
-			}
+	li.item-mymaps {
+	    position: absolute;
+	    bottom: 0px;
+		button { 
+			background:image-url('toolbar/ico_mymaps.png') no-repeat center 15px;
 		}
 	}
 
@@ -535,7 +520,7 @@ body > footer {
 
 /* ============= ADDBAR ============= */
 
-#add-panel {
+#intercalar-panel {
 	height:100%;
 	min-height:100%;
 	position:fixed;

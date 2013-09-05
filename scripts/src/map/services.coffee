@@ -15,19 +15,15 @@ class MapService
                         lng: 1.0
                         zoom: 8
 
-                @tilelayers =
-                        truc:
-                                url_template: 'http://tile.openstreetmap.org/{z}/{x}/{y}.png'
-                                attrs:
-                                        zoom: 12
+                @tilelayer = null
 
                 @map = null
 
-        getCurrentLayer: =>
+        getCurrentDataLayer: =>
                 """
                 Return the current map layer
                 """
-                return @tilelayers[Object.keys(@tilelayers)[0]] # XXX Hacky
+                return @datalayers[Object.keys(@datalayers)[0]] # XXX Hacky
 
         addMarker: (name, aMarker) =>
                 """
@@ -50,7 +46,14 @@ class MapService
 
 
         load: (slug, scope, callback) =>
-                @Restangular.one('scout/map', slug).get().then((aMap) =>
+                @Restangular.withConfig((RestangularConfigurer) =>
+                        RestangularConfigurer.setRestangularFields(
+                                id: "slug" # We need this otherwise
+                                           # the URL isn't builded
+                                           # correctly (it used Id
+                                           # instead of slug)
+                        )
+                ).one('scout/map', slug).get().then((aMap) =>
                         @map = aMap
 
                         # Locate user using HTML5 Api or use map center
@@ -70,16 +73,18 @@ class MapService
                                         lng: aMap.center.coordinates[1]
                                         zoom: aMap.zoom
 
-                        # Add every layer
-                        for layer in aMap.tile_layers
-                                console.debug("loading layer...")
-                                @tilelayers[layer.id] =
-                                        name: layer.name
-                                        uri: layer.resource_uri
-                                        url_template: layer.url_template
-                                        attrs:
-                                                zoom: 12
+                        # Add every tile layer
+                        console.debug("Adding tile layer...")
+                        @tilelayer =
+                                name: aMap.tile_layer.name
+                                uri: aMap.tile_layer.resource_uri
+                                url_template: aMap.tile_layer.url_template
+                                attrs:
+                                        zoom: 12
 
+                        # Add data layers
+                        for layer in aMap.data_layers
+                                console.debug("Adding data layer...")
                                 # Add its markers
                                 for marker in layer.markers
                                         this.addMarker(marker.id,

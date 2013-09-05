@@ -16,7 +16,7 @@
 
 <!-- background map -->
 <div>
-  <leaflet center="MapService.center" tilelayers="MapService.tilelayers" id="background-map">
+  <leaflet center="MapService.center" tilelayer="MapService.tilelayer" id="background-map">
     <div ng-repeat="marker in MapService.markers">
       <leaflet-marker marker="marker">
 	<div ng-include src="'views/map/marker_card.html'"></div>
@@ -29,16 +29,12 @@
 <!-- left sidebar -->
 <div id="toolbar">
   <ul>
-    <li class="item1"><button ng-click="goHome()">Accueil</button></li>
-    <li class="item2"><button ng-click="goMarkerNew()">Ajouter</button></li>
-    <!--
-    <li class="item3"><a href="#">Rechercher</a></li>
-    <li class="item4"><a href="#">Sélection</a></li>
-    <li class="item5"><a href="#">Discussions</a></li>
-    -->
+    <li class="item item-search"><button ng-click="search()">Rechercher</button></li>
+    <li class="item item-addpoi"><button ui-sref="map.marker_new">Ajouter Point</button></li>
     <li class="item item-layers"><button ui-sref="map.layers">Fond de carte</button></li>
-    <li class="item item-share"><button>Partage</button></li>
-    <li class="item item-user"><button>Mes cartes</button></li>
+    <li class="item item-share"><button ui-sref="map.share">Partage</button></li>
+    <li class="item item-setcenter" ng-controller="MapSettingsCtrl"><button ng-click="set_center()">Recadrer</button></li>
+    <li class="item item-mymaps"><button ui-sref="map.my_maps">Mes cartes</button></li>
   </ul>
 </div>
 

@@ -8,27 +8,37 @@ class MapDetailCtrl
                 @$scope.MapService = @MapService
                 @$scope.$stateParams = @$stateParams
 
+                @$scope.isLoading = true
+
                 # Load map once the page has loaded
                 console.debug("loading map...")
                 if @$stateParams.slug
                         @MapService.load(@$stateParams.slug, @$scope, (map) =>
                                 console.debug("map loaded...")
                                 @$rootScope.page_title = map.name
+                                @$scope.isLoading = false
                         )
 
-                @$scope.goMarkerNew = this.goMarkerNew
-                @$scope.goHome = this.goHome
-                @$scope.goMarkerDetail = this.goMarkerDetail
+                @$scope.search = this.search
 
-        goHome: =>
-                @$location.url("/#{@$stateParams.slug}")
+        search: =>
 
-        goMarkerNew: =>
-                @$location.url("/#{@$stateParams.slug}/marker/new")
-
-        goMarkerDetail: =>
-                console.debug("go!")
-                @$location.url("/#{@$stateParams.slug}/marker/#{id}")
+                @geolocation.watchPosition((position)=>
+                        @$scope.$apply( =>
+                                @MapService.center =
+                                        lat: position.coords.latitude
+                                        lng: position.coords.longitude
+                                        zoom: 25
+                        )
+                        console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
+                )
+                #@geolocation.position().then((position) =>
+                #        @MapService.center =
+                #                lat: position.coords.latitude
+                #                lng: position.coords.longitude
+                #                zoom: 20
+                #        console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
+                #)
 
 
 class MapNewCtrl
@@ -41,9 +51,7 @@ class MapNewCtrl
                         center:
                                 coordinates: [0, 0]
                                 type: 'Point'
-                        tile_layers: [
-                                {pk: 1}
-                        ]
+                        tile_layer: {pk: 1}
 
                 @$scope.create = this.create
 
@@ -75,25 +83,68 @@ class MapMarkerDetailCtrl
                 )
 
 
+class MapSettingsCtrl
+        constructor: (@$scope, @$rootScope, @$stateParams, @Restangular, @MapService) ->
+                console.debug("settings initialized")
+                @$scope.set_center = this.set_center
+
+        set_center: =>
+                console.debug("setting center...")
+                @$rootScope.$broadcast('map.get_center', (center, zoom) =>
+                        @MapService.map.center =
+                                coordinates: [center.lat, center.lng]
+                                type: 'Point'
+                        @MapService.map.zoom = zoom
+                        @MapService.map.patch()
+                )
+
+class MapMyMapsCtrl
+        """
+        Get a list of my maps
+        """
+        constructor: (@$scope, @$state, @Restangular, @MapService) ->
+                @$scope.isLoading = true
+                @$scope.maps = []
+
+                @Restangular.all("scout/map").getList().then((maps) =>
+                        @$scope.maps = angular.copy(maps)
+                        @$scope.isLoading = false
+                )
+
 class MapTileLayersCtrl
         """
         Changes the background layer of a map
         """
-        constructor: (@$scope, @$routeParams, @Restangular, @MapService) ->
+        constructor: (@$scope, @$stateParams, @Restangular, @MapService) ->
                 @$scope.form = {}
+                @$scope.isLoading = true
+                @$scope.available_layers = []
 
-                @$scope.$watch('form.selected_layer', (tile) =>
-                        console.debug("tilelayers changed")
-                        @MapService.tilelayers = {'layer': @$scope.layers[tile - 1]}
-                        console.debug(@MapService.tilelayers)
+                @$scope.$watch('form.selected_layer', (tilelayer_idx) =>
+                        if @$scope.isLoading
+                                return
+
+                        @MapService.tilelayer = @$scope.available_layers[tilelayer_idx]
+
+                        # Save preference
+                        @MapService.map.tile_layer = @$scope.available_layers[tilelayer_idx].resource_uri
+                        @MapService.map.patch()
                 )
 
                 @Restangular.all("scout/tilelayer").getList().then((layers) =>
                         console.debug("layers loaded")
-                        @$scope.layers = angular.copy(layers)
+                        @$scope.available_layers = angular.copy(layers)
+                        @$scope.isLoading = false
                 )
 
-
+class MapShareCtrl
+        """
+        Share config for a map
+        """
+        constructor: (@$scope, @$location, @$state, @Restangular, @MapService) ->
+                @$scope.$state = @$state
+                @$scope.$location = @$location
+                @$scope.map = @MapService.map
 
 class MapMarkerNewCtrl
         """
@@ -352,4 +403,7 @@ module.controller("MapDetailCtrl", ['$scope', '$rootScope', '$stateParams', '$lo
 module.controller("MapNewCtrl", ['$scope', '$location', '$cookies', 'Restangular', MapNewCtrl])
 module.controller("MapMarkerDetailCtrl", ['$scope', '$stateParams', 'Restangular', MapMarkerDetailCtrl])
 module.controller("MapTileLayersCtrl", ['$scope', '$stateParams', 'Restangular', 'MapService', MapTileLayersCtrl])
+module.controller("MapMyMapsCtrl", ['$scope', '$state', 'Restangular', 'MapService', MapMyMapsCtrl])
+module.controller("MapSettingsCtrl", ['$scope', '$rootScope', '$state', 'Restangular', 'MapService', MapSettingsCtrl])
+module.controller("MapShareCtrl", ['$scope', '$location', '$state', 'Restangular', 'MapService', MapShareCtrl])
 module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$state', '$location', 'MapService', 'Restangular', 'geolocation', MapMarkerNewCtrl])
