@@ -235,9 +235,8 @@ class MapMarkerNewCtrl
                 Submit the form to create a new point
                 """
                 # XXX Hacky, hardcoded
-                console.debug(@MapService)
-                console.debug(@MapService.getCurrentLayer())
-                @$scope.marker.tile_layer = @MapService.getCurrentLayer().uri
+                console.debug(@MapService.getCurrentDataLayer())
+                @$scope.marker.data_layer = @MapService.getCurrentDataLayer().resource_uri
 
                 # Prepare file upload
                 if @$scope.uploads.picture

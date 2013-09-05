@@ -23,7 +23,7 @@ class MapService
                 """
                 Return the current map layer
                 """
-                return @datalayers[Object.keys(@datalayers)[0]] # XXX Hacky
+                return @map.data_layers[0] # XXX Hacky
 
         addMarker: (name, aMarker) =>
                 """
