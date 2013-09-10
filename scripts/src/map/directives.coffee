@@ -35,8 +35,8 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
             $el = element[0]
 
             $scope.map = new L.Map($el,
-                zoomControl: false
-                zoomAnimation: false
+                zoomControl: true
+                zoomAnimation: true
             )
 
             # Change callback

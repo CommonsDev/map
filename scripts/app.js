@@ -11,7 +11,7 @@ app = angular.module('unisson_map', ['common', 'map', 'ui.router']);
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
 
 app.config(function(RestangularProvider) {
-	       RestangularProvider.setBaseUrl("http://carpe.local:8000/api/v0");
+	       RestangularProvider.setBaseUrl("http://192.168.2.251:8000/api/v0");
 
 	       /* Tastypie patch */
 	       RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
