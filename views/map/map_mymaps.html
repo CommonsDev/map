@@ -1,12 +1,22 @@
-<div id="intercalar" ng-controller="MapMyMapsCtrl">
-  <div id="intercalar-panel">
-    <h1>Mes cartes</h1>
-    <form>
+<div  ng-controller="MapMyMapsCtrl">
+  <div id="intercalar">
+    <span class="caption">Sélectionnez une carte</span>
+  </div>
+  <div id="intercalar-panel" class="map-mymaps-panel">
+     <h1>    
+      <img src="images/mymaps_ico.png" alt="" />
+      <strong>Sélectionnez<br /> votre carte</strong>
+      <span>Cette liste contient les différentes cartes<br /> que vous avez créé depuis votre inscription</span>
+    </h1>
+    <form ng-show="!isLoading">
       <ul>
-	<li ng-repeat="map in maps">
-          <a ui-sref="map({slug: map.slug})">{{ map.name }}</a>
-	</li>
+      	<li ng-repeat="map in maps">
+                <a ui-sref="map({slug: map.slug})">{{ map.name }}</a>
+      	</li>
       </ul>
     </form>
+    <div class="loading" ng-show="isLoading">
+      initializing the awesome
+    </div>
   </div>
 </div>

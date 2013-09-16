@@ -66,7 +66,7 @@ class MapNewCtrl
                 """
                 console.debug("creating map #{@$scope.form.name}")
                 @Restangular.all('scout/map').post(@$scope.form).then((map) =>
-                        @$location.url("/#{map.slug}")
+                        @$location.url("/#{map.slug}/welcome")
                 )
 
 class MapMarkerDetailCtrl

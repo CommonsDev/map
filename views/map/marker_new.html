@@ -16,7 +16,7 @@
 <div id="intercalar-panel">
   <ng-form name="new_marker_form">
   
-    <div ng-switch="wizard.step" data-ng-animate="'wave'">
+    <div ng-switch="wizard.step">
     <!-- location -->
       <section id="add-block-1" class="add-panel-block" ng-switch-when="1">
         <h1>    
@@ -43,6 +43,7 @@
             </div>
             <button ng-disabled="!marker.position.coordinates" ng-click="wizard.step=2" class="valid">Valider la position</button>
         </div>
+        <div class="little-arrow">&nbsp;</div>
       </section>
 
 
@@ -88,6 +89,7 @@
               </ul>
             </div>-->
         </div>
+        <div class="little-arrow">&nbsp;</div>
       </section>
 
       <!-- picture -->
@@ -130,6 +132,7 @@
             <button ng-click="cancelGrabCamera()" class="discard">Annuler</button>
             <button ng-click="takePicture()" class="accept">Valider</button>
         </div>
+        <div class="little-arrow">&nbsp;</div>
       </section>
 
       <!-- info -->
@@ -146,6 +149,7 @@
             <button ng-click="submitForm()" ng-disabled="!infoForm.$valid">Finaliser le point</button>
           </ng-form>
         </div>
+        <div class="little-arrow">&nbsp;</div>
       </section>
     </div>
   </ng-form>

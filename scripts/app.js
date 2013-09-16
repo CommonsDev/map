@@ -5,13 +5,13 @@ config = {
 angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
 
-app = angular.module('unisson_map', ['common', 'map', 'ui.router']);
+app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'ngAnimate']);
 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
 
 app.config(function(RestangularProvider) {
-	       RestangularProvider.setBaseUrl("http://192.168.2.251:8000/api/v0");
+	       RestangularProvider.setBaseUrl("http://carpe.local:8000/api/v0");
 
 	       /* Tastypie patch */
 	       RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
@@ -43,6 +43,10 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 			       url: '/:slug',
 			       templateUrl: moduleTemplateBaseUrl + 'map_detail.html',
 			       controller: 'MapDetailCtrl'
+			   })
+		    .state('map.welcome', {
+			       url: '/welcome',
+			       templateUrl: moduleTemplateBaseUrl + 'map_welcome.html'
 			   })
 		    .state('map.marker_new', {
 			       url: '/marker/new',
