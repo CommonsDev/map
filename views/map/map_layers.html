@@ -3,6 +3,7 @@
     <span class="caption">Choisissez le fond de carte</span>
   </div>
     <div id="intercalar-panel" class="map-bg-panel">
+      <a class="close-link" ui-sref="map">Fermer</a>
       <h1>    
         <img src="images/layers_ico.png" alt="" />
         <strong>Choisissez<br /> votre fond de carte</strong>
@@ -11,9 +12,9 @@
       <form>
         <ul>
   	<li ng-repeat="layer in available_layers">
-  	  <input type="radio" name="bg_layer" ng-value="{{ $index }}" ng-model="form.selected_layer" id="{{ $index }}">
-  	  <img ng-src="{{ layer.url_template|sample_tile }}" width="128" height="128" alt="{{ layer.name }}">
-            <label for="{{ $index }}">{{ layer.name }}</label>
+  	  <input type="radio" name="bg_layer" ng-value="{{ $index }}" ng-model="form.selected_layer" id="{{ $index }}" />
+  	  <img ng-src="{{ layer.url_template|sample_tile }}" width="128" height="128" alt="{{ layer.name }}" />
+      <label for="{{ $index }}">{{ layer.name }}</label>
   	  <em>{{ layer.attribution }}</em>
       <span>&nbsp;</span>
   	</li>

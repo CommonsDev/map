@@ -3,10 +3,11 @@
     <span class="caption">Sélectionnez une carte</span>
   </div>
   <div id="intercalar-panel" class="map-mymaps-panel">
+     <a class="close-link" ui-sref="map">Fermer</a>
      <h1>    
       <img src="images/mymaps_ico.png" alt="" />
       <strong>Sélectionnez<br /> votre carte</strong>
-      <span>Cette liste contient les différentes cartes<br /> que vous avez créé depuis votre inscription</span>
+      <span>Cette liste contient les différentes cartes<br /> que vous avez créées depuis votre inscription</span>
     </h1>
     <form ng-show="!isLoading">
       <ul>
@@ -15,8 +16,11 @@
       	</li>
       </ul>
     </form>
-    <div class="loading" ng-show="isLoading">
-      initializing the awesome
+    <div class="loading-panel" ng-show="isLoading">
+      <p>
+        <img src="images/loading/eolilala.png" class="spin" />
+        <span>un instant, nous chargeons vos contenus...</span>
+      </p>
     </div>
   </div>
 </div>
