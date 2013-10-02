@@ -1,12 +1,12 @@
 <div id="topbar">
 	<div class="wrap">
 		<button ng-hide="username">Se connecter</button>
-		<button ng-show="username">{{ username }}</button>
+		<button ng-show="username" ui-sref="index.my_maps">{{ username }}</button>
 	</div>
 </div>
 <section id="creamap">
 	<div class="intro">
-		<h1>Bienvenue sur la Carte de Gestion Urbaine de Proximité</h1>
+		<h1>Bienvenue sur l'application Cartes</h1>
 		<p>
 			Ce logiciel vous permettra de créer et de gérer les problématiques de vos citoyens par l'intermédiaire d'une carte géographique
 		</p>
@@ -19,4 +19,10 @@
 		</p>
 	  	<button ng-click="create()">Créez votre carte</button>
 	</form>
+
+
+	<!-- overlay panel app -->
+	<div id="overlay-panel" ui-view>
+	</div>
+
 </section>
