@@ -14,4 +14,8 @@ $(document).ready(function(){
 	    $('.map-bg-panel li').removeClass('active');
 	    $(this).addClass('active');
 	});
+
+	$(document).on('click','.photo-widget #picture-file', function(){
+        $(this).siblings('input[type="file"]').click();
+     });
 });

@@ -62,7 +62,7 @@ div#background-map {
 
 #toolbar {
 	height:100%;
-	min-height:100%;
+	min-height:540px;
 	position:fixed;
 	top:0;
 	left:0;
@@ -82,7 +82,7 @@ div#background-map {
 		text-decoration:none;
 		line-height:15px;
 		outline:0 !important;
-		padding:50px 0 0;
+		padding:50px 4px 0;
 
 		&:hover {
 			color:#85c9fa;
@@ -629,6 +629,7 @@ body > footer {
 
 .add-panel-block {
 	@include transition(right 0.5s ease-in-out);
+	min-height:540px !important;
 
 	h1 {
 		padding:42px 0 35px 45px;
@@ -919,6 +920,23 @@ body > footer {
 	width:404px;
 	margin:0 58px;
 
+	.skippy {
+	button {
+		background:#85C9FA;
+	    border: 0 none;
+	    @include border-radius(5px);
+	    color: #FFFFFF;
+	    display: block;
+	    font-size: 0.8rem;
+	    font-weight: 400;
+	    height: 42px;
+	    line-height: 42px;
+	    text-align: center;
+	    width: 225px;
+	    margin:0 0 0 90px;
+		}
+	}
+
 	.wrap-widgets {
 		border-top:1px solid #fff;
 		border-bottom:1px solid #fff;
@@ -948,6 +966,18 @@ body > footer {
 
 			input[type="file"] {
 				margin-top:45px;
+				display:none;
+			}
+
+			#picture-file {
+				color: #999999;
+			    height: 260px;
+			    line-height: 260px;
+			    text-align: center;
+			    text-transform: uppercase;
+			    width: 390px;
+			    cursor:pointer;
+			    font-size:1.5rem;
 			}
 		}
 
@@ -967,7 +997,7 @@ body > footer {
 	    float: left;
 	    text-align: center;
 	    width: 100%;
-	    min-height:400px;
+	    min-height:300px;
 
 		img {
 			display:inline;
@@ -981,7 +1011,9 @@ body > footer {
 	    border: 0 none;
 	    display: block;
 	    margin: 20px auto 0;
-	    width: 74px;
+	    position:absolute;
+	    top:450px;
+	    left:220px;
 	}
 
 	.accept {
