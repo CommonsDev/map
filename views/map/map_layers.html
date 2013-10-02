@@ -11,7 +11,7 @@
       </h1>
       <form>
         <ul>
-  	<li ng-repeat="layer in available_layers">
+  	<li ng-class="{active:$index==form.selected_layer}" ng-click="changeSelectedLayer($index)" ng-repeat="layer in available_layers">
   	  <input type="radio" name="bg_layer" ng-value="{{ $index }}" ng-model="form.selected_layer" id="{{ $index }}" />
   	  <img ng-src="{{ layer.url_template|sample_tile }}" width="128" height="128" alt="{{ layer.name }}" />
       <label for="{{ $index }}">{{ layer.name }}</label>

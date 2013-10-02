@@ -51,6 +51,12 @@
       <!-- category -->
       <section id="add-block-2" class="add-panel-block" ng-switch-when="2">
         <a class="close-link" ui-sref="map">Fermer</a>
+        <div class="loading-panel" ng-show="isLoading">
+          <p>
+            <img src="images/loading/eolilala.png" class="spin" />
+            <span>un instant, nous chargeons vos contenus...</span>
+          </p>
+        </div>
         <h1>    
           <img src="images/steps/2.png" alt="2/4" />
           <strong>Qualifiez<br />  votre point d'intérêt</strong>

@@ -8,13 +8,6 @@ $(document).ready(function(){
 	wW = $(window).width();
 	$('.card.active .inner').height(wH - 308 - 135);
 
-	$(document).on('click','.map-bg-panel form li', function() {
-		$('.map-bg-panel li input').attr('checked',"");
-	    $(this).children('input').attr("checked", "checked");
-	    $('.map-bg-panel li').removeClass('active');
-	    $(this).addClass('active');
-	});
-
 	$(document).on('click','.photo-widget #picture-file', function(){
         $(this).siblings('input[type="file"]').click();
      });

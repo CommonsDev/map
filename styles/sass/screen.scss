@@ -1783,6 +1783,7 @@ body > footer {
     position: absolute;
     top: 0;
     width: 100%;
+    z-index:30000;
 }
 
 .loading-panel p {
@@ -1817,6 +1818,12 @@ body > footer {
 @-ms-keyframes spin {
 	0% { -ms-transform: rotate(0deg);}
 	100% { -ms-transform: rotate(360deg);}
+}
+
+.loading-panel .blocked {
+	margin:0 auto;
+	width:60px;
+	height:60px;
 }
 
 .loading-panel span {
