@@ -8,7 +8,10 @@ $(document).ready(function(){
 	wW = $(window).width();
 	$('.card.active .inner').height(wH - 308 - 135);
 
-	$('.map-bg-panel form img').click(function(){
-		$(this).siblings('input').click();
+	$(document).on('click','.map-bg-panel form li', function() {
+		$('.map-bg-panel li input').attr('checked',"");
+	    $(this).children('input').attr("checked", "checked");
+	    $('.map-bg-panel li').removeClass('active');
+	    $(this).addClass('active');
 	});
 });

@@ -19,6 +19,7 @@
     <div ng-switch="wizard.step">
     <!-- location -->
       <section id="add-block-1" class="add-panel-block" ng-switch-when="1">
+        <a class="close-link" ui-sref="map">Fermer</a>
         <h1>    
           <img src="images/steps/1.png" alt="1/4" />
           <strong>Localisez<br /> votre Point d'intérêt</strong>
@@ -49,6 +50,7 @@
 
       <!-- category -->
       <section id="add-block-2" class="add-panel-block" ng-switch-when="2">
+        <a class="close-link" ui-sref="map">Fermer</a>
         <h1>    
           <img src="images/steps/2.png" alt="2/4" />
           <strong>Qualifiez<br />  votre point d'intérêt</strong>
@@ -57,7 +59,7 @@
         <div class="content-tabs">
             <ul class="tabs">
                 <li class="active"><a href="#points-list">Les plus utilisés</a></li>
-                <li><a href="#">Tous les points</a></li>
+                <!--<li><a href="#">Tous les points</a></li>-->
             </ul>
             <!-- BLOC POINTS FREQUENTS -->
             <div class="points-list">
@@ -94,6 +96,7 @@
 
       <!-- picture -->
       <section id="add-block-3" class="add-panel-block" ng-switch-when="3">
+        <a class="close-link" ui-sref="map">Fermer</a>
         <h1>    
           <img src="images/steps/3.png" alt="3/4" />
           <strong>Ajoutez<br />  une photo ou vidéo</strong>
@@ -137,6 +140,7 @@
 
       <!-- info -->
       <section id="add-block-4" class="add-panel-block" ng-switch-when="4">
+        <a class="close-link" ui-sref="map">Fermer</a>
         <h1>    
           <img src="images/steps/4.png" alt="4/4" />
           <strong>Entrez<br />  votre description</strong>

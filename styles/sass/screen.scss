@@ -82,7 +82,7 @@ div#background-map {
 		text-decoration:none;
 		line-height:15px;
 		outline:0 !important;
-		padding:50px 4px 0;
+		padding:50px 0 0;
 
 		&:hover {
 			color:#85c9fa;
@@ -93,10 +93,10 @@ div#background-map {
 	li:last-child button { border-bottom: 0 }
 
 	li.item-addpoi button { 
-		background:image-url('toolbar/ico_addpoi.png') no-repeat center 15px;
+		background:image-url('toolbar/ico_addpoi.png') no-repeat center 11px;
 
 		&:hover {
-			background:image-url('toolbar/ico_addpoi_active.png') no-repeat center 15px;
+			background:image-url('toolbar/ico_addpoi_active.png') no-repeat center 11px;
 		}
 	}
 
@@ -807,7 +807,7 @@ body > footer {
 			float:left;
 			height:37px;
 			line-height:37px;
-			width:50%;
+			width:100%;
 			text-align:center;
 
 			a {
@@ -963,12 +963,16 @@ body > footer {
 
 .photo-selected {
 	.preview { 
-		text-align:center;
+		background: none repeat scroll 0 0 #FFFFFF;
+	    float: left;
+	    text-align: center;
+	    width: 100%;
+	    min-height:400px;
 
 		img {
 			display:inline;
 			max-width:500px;
-			max-height:300px;
+			max-height:400px;
 		}
 	}
 
@@ -1553,7 +1557,24 @@ body > footer {
 	}
 }
 
-/* ================= MAP BG ============= */
+.map-bg-panel.ng-enter, .map-bg-panel.ng-leave {
+	@include transition(all 0.5s ease);
+}
+
+.map-bg-panel.ng-enter {
+  @include opacity(0);
+}
+.map-bg-panel.ng-enter.ng-enter-active {
+  @include opacity(1);
+}
+.map-bg-panel.ng-leave {
+  @include opacity(1);
+}
+.map-bg-panel.ng-leave.ng-leave-active {
+  @include opacity(0);
+}
+
+/* ================= MAP SHARE ============= */
 
 .map-share-panel {
 	h1 {
@@ -1628,7 +1649,7 @@ body > footer {
 	}
 }
 
-/* ================= MAP BG ============= */
+/* ================= MY MAPS ============= */
 
 .map-mymaps-panel {
 	h1 {
@@ -1719,6 +1740,74 @@ body > footer {
 		font-size:0.75rem;
 		line-height:0.9rem;
 	}
+}
+
+/* ================= LOADING ================== */
+
+.loading-panel {
+	background: rgba(0,0,0,0.6);
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.loading-panel p {
+	position:absolute;
+	top:45%;
+	left:0;
+	width:100%;
+	text-align:center;
+}
+
+.loading-panel .spin {
+	margin:0 auto;
+	width:60px;
+	height:60px;
+	-webkit-animation: spin 1.5s infinite linear;
+	-moz-animation: spin 1.5s infinite linear;
+	-o-animation: spin 1.5s infinite linear;
+	-ms-animation: spin 1.5s infinite linear;
+}
+@-webkit-keyframes spin {
+	0% { -webkit-transform: rotate(0deg);}
+	100% { -webkit-transform: rotate(360deg);}
+}
+@-moz-keyframes spin {
+	0% { -moz-transform: rotate(0deg);}
+	100% { -moz-transform: rotate(360deg);}
+}
+@-o-keyframes spin {
+	0% { -o-transform: rotate(0deg);}
+	100% { -o-transform: rotate(360deg);}
+}
+@-ms-keyframes spin {
+	0% { -ms-transform: rotate(0deg);}
+	100% { -ms-transform: rotate(360deg);}
+}
+
+.loading-panel span {
+	color:white;
+	display:block;
+	width:100%;
+	text-align:center;
+	font-size:0.8rem;
+	padding:16px 0 0 0;
+
+}
+
+/* ================= CLOSE LINK ================== */
+
+a.close-link {
+	border: 1px solid #CCCCCC;
+    color: #666666;
+    font-size: 0.75rem;
+    padding: 4px;
+    position: absolute;
+    right: 10px;
+    text-decoration: none;
+    top: 10px;
 }
 
 /* ================= LEAFLET HACKS ============= */
