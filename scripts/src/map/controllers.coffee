@@ -137,6 +137,12 @@ class MapTileLayersCtrl
                         @$scope.isLoading = false
                 )
 
+                # Bind methods to scope
+                @$scope.changeSelectedLayer = this.changeSelectedLayer
+
+        changeSelectedLayer: (idx) =>
+                @$scope.form.selected_layer = idx
+
 class MapShareCtrl
         """
         Share config for a map
