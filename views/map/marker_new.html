@@ -109,13 +109,14 @@
             <ul>
               <!-- <li><button ng-click="grabCamera()">Prendre une photo</button></li> -->
               <li>
+          <div id="picture-file">Cliquez ici</div>
     	    <input type="file" image="uploads.picture" resize-max-height="300" resize-max-width="250" resize-quality="0.7"  accept="image/*;capture=camera" name="picture"></input>
     	  </li>
             </ul>
           </div>
-          <!--<div class="skippy">
-    	        <button ng-click="$parent.wizard.step = wizard.steps[2]">Passer cette étape</button>
-          </div>-->
+          <div class="skippy">
+    	        <button ng-click="wizard.step=4">Passer cette étape</button>
+          </div>
         </div>
 
         <!-- picture preview -->
