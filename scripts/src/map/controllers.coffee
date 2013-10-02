@@ -160,6 +160,8 @@ class MapMarkerNewCtrl
                 width = 320
                 height = 240
 
+                @$scope.isLoading = true
+
                 video = document.querySelector("#video")
                 """
                 video.addEventListener("canplay", ((ev) ->
@@ -179,6 +181,7 @@ class MapMarkerNewCtrl
                 @Restangular.all("scout/marker_category").getList().then((categories) =>
                         @$scope.marker_categories = angular.copy(categories)
                         @$scope.is_marker_categories_loaded = true
+                        @$scope.isLoading = false
                 )
 
                 @$scope.uploads = {}
