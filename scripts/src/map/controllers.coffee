@@ -10,6 +10,8 @@ class MapDetailCtrl
 
                 @$scope.isLoading = true
 
+                @$scope.positionLocked = false
+
                 # Load map once the page has loaded
                 console.debug("loading map...")
                 if @$stateParams.slug
@@ -19,19 +21,29 @@ class MapDetailCtrl
                                 @$scope.isLoading = false
                         )
 
+                # Bind methods
                 @$scope.search = this.search
+                @$scope.toggleLockPosition = this.toggleLockPosition
+
+
+        toggleLockPosition: =>
+                if not @$scope.positionLocked
+                        @geolocation.watchPosition((position)=>
+                                @$scope.$apply(=>
+                                        @MapService.center =
+                                                lat: position.coords.latitude
+                                                lng: position.coords.longitude
+                                                zoom: 25
+                                )
+                                console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
+                        )
+                else
+                        @geolocation.cancelWatchPosition()
+
+                @$scope.positionLocked = not @$scope.positionLocked
 
         search: =>
 
-                @geolocation.watchPosition((position)=>
-                        @$scope.$apply( =>
-                                @MapService.center =
-                                        lat: position.coords.latitude
-                                        lng: position.coords.longitude
-                                        zoom: 25
-                        )
-                        console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
-                )
                 #@geolocation.position().then((position) =>
                 #        @MapService.center =
                 #                lat: position.coords.latitude
