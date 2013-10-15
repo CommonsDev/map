@@ -5,13 +5,23 @@ config = {
 angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
 
-app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'ngAnimate']);
+app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'ngAnimate', 'googleOauth']);
 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
 
+app.config(['TokenProvider', '$locationProvider', function(TokenProvider, $locationProvider) {
+		TokenProvider.extendConfig({
+					       clientId: '645581170749.apps.googleusercontent.com',
+					       redirectUri: 'http://localhost:8080',
+					       scopes: ["https://www.googleapis.com/auth/userinfo.email"],
+					   });
+	    }])
+
+
 app.config(function(RestangularProvider) {
-	       RestangularProvider.setBaseUrl("http://192.168.2.251:8000/api/v0");
+	       //RestangularProvider.setBaseUrl("http://192.168.2.251:8000/api/v0");
+	       RestangularProvider.setBaseUrl("http://api.gup.extra-muros.coop/api/v0");
 
 	       /* Tastypie patch */
 	       RestangularProvider.setResponseExtractor(function(response, operation, what, url) {

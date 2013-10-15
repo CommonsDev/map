@@ -5,6 +5,12 @@
 
 @import "base";
 
+
+/* Angular helper */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
 * {
 	@include box-sizing(border-box); 
 }
@@ -99,7 +105,6 @@ div#background-map {
 			background:image-url('toolbar/ico_addpoi_active.png') no-repeat center 11px;
 		}
 	}
-
 
 	li.item-search {
 		button { 
@@ -1239,7 +1244,7 @@ body > footer {
 	min-height:100%;
 	top:0;
 	left:0;
-	z-index:4000;
+	z-index:32000;
 
 	#inner-login {
 		width:460px;

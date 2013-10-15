@@ -51,7 +51,7 @@
       <!-- category -->
       <section id="add-block-2" class="add-panel-block" ng-switch-when="2">
         <a class="close-link" ui-sref="map">Fermer</a>
-        <div class="loading-panel" ng-show="isLoading">
+        <div class="loading-panel" ng-show="marker_categories_loading">
           <p>
             <img src="images/loading/eolilala.png" class="spin" />
             <span>un instant, nous chargeons vos contenus...</span>
@@ -69,7 +69,7 @@
             </ul>
             <!-- BLOC POINTS FREQUENTS -->
             <div class="points-list">
-              <div ng-show="is_marker_categories_loaded">
+              <div ng-show="!marker_categories_loading">
                 <div class="inner">
                   <ul>
                     <li ng-repeat="cat in marker_categories" class="category">
@@ -82,7 +82,7 @@
             </div>
             <!-- BLOC POINTS PAR CATEGORIES -->
             <!--<div class="points-list-categ" style="display:none">
-              <ul ng-show="is_marker_categories_loaded">
+              <ul ng-show="!marker_categories_loading">
                 <li class="categ">
                   <div class="top">Intêret</div>
                   <div class="inner">

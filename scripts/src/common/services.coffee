@@ -1,12 +1,12 @@
 services = angular.module("common.services", [])
-services.constant("options", {enableHighAccuracy: false})
+services.constant("options", {enableHighAccuracy: false, maximumAge: 60000, timeout: 5000})
 
 class GeolocationService
         """
         A geolocation service to get and watch user position
         """
-        constructor: (@$q, @$rootScope, @options) ->
-                if not navigator.geolocation
+        constructor: (@$q, @$rootScope, @$window, @options) ->
+                if not @$window.navigator.geolocation
                         console.warn("Geolocation not supported.")
 
                 @geocoder = new google.maps.Geocoder()
@@ -14,15 +14,21 @@ class GeolocationService
                 @watchId = null
                 @$rootScope.position = {}
 
+                @$rootScope.isGeolocating = false
+
         position: =>
+                @$rootScope.isGeolocating = true
+
                 deferred = @$q.defer()
-                navigator.geolocation.getCurrentPosition(
+                @$window.navigator.geolocation.getCurrentPosition(
                         (pos) =>
-                                @$rootScope.$apply(->
+                                @$rootScope.$apply(=>
+                                        @$rootScope.isGeolocating = false
                                         deferred.resolve(angular.copy(pos))
                                 )
                         , (error) =>
-                                @$rootScope.$apply( ->
+                                @$rootScope.$apply(=>
+                                        @$rootScope.isGeolocating = false
                                         deferred.reject(error)
                                 )
                         , @options
@@ -34,7 +40,7 @@ class GeolocationService
                 watch current position of user
                 """
                 console.debug("Watching user location...")
-                @watchId = navigator.geolocation.watchPosition(callback, ->
+                @watchId = @$window.navigator.geolocation.watchPosition(callback, ->
                         console.debug("error while getting position")
                 ,
                         enableHighAccuracy: true,
@@ -46,7 +52,7 @@ class GeolocationService
                 """
                 Cancel watching user position
                 """
-                navigator.geolocation.clearWatch(@watchId)
+                @$window.navigator.geolocation.clearWatch(@watchId)
 
 
         lookupAddress: (location) =>
@@ -105,4 +111,4 @@ services.factory('debounce', ['$timeout', ($timeout) ->
 
 
 
-services.service("geolocation", [ "$q", "$rootScope", "options", GeolocationService])
+services.service("geolocation", [ "$q", "$rootScope", "$window", "options", GeolocationService])

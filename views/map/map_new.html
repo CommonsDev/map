@@ -1,6 +1,6 @@
 <div id="topbar">
 	<div class="wrap">
-		<button ng-hide="username">Se connecter</button>
+		<button ng-hide="username" ng-click="forceLogin()">Se connecter</button>
 		<button ng-show="username" ui-sref="index.my_maps">{{ username }}</button>
 	</div>
 </div>

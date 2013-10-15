@@ -1,10 +1,10 @@
-module = angular.module('common.controllers', ['http-auth-interceptor', 'ngCookies'])
+module = angular.module('common.controllers', ['http-auth-interceptor', 'ngCookies', 'googleOauth'])
 
 class LoginCtrl
         """
         Login a user
         """
-        constructor: (@$scope, @$rootScope, @$http, @Restangular, @$cookies, @authService) ->
+        constructor: (@$scope, @$rootScope, @$http, @Restangular, @$cookies, @authService, @Token) ->
                 # set authorization header if already logged in
                 if @$cookies.username and @$cookies.key
                         console.debug("Already logged in.")
@@ -24,8 +24,15 @@ class LoginCtrl
                         @$scope.loginrequired = false
                 )
 
+                @$scope.accessToken = @Token.get()
+
                 # Add methods to scope
                 @$scope.submit = this.submit
+                @$scope.authenticateGoogle = this.authenticateGoogle
+                @$scope.forceLogin = this.forceLogin
+
+        forceLogin: =>
+                @$scope.loginrequired = true
 
         submit: =>
                 console.debug('submitting login...')
@@ -42,6 +49,32 @@ class LoginCtrl
                                 @$scope.errorMsg = data.reason
                 )
 
-LoginCtrl.$inject = ['$scope', '$rootScope', "$http", "Restangular", "$cookies", "authService"]
+        authenticateGoogle: =>
+                extraParams = {}
+                #if @$scope.askApproval
+                extraParams = {approval_prompt: 'force'}
+
+                @Token.getTokenByPopup(extraParams).then((params) =>
+                        # Verify the token before setting it, to avoid the confused deputy problem.
+                        console.debug(params)
+
+                        @Token.verifyAsync(params.access_token).then((data) =>
+                                console.debug(data)
+
+                                @$rootScope.$apply(=>
+                                        @$scope.accessToken = params.access_token
+                                        @$scope.expiresIn = params.expires_in
+
+                                        @Token.set(params.access_token)
+                                )
+                        , ->
+                                alert("Failed to verify token.")
+                        )
+                , ->
+                        # Failure getting token from popup.
+                        alert("Failed to get token from popup.")
+                )
+
+LoginCtrl.$inject = ['$scope', '$rootScope', "$http", "Restangular", "$cookies", "authService", "Token"]
 
 module.controller("LoginCtrl", LoginCtrl)

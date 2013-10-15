@@ -172,7 +172,7 @@ class MapMarkerNewCtrl
                 width = 320
                 height = 240
 
-                @$scope.isLoading = true
+                @$scope.marker_categories_loading = true
 
                 video = document.querySelector("#video")
                 """
@@ -189,11 +189,10 @@ class MapMarkerNewCtrl
                 """
 
                 # Load marker categories
-                @$scope.is_marker_categories_loaded = false
                 @Restangular.all("scout/marker_category").getList().then((categories) =>
+                        console.debug("cat loaded!")
                         @$scope.marker_categories = angular.copy(categories)
-                        @$scope.is_marker_categories_loaded = true
-                        @$scope.isLoading = false
+                        @$scope.marker_categories_loading = false
                 )
 
                 @$scope.uploads = {}
@@ -384,17 +383,20 @@ class MapMarkerNewCtrl
 
         geolocateMarker: =>
                 console.debug("Getting user position...")
-                p = @geolocation.position().then((pos) =>
-                        console.debug("Resolving #{pos.coords.latitude}")
-                        @$scope.marker_preview.lat = pos.coords.latitude
-                        @$scope.marker_preview.lng = pos.coords.longitude
+                p = @geolocation.position().then(
+                        (pos) =>
+                                console.debug("Resolving #{pos.coords.latitude}")
 
-                        # Focus on new location
-                        @MapService.center =
-                                lat: @$scope.marker_preview.lat
-                                lng: @$scope.marker_preview.lng
-                                zoom: 20
+                                @$scope.marker_preview.lat = pos.coords.latitude
+                                @$scope.marker_preview.lng = pos.coords.longitude
 
+                                # Focus on new location
+                                @MapService.center =
+                                        lat: @$scope.marker_preview.lat
+                                        lng: @$scope.marker_preview.lng
+                                        zoom: 20
+                        , (reason) =>
+                                console.debug("error while getting position...")
                 )
 
         lookupAddress: =>

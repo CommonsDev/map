@@ -50,6 +50,13 @@
 <div id="overlay-panel" ui-view>
 </div>
 
+ <div class="loading-panel" ng-show="isGeolocating">
+  <p>
+    <img src="images/loading/satililalou.png" class="blocked" />
+    <span>Geolocalisation en cours...</span>
+  </p>
+ </div>
+
  <div class="loading-panel" ng-show="isLoading">
   <p>
     <img src="images/loading/satililalou.png" class="blocked" />
