@@ -13,15 +13,16 @@ app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
 app.config(['TokenProvider', '$locationProvider', function(TokenProvider, $locationProvider) {
 		TokenProvider.extendConfig({
 					       clientId: '645581170749.apps.googleusercontent.com',
-					       redirectUri: 'http://localhost:8080',
-					       scopes: ["https://www.googleapis.com/auth/userinfo.email"],
+					       redirectUri: 'http://localhost:8080/oauth2callback.html',
+					       scopes: ["https://www.googleapis.com/auth/userinfo.email",
+							"https://www.googleapis.com/auth/userinfo.profile"],
 					   });
 	    }])
 
 
 app.config(function(RestangularProvider) {
-	       //RestangularProvider.setBaseUrl("http://192.168.2.251:8000/api/v0");
-	       RestangularProvider.setBaseUrl("http://api.gup.extra-muros.coop/api/v0");
+	       RestangularProvider.setBaseUrl("http://localhost:8000/api/v0");
+	       //RestangularProvider.setBaseUrl("http://api.gup.extra-muros.coop/api/v0");
 
 	       /* Tastypie patch */
 	       RestangularProvider.setResponseExtractor(function(response, operation, what, url) {

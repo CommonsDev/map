@@ -51,24 +51,23 @@ class LoginCtrl
 
         authenticateGoogle: =>
                 extraParams = {}
-                #if @$scope.askApproval
-                extraParams = {approval_prompt: 'force'}
+                if @$scope.askApproval
+                        extraParams = {approval_prompt: 'force'}
 
                 @Token.getTokenByPopup(extraParams).then((params) =>
                         # Verify the token before setting it, to avoid the confused deputy problem.
                         console.debug(params)
 
-                        @Token.verifyAsync(params.access_token).then((data) =>
-                                console.debug(data)
-
-                                @$rootScope.$apply(=>
-                                        @$scope.accessToken = params.access_token
-                                        @$scope.expiresIn = params.expires_in
-
-                                        @Token.set(params.access_token)
-                                )
-                        , ->
-                                alert("Failed to verify token.")
+                        @Restangular.all('account/user/login').customPOST("google", {}, {},
+                                access_token: params.access_token
+                        ).then((data) =>
+                                @$cookies.username = data.username
+                                @$cookies.key = data.key
+                                @$http.defaults.headers.common['Authorization'] = "ApiKey #{data.username}:#{data.key}"
+                                @authService.loginConfirmed()
+                        , (data) =>
+                                console.debug("LoginController submit error: #{data.reason}")
+                                @$scope.errorMsg = data.reason
                         )
                 , ->
                         # Failure getting token from popup.
