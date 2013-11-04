@@ -5,11 +5,8 @@ class LoginCtrl
         Login a user
         """
         constructor: (@$scope, @$rootScope, @$http, @Restangular, @$cookies, @authService, @Token) ->
-                # set authorization header if already logged in
-                if @$cookies.username and @$cookies.key
-                        console.debug("Already logged in.")
-                        @$http.defaults.headers.common['Authorization'] = "ApiKey #{@$cookies.username}:#{@$cookies.key}"
-                        @authService.loginConfirmed()
+                @$scope.isAuthenticated = false
+                @$scope.username = ""
                 @$scope.loginrequired = false
 
                 # On login required
@@ -22,7 +19,16 @@ class LoginCtrl
                 @$scope.$on('event:auth-loginConfirmed', =>
                         console.debug("Login OK")
                         @$scope.loginrequired = false
+                        @$scope.username = @$cookies.username
+                        @$scope.isAuthenticated = true
                 )
+
+                # set authorization header if already logged in
+                if @$cookies.username and @$cookies.key
+                        console.debug("Already logged in.")
+                        @$http.defaults.headers.common['Authorization'] = "ApiKey #{@$cookies.username}:#{@$cookies.key}"
+                        @authService.loginConfirmed()
+
 
                 @$scope.accessToken = @Token.get()
 
@@ -55,9 +61,8 @@ class LoginCtrl
                         extraParams = {approval_prompt: 'force'}
 
                 @Token.getTokenByPopup(extraParams).then((params) =>
-                        # Verify the token before setting it, to avoid the confused deputy problem.
-                        console.debug(params)
 
+                        # Verify the token before setting it, to avoid the confused deputy problem.
                         @Restangular.all('account/user/login').customPOST("google", {}, {},
                                 access_token: params.access_token
                         ).then((data) =>
