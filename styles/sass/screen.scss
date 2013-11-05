@@ -50,7 +50,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 
 /* ============= PAGE ============= */
 
-#page {
+#wrap-page, #page {
 	height:100%;
 	min-height:100%;
 }
@@ -1418,20 +1418,20 @@ body > footer {
 	min-height:100%;
 	width:100%;
 	background:#fff image-url('crea_bg.jpg') no-repeat top center;
-	padding:60px 0 0 0;
+	padding:10px 0 0 0;
 
 	.intro {
-		margin:40px auto 0;
+		margin:40px auto 20px;
 		width:870px;
 		height:225px;
 		padding-left:300px;
-		background:image-url('creamap_ico.png') no-repeat left top;
+		background:image-url('creamap_ico.png') no-repeat 46px 52px / 210px;
 
 		h1 {
 			color: white;
 		    font-size: 2.2rem;
 		    line-height: 2.5rem;
-		    padding: 5px 20px 10px 0;
+		    padding: 75px 20px 10px 0;
 		}
 
 		p {
@@ -1457,19 +1457,16 @@ body > footer {
 
 		p {
 			width:100%;
-			float:left;
+			text-align:center;
 		}
 
 		label {
 			color: white;
-		    display: block;
-		    float: left;
 		    font-size: 1.5rem;
 		    height: 36px;
 		    line-height: 36px;
 		    padding: 0 5px 0 0;
 		    text-align: right;
-		    width: 62%;
 		}
 
 		input[type="text"] {
@@ -1492,7 +1489,8 @@ body > footer {
 			font-size:1.1rem;
 			text-align:center;
 			border:0;
-			margin:35px 0 0 200px;
+			margin:35px auto 0;
+			display:block;
 			@include border-radius(5px);
 		}
 	}
