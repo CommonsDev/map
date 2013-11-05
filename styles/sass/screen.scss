@@ -888,19 +888,19 @@ body > footer {
 	margin:0 58px;
 
 	.skippy {
-	button {
-		background:#85C9FA;
-	    border: 0 none;
-	    @include border-radius(5px);
-	    color: #FFFFFF;
-	    display: block;
-	    font-size: 0.8rem;
-	    font-weight: 400;
-	    height: 42px;
-	    line-height: 42px;
-	    text-align: center;
-	    width: 225px;
-	    margin:0 0 0 90px;
+		button {
+			background:#85C9FA;
+		    border: 0 none;
+		    @include border-radius(5px);
+		    color: #FFFFFF;
+		    display: block;
+		    font-size: 0.8rem;
+		    font-weight: 400;
+		    height: 42px;
+		    line-height: 42px;
+		    text-align: center;
+		    width: 225px;
+		    margin:0 auto;
 		}
 	}
 

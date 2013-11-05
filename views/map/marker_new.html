@@ -27,9 +27,11 @@
         </h1>
         <div class="adress-form">
             <div class="find find1">
-              <label for="adress-field">Entrez l'adresse</label>
-              <input type="text" name="address" ng-model="marker.address" placeholder="Adresse du point ..." />
-              <button ng-click="lookupAddress()" class="search2"><img src="images/adress_search.png" alt="Chercher" /></button>
+              <form action="javacript:void(0)" method="post">
+                <label for="adress-field">Entrez l'adresse</label>
+                <input type="text" name="address" ng-model="marker.address" placeholder="Adresse du point ..." />
+                <button type="submit" ng-click="lookupAddress()" class="search2"><img src="images/adress_search.png" alt="Chercher" /></button>
+              </form>
             </div>
             <div class="find find2">
                 <span>Géolocalisez-vous</span>
