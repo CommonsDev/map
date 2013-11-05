@@ -2,11 +2,10 @@ services = angular.module('map.services', ['restangular'])
 
 class MapService
         constructor: (@$compile, @Restangular) ->
-                @icon = L.icon({
-                        iconUrl: '/images/pointer.png'
-                        shadowUrl: null,
-                        iconSize: [61, 61]
-                        iconAnchor: [4, 56]
+                @icon = L.AwesomeMarkers.icon({
+                        icon: 'dot-circle-o'
+                        iconColor: 'white'
+                        markerColor: 'cadetblue'
                 })
 
                 @markers = {}
@@ -30,6 +29,7 @@ class MapService
                 Given marker data, add it
                 """
                 # console.debug("adding marker #{name}...")
+                console.debug(aMarker)
                 if not aMarker.options
                         aMarker.options = {}
                 if not aMarker.options.icon
@@ -87,10 +87,17 @@ class MapService
                                 console.debug("Adding data layer...")
                                 # Add its markers
                                 for marker in layer.markers
+                                        console.debug(marker.category)
                                         this.addMarker(marker.id,
                                                 lat: marker.position.coordinates[0]
                                                 lng: marker.position.coordinates[1]
                                                 data: marker
+                                                options:
+                                                        icon: L.AwesomeMarkers.icon(
+                                                                icon: marker.category.icon_name
+                                                                markerColor: marker.category.marker_color
+                                                                iconColor: marker.category.icon_color
+                                                        )
                                         )
 
                         callback(@map)

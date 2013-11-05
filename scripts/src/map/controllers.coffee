@@ -209,13 +209,7 @@ class MapMarkerNewCtrl
                         lng: @MapService.center.lng
                         options:
                                 draggable: true
-                                icon: L.icon(
-                                        iconUrl: '/images/poi_localisation.png'
-                                        shadowUrl: null,
-                                        iconSize: [65, 75]
-                                        iconAnchor: [4, 37]
-                                )
-
+                                icon: @MapService.icon
                 @MapService.addMarker('marker_preview', @$scope.marker_preview)
 
 
@@ -283,6 +277,13 @@ class MapMarkerNewCtrl
                                 lat: marker.position.coordinates[0]
                                 lng: marker.position.coordinates[1]
                                 data: angular.copy(marker)
+                                options:
+                                        icon: L.AwesomeMarkers.icon({
+                                                icon: marker.category.icon_name
+                                                iconColor: marker.category.icon_color
+                                                markerColor: marker.category.marker_color
+                                        })
+
                         )
 
                         # Show the newly created marker

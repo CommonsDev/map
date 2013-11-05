@@ -6,6 +6,7 @@ class LeafletController
         @$scope.marker_instances = []
 
     addMarker: (lat, lng, options) =>
+        console.debug(options.icon)
         marker = new L.marker([lat, lng], options).addTo(@$scope.map)
 
         return marker
