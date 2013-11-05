@@ -1,1 +1,24 @@
-yo
+<div id="map-search">
+	<div class="container">
+		<form method="post" action="#">
+			<div class="title">
+				<h1>Recherche</h1>
+				<em>Commencez à écrire...</em>
+			</div>
+			<a href="#" class="geoloc">Géolocalisez-vous</a>
+			<input type="text" id="search-field" name="search-field" autofocus="autofocus" />
+			<input type="submit" value="Rechercher" />
+
+			<ul class="results">
+				<li><a href="#">Mon slip</a><span>, est confortable</span></li>
+				<li><a href="#">Mon slip</a><span>, est doux comme du gouda</span></li>
+				<li><a href="#">Mon slip</a><span>, est beau comme du nougat</span></li>
+			</ul>
+		</form>
+	</div>
+	<a href="#" class="close-link">Fermer</a>
+</div>
+
+<script type="text/javascript">
+	$('#search-field').focus();
+</script>
