@@ -131,6 +131,7 @@
               <img ng-src="{{uploads.picture.resized.dataURL}}" id="selected-photo" alt="preview" />
             </div>
             <button ng-click="pictureDelete()" class="trash"><img src="images/trash_bt.png" alt="effacer" /></button>
+            <button ng-click="wizard.step=4" class="accept">Valider et continuer</button>
         </div>
 
         <!-- picture being taken -->
@@ -148,6 +149,12 @@
       <!-- info -->
       <section id="add-block-4" class="add-panel-block" ng-switch-when="4">
         <a class="close-link" ui-sref="map">Fermer</a>
+        <div class="loading-panel" ng-show="isLoading">
+          <p>
+            <img src="images/loading/eolilala.png" class="spin" />
+            <span>un instant, nous chargeons vos contenus...</span>
+          </p>
+        </div>
         <h1>    
           <img src="images/steps/4.png" alt="4/4" />
           <strong>Entrez<br />  votre description</strong>

@@ -29,7 +29,6 @@
 <!-- left sidebar -->
 <div id="toolbar">
   <ul>
-    <li class="item item-position" ng-class="{'locked': positionLocked}"><button ng-click="toggleLockPosition()">Position</button></li>
     <li class="item item-search"><button ui-sref="map.search">Rechercher</button></li>
     <li class="item item-addpoi"><button ui-sref="map.marker_new">Ajouter Point</button></li>
     <li class="item item-layers"><button ui-sref="map.layers">Fond de carte</button></li>
@@ -37,6 +36,10 @@
     <li class="item item-setcenter" ng-controller="MapSettingsCtrl"><button ng-click="set_center()">Recadrer</button></li>
     <li class="item item-mymaps"><button ui-sref="map.my_maps">Mes cartes</button></li>
   </ul>
+</div>
+
+<div id="item-position" ng-class="{'locked': positionLocked}">
+  <button ng-click="toggleLockPosition()">Position</button>
 </div>
 
 <!-- overlay panel app -->

@@ -728,9 +728,9 @@ body > footer {
 	    float: left;
 	    font-size: 1.4rem;
 	    font-weight: 500;
-	    height: 80px;
+	    min-height: 80px;
 	    line-height: 1.6rem;
-	    padding: 20px 40px 0;
+	    padding: 20px 40px 10px;
 	    text-align: center;
 	    width: 100%;
 	}
@@ -984,19 +984,20 @@ body > footer {
 	}
 
 	.accept {
-		display:block;
-		text-decoration:none;
-		color:white;
-		height:50px;
-		width:230px;
-		line-height:50px;
-		width:180px;
-		font-size:1rem;
-		margin:15px auto;
-		background:#2e394b;
-		text-align:center;
-		border:1px solid white;
-		@include border-radius(25px);
+		background: none repeat scroll 0 0 #85C9FA;
+	    border: 0 none;
+	    @include border-radius(5px);
+	    color: #FFFFFF;
+	    display: block;
+	    font-size: 0.8rem;
+	    font-weight: 400;
+	    height: 42px;
+	    line-height: 42px;
+	    text-align: center;
+	    width: 225px;
+	    position:absolute;
+	    top:545px;
+	    left:148px;
 	}
 
 	a.discard {
@@ -1792,7 +1793,7 @@ body > footer {
 		border:0;
 		display:block;
 		width:100%;
-		height:64px;
+		height:108px;
 		text-transform:uppercase;
 		font-size:5rem;
 		color:#b9b9b9;
@@ -1807,6 +1808,7 @@ body > footer {
 		background:image-url('bt_search.png') no-repeat top left;
 		text-indent:-9999em;
 		margin:0 auto;
+		cursor:pointer;
 	}
 
 	.results {
@@ -1911,6 +1913,30 @@ a.close-link {
     width:28px;
     text-indent:-99999em;
     outline:0;
+}
+
+/* ================= GEOLOC POSITION ITEM ================== */
+
+#item-position {
+	position:fixed;
+	bottom:18px;
+	left:100px;
+	z-index:4px;
+
+	button {
+		height:42px;
+		width:42px;
+		display:block;
+		border:0;
+		background:rgba(255,255,255,0.8) image-url('position_item1.png') no-repeat 10px center;
+		text-indent:-9999rem;
+		@include box-shadow(0 1px 2px #666);
+		@include border-radius(4px);
+	}
+
+	&.locked button {
+		background:rgba(255,255,255,0.8) image-url('position_item2.png') no-repeat center center;
+	}
 }
 
 /* ================= LEAFLET HACKS ============= */
