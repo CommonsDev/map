@@ -63,6 +63,10 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 			       url: '/welcome',
 			       templateUrl: moduleTemplateBaseUrl + 'map_welcome.html'
 			   })
+		    .state('map.search', {
+			       url: '/search',
+			       templateUrl: moduleTemplateBaseUrl + 'map_search.html'
+			   })
 		    .state('map.marker_new', {
 			       url: '/marker/new',
 			       templateUrl: moduleTemplateBaseUrl + 'marker_new.html',

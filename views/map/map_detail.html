@@ -30,7 +30,7 @@
 <div id="toolbar">
   <ul>
     <li class="item item-position" ng-class="{'locked': positionLocked}"><button ng-click="toggleLockPosition()">Position</button></li>
-    <li class="item item-search"><button ng-click="search()">Rechercher</button></li>
+    <li class="item item-search"><button ui-sref="map.search">Rechercher</button></li>
     <li class="item item-addpoi"><button ui-sref="map.marker_new">Ajouter Point</button></li>
     <li class="item item-layers"><button ui-sref="map.layers">Fond de carte</button></li>
     <li class="item item-share"><button ui-sref="map.share">Partage</button></li>
