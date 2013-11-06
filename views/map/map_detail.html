@@ -1,9 +1,10 @@
 <!-- Définition des masques svg pour les illustrations -->
- <svg height="184" width="248" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+<!-- <svg height="184" width="248" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
       <mask id="mask1">
           <image width="248" height="184" xlink:href="/images/mask.png"></image>
       </mask>
   </svg>
+-->
 <!--
     <svg height="282" width="378" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
       <mask id="mask2">
@@ -35,6 +36,9 @@
     <li class="item item-share"><button ui-sref="map.share">Partage</button></li>
     <li class="item item-setcenter" ng-controller="MapSettingsCtrl"><button ng-click="set_center()">Recadrer</button></li>
     <li class="item item-mymaps"><button ui-sref="map.my_maps">Mes cartes</button></li>
+    <li class="connected">
+      <a href="javascript:void(0)"><img src="/images/toolbar/connected_ico.png" alt="" /></a>
+    </li>
   </ul>
 </div>
 
@@ -53,23 +57,17 @@
   </p>
  </div>
 
+ <!-- Logout panel -->
+ <div id="connected-user-block">
+    <strong>Hannah Mackay</strong>
+    <button>Déconnexion</button>
+    <span class="little-arrow">&nbsp;</span>
+ </div>
+
  <div class="loading-panel" ng-show="isLoading">
   <p>
     <img src="images/loading/satililalou.png" class="blocked" />
     <span>un instant, nous chargeons votre carte...</span>
   </p>
 </div>
-<!-- right sidebar -->
-<!--
-    <div id="sidebar">
-      <section id="default-panel">
-    	<h1>MAP</h1>
-    	<div class="actions">
-    	  <a href="/marker/detail/1">Signaler un problème</a>
-    	  <a href="/marker/new">Ajouter un point d'intêret</a>
-    	</div>
-
-      </section>
-    </div>
-    -->
 

@@ -100,68 +100,83 @@ div#background-map {
 	li:last-child button { border-bottom: 0 }
 
 	li.item-addpoi button { 
-		background:image-url('toolbar/ico_addpoi.png') no-repeat center 11px;
+		background:image-url('toolbar/ico_addpoi.png') no-repeat center 11px / 36px;
 
 		&:hover {
-			background:image-url('toolbar/ico_addpoi_active.png') no-repeat center 11px;
+			background:image-url('toolbar/ico_addpoi_active.png') no-repeat center 11px / 36px;
 		}
 	}
 
 	li.item-search {
 		button { 
-			background:image-url('toolbar/ico_search.png') no-repeat center 15px;
+			background:image-url('toolbar/ico_search.png') no-repeat center 15px / 36px;
 
 			&:hover {
-				background:image-url('toolbar/ico_search_active.png') no-repeat center 15px;
+				background:image-url('toolbar/ico_search_active.png') no-repeat center 15px / 36px;
 			}
 		}
 	}
 
 	li.item-layers {
 		button { 
-			background:image-url('toolbar/ico_layers.png') no-repeat center 15px;
+			background:image-url('toolbar/ico_layers.png') no-repeat center 15px / 36px;
 
 			&:hover {
-				background:image-url('toolbar/ico_layers_active.png') no-repeat center 15px;
+				background:image-url('toolbar/ico_layers_active.png') no-repeat center 15px / 36px;
 			}
 		}
 	}
 
 	li.item-share {
 		button { 
-			background:image-url('toolbar/ico_share.png') no-repeat center 15px;
+			background:image-url('toolbar/ico_share.png') no-repeat center 15px / 36px;
 
 			&:hover {
-				background:image-url('toolbar/ico_share_active.png') no-repeat center 15px;
+				background:image-url('toolbar/ico_share_active.png') no-repeat center 15px / 36px;
 			}
 		}
 	}
 
 	li.item-setcenter {
 		button { 
-			background:image-url('toolbar/ico_setcenter.png') no-repeat center 15px;
+			background:image-url('toolbar/ico_setcenter.png') no-repeat center 10px / 44px;
 
 			&:hover {
-				background:image-url('toolbar/ico_setcenter_active.png') no-repeat center 15px;
+				background:image-url('toolbar/ico_setcenter_active.png') no-repeat center 10px / 44px;
 			}
 		}
 	}
 
 	li.item-mymaps {
 	    position: absolute;
-	    bottom: 0px;
+	    bottom: 28px;
 		button { 
-			background:image-url('toolbar/ico_mymaps.png') no-repeat center 15px;
+			background:image-url('toolbar/ico_mymaps.png') no-repeat center 14px / 36px;
 
 			&:hover {
-				background:image-url('toolbar/ico_mymaps_active.png') no-repeat center 15px;
+				background:image-url('toolbar/ico_mymaps_active.png') no-repeat center 14px / 36px;
 			}
 		}
 	}
 
-	li.temp a {
-		height:20px;
-		line-height:20px;
+	li.connected {
+		position:absolute;
+		bottom:0;
+		height:28px;
+		text-align:center;
+		width:100%;
+
+		a {
+			display:block;
+			width:100%;
+			height:28px;
+		}
+
+		img {
+			display:inline;
+			position:relative;
+			top:4px;
+		}
 	}
 }
 
@@ -1900,6 +1915,59 @@ body > footer {
 
 }
 
+
+/* ================= CONNECTED USER BLOCK ================== */
+
+#connected-user-block {
+	position:absolute;
+	bottom:0;
+	left:90px;
+	width:240px;
+	z-index:11;
+	background:#161719;
+	padding:0 0 10px;
+	@include border-radius(3px);
+
+	strong {
+		display:block;
+		height:34px;
+		width:100%;
+		padding:0 0 0 20px;
+		font-size:0.8rem;
+		line-height:34px;
+		color:#85c9fa;
+		font-weight:bold;
+		border-bottom:1px solid #000;
+		margin:0 0 10px;
+		@include box-shadow(0 1px 0 #2e2f30);
+	}
+
+	button {
+		background:#85c9fa;
+		color:white;
+		height:32px;
+		border:0;
+		font-size:0.8rem;
+		font-style:italic;
+		display:block;
+		width:200px;
+		margin:0 auto;
+		@include border-radius(4px);
+	}
+
+	.little-arrow {
+		border-bottom: 8px solid transparent;
+	    border-right: 8px solid #161719;
+	    border-top: 8px solid transparent;
+	    height: 0;
+	    left: -8px;
+	    position: absolute;
+	    top: 64px;
+	    width: 0;
+	}
+}
+
+
 /* ================= CLOSE LINK ================== */
 
 a.close-link {
@@ -1913,6 +1981,7 @@ a.close-link {
     width:28px;
     text-indent:-99999em;
     outline:0;
+    z-index:1000;
 }
 
 /* ================= GEOLOC POSITION ITEM ================== */
@@ -1928,14 +1997,14 @@ a.close-link {
 		width:42px;
 		display:block;
 		border:0;
-		background:rgba(255,255,255,0.8) image-url('position_item1.png') no-repeat 10px center;
+		background:white image-url('position_item1.png') no-repeat 10px center;
 		text-indent:-9999rem;
 		@include box-shadow(0 1px 2px #666);
 		@include border-radius(4px);
 	}
 
 	&.locked button {
-		background:rgba(255,255,255,0.8) image-url('position_item2.png') no-repeat center center;
+		background:white image-url('position_item2.png') no-repeat center center;
 	}
 }
 
