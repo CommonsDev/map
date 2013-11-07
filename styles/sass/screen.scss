@@ -1791,7 +1791,7 @@ body > footer {
 		}
 	}
 
-	a.geoloc {
+	button.geoloc {
 		background:#b9b9b9 image-url('geoloc_ico.png') no-repeat 10px center;
 		color:white;
 		display:block;
@@ -1803,6 +1803,7 @@ body > footer {
 		position:absolute;
 		top:10px;
 		right:0;
+		border:0;
 		@include border-radius(5px);
 	}
 
@@ -1818,7 +1819,7 @@ body > footer {
 		margin:36px 0;
 	}
 
-	input[type="submit"] {
+	button[type="submit"] {
 		height:66px;
 		width:66px;
 		display:block;
@@ -1827,6 +1828,7 @@ body > footer {
 		text-indent:-9999em;
 		margin:0 auto;
 		cursor:pointer;
+		border:0;
 	}
 
 	.results {
