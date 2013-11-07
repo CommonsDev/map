@@ -549,6 +549,7 @@ body > footer {
 	background:rgba(255,255,255,1);
 	overflow:hidden;
 	@include box-shadow(3px 0px 10px #666);
+	z-index:20;
 }
 
 #intercalar {
@@ -559,6 +560,7 @@ body > footer {
 	min-height:100%;
 	width:38px;
 	background:#303030;
+	z-index:20;
 
 	ul {
 		margin:40px 0 0;
@@ -1369,7 +1371,7 @@ body > footer {
 	top:0;
 	left:0;
 	width:100%;
-	z-index:1000;
+	z-index:15;
 
 	.wrap {
 		width:100%;
