@@ -4,7 +4,7 @@ class LoginCtrl
         """
         Login a user
         """
-        constructor: (@$scope, @$rootScope, @$http, @Restangular, @$cookies, @authService, @Token) ->
+        constructor: (@$scope, @$rootScope, @$http, @$state, @Restangular, @$cookies, @authService, @Token) ->
                 @$scope.isAuthenticated = false
                 @$scope.username = ""
                 @$scope.loginrequired = false
@@ -36,9 +36,20 @@ class LoginCtrl
                 @$scope.submit = this.submit
                 @$scope.authenticateGoogle = this.authenticateGoogle
                 @$scope.forceLogin = this.forceLogin
+                @$scope.logout = this.logout
 
         forceLogin: =>
                 @$scope.loginrequired = true
+
+        logout: =>
+                @$scope.isAuthenticated = false
+                delete @$http.defaults.headers.common['Authorization']
+                delete @$cookies['username']
+                delete @$cookies['key']
+                @$scope.username = ""
+
+                @$state.go('index')
+
 
         submit: =>
                 console.debug('submitting login...')
@@ -79,6 +90,6 @@ class LoginCtrl
                         alert("Failed to get token from popup.")
                 )
 
-LoginCtrl.$inject = ['$scope', '$rootScope', "$http", "Restangular", "$cookies", "authService", "Token"]
+LoginCtrl.$inject = ['$scope', '$rootScope', "$http", "$state", "Restangular", "$cookies", "authService", "Token"]
 
 module.controller("LoginCtrl", LoginCtrl)
