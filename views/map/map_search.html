@@ -1,20 +1,22 @@
 <div id="map-search">
 	<div class="container">
-		<form method="post" action="#">
+		<ng-form name="form">
 			<div class="title">
 				<h1>Recherche</h1>
 				<em>Commencez à écrire...</em>
 			</div>
-			<a href="#" class="geoloc">Géolocalisez-vous</a>
-			<input type="text" id="search-field" name="search-field" autofocus="autofocus" />
-			<input type="submit" value="Rechercher" />
+			<button ng-click="geolocateMarker()" class="geoloc">Géolocalisez-vous</button>
+			<input type="text" id="search_field" name="search_field" autofocus="autofocus" />
+			<button ng-click="lookupAddress()">Rechercher</button>
 
+			<!--
 			<ul class="results">
 				<li><a href="#">Mon slip</a><span>, est confortable</span></li>
 				<li><a href="#">Mon slip</a><span>, est doux comme du gouda</span></li>
 				<li><a href="#">Mon slip</a><span>, est beau comme du nougat</span></li>
 			</ul>
-		</form>
+			-->
+		</ng-form>
 	</div>
 	<a ui-sref="map" class="close-link">Fermer</a>
 </div>

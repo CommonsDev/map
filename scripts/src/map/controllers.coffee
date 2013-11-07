@@ -1,5 +1,26 @@
 module = angular.module('map.controllers', ['imageupload', 'restangular'])
 
+class MapSearchCtrl
+        constructor: (@$scope, @$rootScope, @MapService, @Restangular, @geolocation) ->
+                @$scope.lookupAddress = this.lookupAddress
+
+        lookupAddress: =>
+                """
+                Given an address, find lat/lng
+                """
+                console.debug("looking up #{@$scope.form.search_field}")
+                pos_promise = @geolocation.lookupAddress(@$scope.form.search_field).then((coords)=>
+                        console.debug("Found pos #{coords}")
+
+                        # Focus on new position
+                        @MapService.center =
+                                lat: @$scope.marker_preview.lat
+                                lng: @$scope.marker_preview.lng
+                                zoom: 15
+
+                )
+
+
 class MapDetailCtrl
         """
         Base controller for interacting with a map
@@ -266,6 +287,7 @@ class MapMarkerNewCtrl
                 # Now save the marker
                 console.debug("saving...")
                 console.debug(@$scope.marker)
+                @$scope.isUploading = true
                 @Restangular.all('scout/marker').post(@$scope.marker).then((marker) =>
                         console.debug("new marker saved")
 
@@ -285,6 +307,8 @@ class MapMarkerNewCtrl
                                         })
 
                         )
+
+                        @$scope.isUploading = false
 
                         # Show the newly created marker
                         @$state.go('map.marker_detail', {markerId: marker.id})
@@ -430,3 +454,4 @@ module.controller("MapMyMapsCtrl", ['$scope', '$state', 'Restangular', 'MapServi
 module.controller("MapSettingsCtrl", ['$scope', '$rootScope', '$state', 'Restangular', 'MapService', MapSettingsCtrl])
 module.controller("MapShareCtrl", ['$scope', '$location', '$state', 'Restangular', 'MapService', MapShareCtrl])
 module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$state', '$location', 'MapService', 'Restangular', 'geolocation', MapMarkerNewCtrl])
+module.controller("MapSearchCtrl", ['$scope', '$rootScope', 'MapService', 'Restangular', 'geolocation', MapSearchCtrl])

@@ -21,8 +21,8 @@ app.config(['TokenProvider', '$locationProvider', function(TokenProvider, $locat
 
 
 app.config(function(RestangularProvider) {
-	       //RestangularProvider.setBaseUrl("http://localhost:8000/api/v0");
-	       RestangularProvider.setBaseUrl("http://api.gup.extra-muros.coop/api/v0");
+	       RestangularProvider.setBaseUrl("http://localhost:8000/api/v0");
+	       //RestangularProvider.setBaseUrl("http://api.gup.extra-muros.coop/api/v0");
 
 	       /* Tastypie patch */
 	       RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
@@ -65,7 +65,8 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 			   })
 		    .state('map.search', {
 			       url: '/search',
-			       templateUrl: moduleTemplateBaseUrl + 'map_search.html'
+			       templateUrl: moduleTemplateBaseUrl + 'map_search.html',
+			       controller: 'MapSearchCtrl'
 			   })
 		    .state('map.marker_new', {
 			       url: '/marker/new',

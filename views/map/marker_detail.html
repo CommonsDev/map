@@ -5,15 +5,14 @@
         <img ng-src="{{ MEDIA_URI }}{{ marker.picture }}" height="282" width="378" alt="{{ marker.title }}"/>
       </div>
       <div class="author">
-        <img src="/images/_TEMP/dave.png" alt="Dave" />
+        <img src="/images/_TEMP/generic_avatar.gif" alt="Avatar" width="60px" />
         <em>{{ marker.created_by.username }}</em>
         <span>{{ marker.created_on | fromNow }}</span>
       </div>
     </header>
     <div class="inner">
       <p>
-        Grand place, centre ville <br />
-        59000 Lille.
+        {{ marker.address }}
       </p>
       <ul class="social">
         <li><a href="http://twitter.com/home?status=Venez%20voir%20mon%20super%20marqueur" title="partager sur twitter"><img src="/images/ico_twitter.png" alt="twitter" /></a></li>
