@@ -170,6 +170,7 @@ div#background-map {
 			display:block;
 			width:100%;
 			height:28px;
+			outline:0;
 		}
 
 		img {
@@ -1919,6 +1920,7 @@ body > footer {
 /* ================= CONNECTED USER BLOCK ================== */
 
 #connected-user-block {
+	display:none;
 	position:absolute;
 	bottom:0;
 	left:90px;
@@ -1927,6 +1929,10 @@ body > footer {
 	background:#161719;
 	padding:0 0 10px;
 	@include border-radius(3px);
+
+	&.show {
+		display:block;
+	}
 
 	strong {
 		display:block;
@@ -2021,6 +2027,10 @@ a.close-link {
 	@include box-shadow(none);
 }
 
+.leaflet-container a {
+	outline:0;
+	text-decoration:none;
+}
 
 .leaflet-container a.leaflet-popup-close-button {
     background: none repeat scroll 0 0 black;
