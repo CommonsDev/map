@@ -6,7 +6,6 @@ class LeafletController
         @$scope.marker_instances = []
 
     addMarker: (lat, lng, options) =>
-        console.debug(options.icon)
         marker = new L.marker([lat, lng], options).addTo(@$scope.map)
 
         return marker
@@ -38,7 +37,7 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
             $scope.map = new L.Map($el,
                 zoomControl: true
                 zoomAnimation: true
-                crs: L.CRS.EPSG4326
+                # crs: L.CRS.EPSG4326
             )
 
             # Change callback
@@ -164,11 +163,13 @@ module.directive("leafletMarker", ($timeout) ->
         link: ($scope, $elem, attrs, ctrl) ->
             marker_instance = ctrl.addMarker($scope.marker.lat, $scope.marker.lng, $scope.marker.options)
             $scope.marker.instance = marker_instance
+            marker_instance.getLatLng()
 
             # Marker lat/lng changes
             $scope.$watch("marker.lat", (newValue, oldValue) ->
                 if $scope.marker.dragging or not newValue
                     return
+                console.debug($scope.marker)
                 $scope.marker.instance.setLatLng(new L.LatLng(newValue, $scope.marker.instance.getLatLng().lng))
             )
 

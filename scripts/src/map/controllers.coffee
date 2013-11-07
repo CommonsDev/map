@@ -1,23 +1,46 @@
 module = angular.module('map.controllers', ['imageupload', 'restangular'])
 
 class MapSearchCtrl
-        constructor: (@$scope, @$rootScope, @MapService, @Restangular, @geolocation) ->
+        constructor: (@$scope, @$rootScope, @$state, @MapService, @Restangular, @geolocation) ->
                 @$scope.lookupAddress = this.lookupAddress
+                @$scope.geolocate = this.geolocate
+
+                @$scope.form =
+                        address: ""
+
+        geolocate: =>
+                p = @geolocation.position().then(
+                        (pos) =>
+                                console.debug("Resolving #{pos.coords.latitude}")
+
+                                # Focus on new location
+                                @MapService.center =
+                                        lat: pos.coords.latitude
+                                        lng: pos.coords.longitude
+                                        zoom: 20
+
+                                @$state.go('map')
+
+                        , (reason) =>
+                                console.debug("error while getting position...")
+                )
+
 
         lookupAddress: =>
                 """
                 Given an address, find lat/lng
                 """
-                console.debug("looking up #{@$scope.form.search_field}")
-                pos_promise = @geolocation.lookupAddress(@$scope.form.search_field).then((coords)=>
+                console.debug("looking up #{@$scope.form.address}")
+                pos_promise = @geolocation.lookupAddress(@$scope.form.address).then((coords)=>
                         console.debug("Found pos #{coords}")
 
                         # Focus on new position
                         @MapService.center =
-                                lat: @$scope.marker_preview.lat
-                                lng: @$scope.marker_preview.lng
-                                zoom: 15
+                                lat: coords[0]
+                                lng: coords[1]
+                                zoom: 20
 
+                        @$state.go('map')
                 )
 
 
@@ -193,6 +216,9 @@ class MapMarkerNewCtrl
                 width = 320
                 height = 240
 
+                console.debug("Mapservice")
+                console.debug(MapService)
+
                 @$scope.marker_categories_loading = true
 
                 video = document.querySelector("#video")
@@ -233,9 +259,9 @@ class MapMarkerNewCtrl
                                 icon: @MapService.icon
                 @MapService.addMarker('marker_preview', @$scope.marker_preview)
 
-
-                # Geolocation
-                # this.geolocateMarker()
+                $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) =>
+                        @MapService.removeMarker('marker_preview')
+                )
 
                 # Wizard Steps
                 @$scope.wizard =
@@ -270,6 +296,8 @@ class MapMarkerNewCtrl
                 Submit the form to create a new point
                 """
                 # XXX Hacky, hardcoded
+                console.debug(@MapService)
+
                 console.debug(@MapService.getCurrentDataLayer())
                 @$scope.marker.data_layer = @MapService.getCurrentDataLayer().resource_uri
 
@@ -454,4 +482,4 @@ module.controller("MapMyMapsCtrl", ['$scope', '$state', 'Restangular', 'MapServi
 module.controller("MapSettingsCtrl", ['$scope', '$rootScope', '$state', 'Restangular', 'MapService', MapSettingsCtrl])
 module.controller("MapShareCtrl", ['$scope', '$location', '$state', 'Restangular', 'MapService', MapShareCtrl])
 module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$state', '$location', 'MapService', 'Restangular', 'geolocation', MapMarkerNewCtrl])
-module.controller("MapSearchCtrl", ['$scope', '$rootScope', 'MapService', 'Restangular', 'geolocation', MapSearchCtrl])
+module.controller("MapSearchCtrl", ['$scope', '$rootScope', '$state', 'MapService', 'Restangular', 'geolocation', MapSearchCtrl])
