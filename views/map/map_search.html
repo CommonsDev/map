@@ -6,7 +6,7 @@
 				<em>Commencez à écrire...</em>
 			</div>
 			<button ng-click="geolocate()" class="geoloc">Géolocalisez-vous</button>
-			<input type="text" ng-model="form.address" id="search-field" name="search-field" autofocus="autofocus" />
+			<input type="text" ng-model="form.address" id="search-field" name="search-field" autofocus="autofocus" autocomplete="off"/>
 			<button type="submit" ng-click="lookupAddress()">Rechercher</button>
 
 			<!--
