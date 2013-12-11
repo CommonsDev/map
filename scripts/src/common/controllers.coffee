@@ -53,9 +53,10 @@ class LoginCtrl
 
         submit: =>
                 console.debug('submitting login...')
-                @Restangular.all('account/user').customPOST("login", {}, {},
-                                username: @$scope.username
-                                password: @$scope.password
+                @Restangular.all('account/user').customPOST(
+                        username: @$scope.username
+                        password: @$scope.password
+                        ,"login", {}, {}
                         ).then((data) =>
                                 @$cookies.username = data.username
                                 @$cookies.key = data.key
@@ -74,8 +75,9 @@ class LoginCtrl
                 @Token.getTokenByPopup(extraParams).then((params) =>
 
                         # Verify the token before setting it, to avoid the confused deputy problem.
-                        @Restangular.all('account/user/login').customPOST("google", {}, {},
+                        @Restangular.all('account/user/login').customPOST(
                                 access_token: params.access_token
+                                ,"google", {}, {}
                         ).then((data) =>
                                 @$cookies.username = data.username
                                 @$cookies.key = data.key
