@@ -74,10 +74,22 @@ class MapDetailCtrl
                 if not @$scope.positionLocked
                         @geolocation.watchPosition((position)=>
                                 @$scope.$apply(=>
+                                        # Center & Zoom map
                                         @MapService.center =
                                                 lat: position.coords.latitude
                                                 lng: position.coords.longitude
                                                 zoom: 25
+
+                                        # Create or update geolocation marker
+                                        if "geoloc_marker" in @MapService.markers
+                                                marker = @MapService.markers["geoloc_marker"]
+                                                marker.lat = position.coords.latitude
+                                                marker.lng = position.coords.longitude
+                                        else
+                                                @MapService.addMarker("geoloc_marker",
+                                                        lat: position.coords.latitude
+                                                        lng: position.coords.longitude
+                                                )
                                 )
                                 console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
                         )
@@ -176,6 +188,7 @@ class MapTileLayersCtrl
                 @$scope.isLoading = true
                 @$scope.available_layers = []
 
+                # When changing tile layer
                 @$scope.$watch('form.selected_layer', (tilelayer_idx) =>
                         if @$scope.isLoading
                                 return
@@ -187,6 +200,7 @@ class MapTileLayersCtrl
                         @MapService.map.patch()
                 )
 
+                # Get a list of available tile layers
                 @Restangular.all("scout/tilelayer").getList().then((layers) =>
                         console.debug("layers loaded")
                         @$scope.available_layers = angular.copy(layers)

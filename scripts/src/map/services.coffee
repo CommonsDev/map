@@ -38,6 +38,9 @@ class MapService
 
                 @markers[name] = aMarker
 
+                return aMarker
+
+
         removeMarker: (name) =>
                 """
                 Given a name (key), remove it from the marker list
@@ -84,6 +87,8 @@ class MapService
                                         zoom: 12
 
                         # Add data layers
+                        @markers = {}
+
                         for layer in aMap.data_layers
                                 console.debug("Adding data layer...")
                                 # Add its markers
