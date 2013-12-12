@@ -10,6 +10,13 @@ app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'ngAnimate', 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
 
+// CORS
+app.config(['$httpProvider', function ($httpProvider) {
+		$httpProvider.defaults.useXDomain = true;
+		delete $httpProvider.defaults.headers.common['X-Requested-With'];
+}
+]);
+
 app.config(['TokenProvider', '$locationProvider', function(TokenProvider, $locationProvider) {
 		TokenProvider.extendConfig({
 					       clientId: '645581170749.apps.googleusercontent.com',
