@@ -1,4 +1,4 @@
-module = angular.module('map.controllers', ['imageupload', 'restangular'])
+module = angular.module('map.controllers', ['imageupload', 'angularFileUpload', 'restangular'])
 
 class MapSearchCtrl
         constructor: (@$scope, @$rootScope, @$state, @MapService, @Restangular, @geolocation) ->
@@ -226,12 +226,9 @@ class MapMarkerNewCtrl
         """
         Wizard to create a new marker
         """
-        constructor: (@$scope, @$rootScope, @debounce, @$state, @$location, @MapService, @Restangular, @geolocation) ->
+        constructor: (@$scope, @$rootScope, @debounce, @$state, @$upload, @$location, @MapService, @Restangular, @geolocation) ->
                 width = 320
                 height = 240
-
-                console.debug("Mapservice")
-                console.debug(MapService)
 
                 @$scope.marker_categories_loading = true
 
@@ -293,6 +290,7 @@ class MapMarkerNewCtrl
                 @$scope.pictureDelete = this.pictureDelete
                 @$scope.geolocateMarker = this.geolocateMarker
                 @$scope.lookupAddress = this.lookupAddress
+                @$scope.onFileSelect = this.onFileSelect
 
                 # Use debounce to prevent multiple calls
                 @$scope.on_marker_preview_moved = @debounce(this.on_marker_preview_moved, 2)
@@ -302,7 +300,18 @@ class MapMarkerNewCtrl
                         @$scope.on_marker_preview_moved()
                 )
 
-                # @$rootScope.page_title = "#{@MapService.map.name} | Ajouter un POI"
+        onFileSelect: (files) =>
+                # $files: an array of files selected, each file has name, size, and type.
+                for file in files
+                        @$scope.upload = @$upload.upload(
+                                url: "http://localhost:8000/bucket/upload/"
+                                data: {bucket: @MapService.map.bucket.id},
+                                file: file,
+                        ).progress((evt) =>
+                                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                        ).success((data, status, headers, config) =>
+                                @$scope.marker.picture_url = data[0].thumbnail_url
+                        );
 
 
         submitForm: =>
@@ -310,18 +319,7 @@ class MapMarkerNewCtrl
                 Submit the form to create a new point
                 """
                 # XXX Hacky, hardcoded
-                console.debug(@MapService)
-
-                console.debug(@MapService.getCurrentDataLayer())
                 @$scope.marker.data_layer = @MapService.getCurrentDataLayer().resource_uri
-
-                # Prepare file upload
-                if @$scope.uploads.picture
-                        console.debug(@$scope.uploads.picture)
-                        @$scope.marker.picture =
-                                name: @$scope.uploads.picture.file.name
-                                file: @$scope.uploads.picture.dataURL.replace(/^data:image\/(png|jpg|jpeg);base64,/, "")
-                                content_type: @$scope.uploads.picture.file.type
 
                 # Use 'pk' for category
                 # @$scope.marker.category = {'pk': @$scope.marker.category}
@@ -495,5 +493,5 @@ module.controller("MapTileLayersCtrl", ['$scope', '$stateParams', 'Restangular',
 module.controller("MapMyMapsCtrl", ['$scope', '$state', 'Restangular', 'MapService', MapMyMapsCtrl])
 module.controller("MapSettingsCtrl", ['$scope', '$rootScope', '$state', 'Restangular', 'MapService', MapSettingsCtrl])
 module.controller("MapShareCtrl", ['$scope', '$location', '$state', 'Restangular', 'MapService', MapShareCtrl])
-module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$state', '$location', 'MapService', 'Restangular', 'geolocation', MapMarkerNewCtrl])
+module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$state', '$upload', '$location', 'MapService', 'Restangular', 'geolocation', MapMarkerNewCtrl])
 module.controller("MapSearchCtrl", ['$scope', '$rootScope', '$state', 'MapService', 'Restangular', 'geolocation', MapSearchCtrl])
