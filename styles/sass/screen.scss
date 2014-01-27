@@ -1684,6 +1684,10 @@ body > footer {
 			}
 		}
 
+		&:hover {
+			background-color:#eee;
+		}
+
 
 		label {
 			font-size:0.9rem;
@@ -1697,6 +1701,10 @@ body > footer {
 			display:block;
 			padding:5px 0 0 0;
 			font-style:italic;
+		}
+
+		input {
+			display:none;
 		}
 	}
 
