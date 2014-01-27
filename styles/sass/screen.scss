@@ -1638,8 +1638,9 @@ body > footer {
 	}
 
 	li {
-		margin:0 0 10px;
-		padding:0 20px 0 90px;
+		margin:0 0 10px 50px;
+		padding:10px 20px 10px 90px;
+		@include border-radius(10px);
 
 		&.contrib {
 			background:image-url('share_ico_contrib.png') no-repeat 10px center;
@@ -1653,9 +1654,35 @@ body > footer {
 			background:image-url('share_ico_publi.png') no-repeat 10px center;
 		}
 
+		&.active {
+			background-color:#85c9fa;
+
+			label {
+				color:white;
+			}
+
+			em {
+				color:white;
+			}
+
+			&.contrib {
+				background:#85c9fa image-url('share_ico_contrib_on.png') no-repeat 10px center;
+			}
+
+			&.consult {
+				background:#85c9fa image-url('share_ico_consul_on.png') no-repeat 10px center;
+			}
+
+			&.publi {
+				background:#85c9fa image-url('share_ico_publi_on.png') no-repeat 10px center;
+			}
+		}
+
 
 		label {
 			font-size:0.9rem;
+			color:#85c9fa;
+			font-weight:bold;
 		}
 
 		em {
@@ -1668,11 +1695,11 @@ body > footer {
 	}
 
 	p {
-		margin:20px 40px 0 125px;
+		margin:20px 40px 0 90px;
 		background:#ddd;
 		padding:10px 15px 15px;
 		float:left;
-		width:320px;
+		width:378px;
 		font-size:0.75rem;
 		line-height:1.25rem;
 		@include border-radius(8px);

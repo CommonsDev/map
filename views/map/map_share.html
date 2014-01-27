@@ -8,23 +8,23 @@
       <strong>Choisissez le niveau<br /> de partage de cette carte</strong>
       <span>Attention, si ces données sont confidentielles<br /> partagez avec précaution</span>
     </h1>
-    
+    <form>
     <ul>
-      <li class="consult">
-	<input type="radio" name="security" ng-value="readonly" ng-model="form.security" id="readonly"/>
+      <li class="consult" ng-class="{active:readonly==form.privacy_level}">
+	<input type="radio" name="security" ng-value="readonly" ng-model="form.privacy_level" id="readonly"/>
         <label for="readonly">Consultatif</label><br />
 	<em>Vous seul pouvez configurer la carte et ajouter des éléments.</em>
       </li>
 
       <li class="contrib">
-	<input type="radio" name="security" ng-value="contributive" ng-model="form.security" id="contributive"/>
+	<input type="radio" name="security" ng-value="contributive" ng-model="form.privacy_level" id="contributive"/>
         <label for="contributive">Contributif</label><br />
 	<em>Vous seul pouvez configurer la carte mais chacun peut ajouter des éléments.</em>
       </li>
 
 
       <li class="publi">
-	<input type="radio" name="security" ng-value="public" ng-model="form.security" id="public"/>
+	<input type="radio" name="security" ng-value="public" ng-model="form.privacy_level" id="public"/>
         <label for="public">Publique</label><br />
 	<em>Tout le monde peut configurer la carte et ajouter des éléments.</em>
       </li>
@@ -37,6 +37,6 @@
     </p>
 
     <button class="valid">Valider les changements</button>
-
+  </form>
   </div>
 
