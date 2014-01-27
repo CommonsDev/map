@@ -222,6 +222,10 @@ class MapShareCtrl
                 @$scope.$location = @$location
                 @$scope.map = @MapService.map
 
+                @$scope.form =
+                        privacy_level: 'readonly'
+
+
 class MapMarkerNewCtrl
         """
         Wizard to create a new marker

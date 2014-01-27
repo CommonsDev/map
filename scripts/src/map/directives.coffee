@@ -169,7 +169,6 @@ module.directive("leafletMarker", ($timeout) ->
             $scope.$watch("marker.lat", (newValue, oldValue) ->
                 if $scope.marker.dragging or not newValue
                     return
-                console.debug($scope.marker)
                 $scope.marker.instance.setLatLng(new L.LatLng(newValue, $scope.marker.instance.getLatLng().lng))
             )
 

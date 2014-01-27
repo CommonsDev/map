@@ -1,30 +1,30 @@
 <div id="intercalar" ng-controller="MapShareCtrl">
   <span class="caption">Ajustez le niveau de partage</span>
-</div>
+
   <div id="intercalar-panel" class="map-share-panel">
     <a class="close-link" ui-sref="map">Fermer</a>
     <h1>    
       <img src="images/share_ico.png" alt="" />
-      <strong>Choisissez le niveau<br /> de partage de cette carte</strong>
-      <span>Attention, si ces données sont confidentielles<br /> partagez avec précaution</span>
+      <strong>Niveau de partage de cette carte</strong>
+      <span>Le niveau de partage définit qui peut voir et faire quoi.</span>
     </h1>
-    <form>
+    <ng-form name="form">
     <ul id="privacy-list">
-      <li class="consult" ng-class="{active:readonly==form.privacy_level}">
-	<input type="radio" name="security" ng-value="readonly" ng-model="form.privacy_level" id="readonly"/>
+      <li class="consult" ng-class="{active: form.privacy_level == 'readonly'}">
+	<input type="radio" name="privacy_level" value="readonly" ng-model="form.privacy_level" id="readonly"/>
         <label for="readonly">Consultatif</label><br />
 	<em>Vous seul pouvez configurer la carte et ajouter des éléments.</em>
       </li>
 
-      <li class="contrib">
-	<input type="radio" name="security" ng-value="contributive" ng-model="form.privacy_level" id="contributive"/>
+      <li class="contrib" ng-class="{active: form.privacy_level == 'contributive'}">
+	<input type="radio" name="privacy_level" value="contributive" ng-model="form.privacy_level" id="contributive"/>
         <label for="contributive">Contributif</label><br />
 	<em>Vous seul pouvez configurer la carte mais chacun peut ajouter des éléments.</em>
       </li>
 
 
-      <li class="publi">
-	<input type="radio" name="security" ng-value="public" ng-model="form.privacy_level" id="public"/>
+      <li class="publi" ng-class="{active: form.privacy_level == 'public'}">
+	<input type="radio" name="privacy_level" value="public" ng-model="form.privacy_level" id="public"/>
         <label for="public">Publique</label><br />
 	<em>Tout le monde peut configurer la carte et ajouter des éléments.</em>
       </li>
@@ -33,9 +33,10 @@
 
     <p>
       Pour partager cette carte, envoyez ce lien :
-      <input type="text" length="125" value="{{ $location.protocol() + '://' + $location.host() + '/' + $state.href('map', {'map': map.slug}) }}"/>
+      <input type="text" length="125" value="{{ $state.href('map', {'map': map.slug}, {'absolute': true}) }}"/>
     </p>
 
-    <button class="valid">Valider les changements</button>
+    <!-- <button class="valid">Valider les changements</button>-->
   </form>
   </div>
+</div>
