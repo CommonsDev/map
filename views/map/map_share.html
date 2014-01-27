@@ -10,20 +10,20 @@
     </h1>
     
     <ul>
-      <li>
+      <li class="consult">
 	<input type="radio" name="security" ng-value="readonly" ng-model="form.security" id="readonly"/>
         <label for="readonly">Consultatif</label><br />
 	<em>Vous seul pouvez configurer la carte et ajouter des éléments.</em>
       </li>
 
-      <li>
+      <li class="contrib">
 	<input type="radio" name="security" ng-value="contributive" ng-model="form.security" id="contributive"/>
         <label for="contributive">Contributif</label><br />
 	<em>Vous seul pouvez configurer la carte mais chacun peut ajouter des éléments.</em>
       </li>
 
 
-      <li>
+      <li class="publi">
 	<input type="radio" name="security" ng-value="public" ng-model="form.security" id="public"/>
         <label for="public">Publique</label><br />
 	<em>Tout le monde peut configurer la carte et ajouter des éléments.</em>
@@ -35,6 +35,8 @@
       Pour partager cette carte, envoyez ce lien :
       <input type="text" length="125" value="{{ $location.protocol() + '://' + $location.host() + '/' + $state.href('map', {'map': map.slug}) }}"/>
     </p>
+
+    <button class="valid">Valider les changements</button>
 
   </div>
 
