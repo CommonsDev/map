@@ -9,7 +9,7 @@
       <span>Attention, si ces données sont confidentielles<br /> partagez avec précaution</span>
     </h1>
     <form>
-    <ul>
+    <ul id="privacy-list">
       <li class="consult" ng-class="{active:readonly==form.privacy_level}">
 	<input type="radio" name="security" ng-value="readonly" ng-model="form.privacy_level" id="readonly"/>
         <label for="readonly">Consultatif</label><br />
@@ -39,4 +39,3 @@
     <button class="valid">Valider les changements</button>
   </form>
   </div>
-

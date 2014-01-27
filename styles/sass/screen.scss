@@ -1556,6 +1556,11 @@ body > footer {
 		img {
 			display:block;
 			@include border-radius(15px);
+			@include transition(all ease 0.2s);
+
+			&:hover {
+				@include opacity(0.5);
+			}
 		}
 
 		label {
@@ -1641,6 +1646,7 @@ body > footer {
 		margin:0 0 10px 50px;
 		padding:10px 20px 10px 90px;
 		@include border-radius(10px);
+		cursor:pointer;
 
 		&.contrib {
 			background:image-url('share_ico_contrib.png') no-repeat 10px center;
