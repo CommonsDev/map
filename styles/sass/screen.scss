@@ -1782,10 +1782,9 @@ body > footer {
 	li {
 		margin:0 40px;
 		height:40px;
-		width:80%;
+		width:72%;
 		display:block;
 		line-height:30px;
-		@include transition(all ease 0.3s);
 		@include border-radius(5px);
 
 		&:hover {
@@ -1806,7 +1805,6 @@ body > footer {
 			height:40px;
 			line-height:40px;
 			text-decoration:none;
-			@include transition(all ease 0.3s);
 		}
 	}
 }
