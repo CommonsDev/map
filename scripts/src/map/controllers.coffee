@@ -225,6 +225,13 @@ class MapShareCtrl
                 @$scope.form =
                         privacy_level: 'readonly'
 
+                # Bind methods to scope
+                @$scope.changePrivacyLevel = this.changePrivacyLevel
+
+        changePrivacyLevel: (level) =>
+                @$scope.form.privacy_level = level
+
+
 
 class MapMarkerNewCtrl
         """

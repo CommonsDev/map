@@ -10,20 +10,20 @@
     </h1>
     <ng-form name="form">
     <ul id="privacy-list">
-      <li class="consult" ng-class="{active: form.privacy_level == 'readonly'}">
+      <li class="consult" ng-class="{active: form.privacy_level == 'readonly'}" ng-click="changePrivacyLevel('readonly')">
 	<input type="radio" name="privacy_level" value="readonly" ng-model="form.privacy_level" id="readonly"/>
         <label for="readonly">Consultatif</label><br />
 	<em>Vous seul pouvez configurer la carte et ajouter des éléments.</em>
       </li>
 
-      <li class="contrib" ng-class="{active: form.privacy_level == 'contributive'}">
+      <li class="contrib" ng-class="{active: form.privacy_level == 'contributive'}" ng-click="changePrivacyLevel('contributive')">
 	<input type="radio" name="privacy_level" value="contributive" ng-model="form.privacy_level" id="contributive"/>
         <label for="contributive">Contributif</label><br />
 	<em>Vous seul pouvez configurer la carte mais chacun peut ajouter des éléments.</em>
       </li>
 
 
-      <li class="publi" ng-class="{active: form.privacy_level == 'public'}">
+      <li class="publi" ng-class="{active: form.privacy_level == 'public'}" ng-click="changePrivacyLevel('public')">
 	<input type="radio" name="privacy_level" value="public" ng-model="form.privacy_level" id="public"/>
         <label for="public">Publique</label><br />
 	<em>Tout le monde peut configurer la carte et ajouter des éléments.</em>
