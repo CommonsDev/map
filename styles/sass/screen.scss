@@ -846,31 +846,67 @@ body > footer {
 		background:#212121;
 
 		ul {
-			width:258px;
+			width:340px;
 			margin:21px auto 0;
 
 			li {
 				display:block;
-				width:86px;
+				width:93px;
 				height:90px;
 				float:left;
+				margin:10px;
 
 				label {
 					display:block;
 					cursor:pointer;
-					width:86px;
-					height:86px;
-					padding-top:60px;
+					width:93px;
+					position:relative;
+					height:94px;
 					color:#6b6a6a;
 					text-decoration:none;
 					text-align:center;
-					background:image-url('_TEMP/bt1.png') no-repeat top center;
+					padding:8px 0 0 0;
+					@include border-radius(8px);
+
+					span {
+						color:white;
+						display:block;
+						width:100%;
+						text-align:center;
+					}
+				}
+
+				.amazing-marker {
+					display:block;
+					height:54px;
+					width:54px;
+					margin:0 auto 5px;
+					@include border-radius(27px);
+
+					&.red { background:#d33d2a }
+					&.darkred { background:#a23336 }
+					&.orange { background:#f69730 }
+					&.green { background:#72af26 }
+					&.darkgreen { background:#728224 }
+					&.blue { background:#38aadd }
+					&.darkblue { background:#00639e }
+					&.purple { background:#d252b9 }
+					&.darkpurple { background:#5b396b }
+					&.cadetblue { background:#436978 }
+
+					i {
+						font-size:1.5rem;
+						line-height:54px;
+					}
+
+					.icon-white { color:white }	
+					.icon-black { color:black }
 				}
 
 				input[type="radio"] { display:none; }
 
 				input[type="radio"]:checked + label {
-				    background-color:#bbb;
+				    background-color:#444;
 				}
 
 				&.point1 label { background:image-url('_TEMP/bt1.png') no-repeat top center; }
