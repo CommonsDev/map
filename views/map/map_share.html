@@ -36,6 +36,14 @@
       <input type="text" length="125" value="{{ $state.href('map', {'map': map.slug}, {'absolute': true}) }}"/>
     </p>
 
+    <p>
+      Pour intégrer cette carte sur votre site, copiez-coller ce code :
+      <textarea><iframe width="800px" height="350px" src="{{ $state.href('map', {'map': map.slug}, {'absolute': true}) }}"></iframe></textarea>
+
+      <span><a href="http://www.aidoweb.com/tutoriaux/creation-mise-forme-iframe-62">Comment intégrer ce code sur mon site ?</a></span>
+    </p>
+
+
     <!-- <button class="valid">Valider les changements</button>-->
   </form>
   </div>
