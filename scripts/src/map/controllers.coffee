@@ -171,9 +171,9 @@ class MapSettingsCtrl
                                 coordinates: [center.lat, center.lng]
                                 type: 'Point'
                         @MapService.map.zoom = zoom
-                        @MapService.map.patch()
-
-                        $("#recadring").fadeIn('slow').fadeOut('slow')
+                        @MapService.map.patch({'center': @MapService.map.center, 'zoom': @MapService.map.zoom}).then(() =>
+                                $("#recadring").fadeIn('slow').delay(1000).fadeOut('slow')
+                        )
                 )
 
 class MapMyMapsCtrl
@@ -197,6 +197,7 @@ class MapTileLayersCtrl
                 @$scope.form = {}
                 @$scope.isLoading = true
                 @$scope.available_layers = []
+                @$scope.MapService = @MapService
 
                 # When changing tile layer
                 @$scope.$watch('form.selected_layer', (tilelayer_idx) =>
@@ -207,18 +208,39 @@ class MapTileLayersCtrl
 
                         # Save preference
                         @MapService.map.tile_layer = @$scope.available_layers[tilelayer_idx].resource_uri
-                        @MapService.map.patch()
+                        @MapService.map.patch({'tile_layer': @MapService.map.tile_layer})
                 )
+
+                # Bind methods to scope
+                @$scope.changeSelectedLayer = this.changeSelectedLayer
+
 
                 # Get a list of available tile layers
                 @Restangular.all("scout/tilelayer").getList().then((layers) =>
                         console.debug("layers loaded")
                         @$scope.available_layers = angular.copy(layers)
+
+
+                        if @MapService.map
+                                this.setCurrentLayer()
+                        else
+                                @$scope.$watch("MapService.map", =>
+                                        if MapService.map == null
+                                                return
+                                        this.setCurrentLayer()
+                                )
+
                         @$scope.isLoading = false
+
                 )
 
-                # Bind methods to scope
-                @$scope.changeSelectedLayer = this.changeSelectedLayer
+
+        setCurrentLayer: =>
+                # Check current layer
+                for layer, idx in @$scope.available_layers
+                        if layer.id == @MapService.map.tile_layer.id or layer.resource_uri == @MapService.map.tile_layer
+                                this.changeSelectedLayer(idx)
+
 
         changeSelectedLayer: (idx) =>
                 @$scope.form.selected_layer = idx
