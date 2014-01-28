@@ -141,8 +141,10 @@ class MapMarkerDetailCtrl
         """
         Show the full page of a given Marker
         """
-        constructor: (@$scope, @$routeParams, @Restangular) ->
+        constructor: (@$scope, @$routeParams, @$state, @Restangular) ->
                 @$scope.isLoading = true
+
+                @$scope.$state = @$state
 
                 @Restangular.one('scout/marker', @$routeParams.markerId).get().then((marker) =>
                         console.debug("marker loaded")
@@ -312,16 +314,18 @@ class MapMarkerNewCtrl
                 )
 
         onFileSelect: (files) =>
+                @$scope.isUploading = true
                 # $files: an array of files selected, each file has name, size, and type.
                 for file in files
                         @$scope.upload = @$upload.upload(
-                                url: "http://localhost:8000/bucket/upload/"
+                                url: @$rootScope.CONFIG.bucket_uri,
                                 data: {bucket: @MapService.map.bucket.id},
                                 file: file,
                         ).progress((evt) =>
                                 console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
                         ).success((data, status, headers, config) =>
                                 @$scope.marker.picture_url = data[0].thumbnail_url
+                                @$scope.isUploading = false
                         );
 
 
@@ -499,7 +503,7 @@ class MapMarkerNewCtrl
 # Controller declarations
 module.controller("MapDetailCtrl", ['$scope', '$rootScope', '$stateParams', '$location', 'MapService', 'geolocation', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', '$location', '$cookies', 'Restangular', MapNewCtrl])
-module.controller("MapMarkerDetailCtrl", ['$scope', '$stateParams', 'Restangular', MapMarkerDetailCtrl])
+module.controller("MapMarkerDetailCtrl", ['$scope', '$stateParams', '$state', 'Restangular', MapMarkerDetailCtrl])
 module.controller("MapTileLayersCtrl", ['$scope', '$stateParams', 'Restangular', 'MapService', MapTileLayersCtrl])
 module.controller("MapMyMapsCtrl", ['$scope', '$state', 'Restangular', 'MapService', MapMyMapsCtrl])
 module.controller("MapSettingsCtrl", ['$scope', '$rootScope', '$state', 'Restangular', 'MapService', MapSettingsCtrl])

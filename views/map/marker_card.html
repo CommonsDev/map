@@ -1,16 +1,12 @@
 <article class="leaflet-popup" ng-show="!isLoading">
   <section class="card">
     <header>
-      <!-- 
-      <a href="javascript:void(0)" class="card-like" title="like"><img src="images/card_like.png" alt="support" /></a>
-    -->
       <div class="minipic">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="248" height="184">
-        <image alt="{{ marker.data.title }}" xlink:href="images/_TEMP/prima.jpg" width="248" height="184" mask="url(#mask1)">
-        </svg>
+        <img ng-show="marker.data.picture_url" alt="{{ marker.data.title }}" ng-src="{{ MEDIA_URI }}{{ marker.data.picture_url }}" width="248" height="184">
+        <img ng-hide="marker.data.picture_url" alt="{{ marker.data.title }}" src="images/marker_nopicture.jpg" width="248" height="184">
       </div>
       <div class="author">
-        <img src="images/_TEMP/dave.png" alt="Dave" />
+        <img src="images/_TEMP/generic_avatar.gif" width="60px" alt="{{ marker.data.created_by.username }}" />
         <em>{{ marker.data.created_by.username }}</em>
       </div>
     </header>
@@ -23,15 +19,6 @@
 	</p>
       </a>
     </div>
-    <!--
-    <footer>
-      <ul class="icons">
-        <li class="supports" title="XX supports">XX</li>
-        <li class="comments" title="XX commentaires">XX</li>
-        <li class="polls" title="XX sondages">XX</li>
-      </ul>
-    </footer>
-    -->
   </section>
 </article>
 

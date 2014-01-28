@@ -30,7 +30,6 @@ class MapService
                 Given marker data, add it
                 """
                 # console.debug("adding marker #{name}...")
-                console.debug(aMarker)
                 if not aMarker.options
                         aMarker.options = {}
                 if not aMarker.options.icon
@@ -93,7 +92,6 @@ class MapService
                                 console.debug("Adding data layer...")
                                 # Add its markers
                                 for marker in layer.markers
-                                        console.debug(marker.category)
                                         this.addMarker(marker.id,
                                                 lat: marker.position.coordinates[0]
                                                 lng: marker.position.coordinates[1]

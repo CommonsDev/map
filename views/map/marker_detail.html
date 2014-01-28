@@ -2,10 +2,11 @@
   <section class="card active">
     <header>
       <div class="bigpic">
-        <img ng-src="{{ MEDIA_URI }}{{ marker.picture }}" height="282" width="378" alt="{{ marker.title }}"/>
+        <img ng-show="marker.picture_url" ng-src="{{ MEDIA_URI }}{{ marker.picture_url }}" height="282" width="378" alt="{{ marker.title }}"/>
+        <img ng-hide="marker.picture_url" src="images/marker_nopicture.jpg" height="282" width="378" alt="{{ marker.title }}"/>
       </div>
       <div class="author">
-        <img src="images/_TEMP/generic_avatar.gif" alt="Avatar" width="60px" />
+        <img src="images/_TEMP/generic_avatar.gif" alt="{{ marker.created_by.username }}" width="60px" />
         <em>{{ marker.created_by.username }}</em>
         <span>{{ marker.created_on | fromNow }}</span>
       </div>
@@ -15,9 +16,9 @@
         {{ marker.address }}
       </p>
       <ul class="social">
-        <li><a href="http://twitter.com/home?status=Venez%20voir%20mon%20super%20marqueur" title="partager sur twitter"><img src="images/ico_twitter.png" alt="twitter" /></a></li>
-        <li><a href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]=#&p[images][0]=&p[title]={{ marker.data.title }}&p[summary]=" title="partager sur facebook"><img src="images/ico_fb.png" alt="facebook" /></a></li>
-        <li><a href="https://plus.google.com/share?url=#" title="partager sur google plus"><img src="images/ico_google.png" alt="google plus" /></a></li>
+        <li><a target="_new" href="http://twitter.com/home?status=Découvrez '{{ marker.title }}' {{ $state.href('map.marker_detail', {}, {absolute: true}) }}" title="Partager sur twitter"><img src="images/ico_twitter.png" alt="twitter"/></a></li>
+        <li><a target="_new" href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]={{ $state.href('map.marker_detail', {}, {absolute: true}) }}&p[images][0]=&p[title]={{ marker.title }}&p[summary]=Je vous invite à découvrir ce lieu." title="partager sur facebook"><img src="images/ico_fb.png" alt="facebook"/></a></li>
+        <li><a target="_new" href="https://plus.google.com/share?url={{ $state.href('map.marker_detail', {}, {absolute: true}) }}" title="partager sur google plus"><img src="images/ico_google.png" alt="google plus" /></a></li>
       </ul>
     </div>
     <!--
