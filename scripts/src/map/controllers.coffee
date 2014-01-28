@@ -54,6 +54,7 @@ class MapDetailCtrl
 
                 @$scope.isLoading = true
 
+                @$scope.acquiringPosition = false
                 @$scope.positionLocked = false
 
                 # Load map once the page has loaded
@@ -71,7 +72,7 @@ class MapDetailCtrl
 
 
         toggleLockPosition: =>
-                if not @$scope.positionLocked
+                if not @$scope.acquiringPosition
                         @geolocation.watchPosition((position)=>
                                 @$scope.$apply(=>
                                         # Center & Zoom map
@@ -90,13 +91,18 @@ class MapDetailCtrl
                                                         lat: position.coords.latitude
                                                         lng: position.coords.longitude
                                                 )
+
+                                        console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
+
+                                        @$scope.positionLocked = true
                                 )
-                                console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
+
                         )
                 else
                         @geolocation.cancelWatchPosition()
+                        @$scope.positionLocked = false
 
-                @$scope.positionLocked = not @$scope.positionLocked
+                @$scope.acquiringPosition = not @$scope.acquiringPosition
 
         search: =>
 
@@ -166,6 +172,8 @@ class MapSettingsCtrl
                                 type: 'Point'
                         @MapService.map.zoom = zoom
                         @MapService.map.patch()
+
+                        $("#recadring").fadeIn('slow').fadeOut('slow')
                 )
 
 class MapMyMapsCtrl
