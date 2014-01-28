@@ -480,6 +480,28 @@ div.marker {
 		    line-height: 1.05rem;
 		    padding: 0 28px;
 		}
+
+		.actions {
+			position:absolute;
+			bottom:20px;
+			left:25px;
+
+			button {
+				background:#f36b56;
+				display:block;
+				border:0;
+				@include border-radius(5px);
+				color:white;
+				width:180px;
+				height:42px;
+				text-align:center;
+				line-height:42px;
+				font-size:0.8rem;
+				font-weight:400;
+				margin:35px 0 0 10px;
+				float:left;
+			}
+		}
 	}
 
 	section.forum {
