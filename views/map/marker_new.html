@@ -110,6 +110,12 @@
       <!-- picture -->
       <section id="add-block-3" class="add-panel-block" ng-switch-when="3">
         <a class="close-link" ui-sref="map">Fermer</a>
+        <div class="loading-panel" ng-show="isUploading">
+          <p>
+            <img src="images/loading/eolilala.png" class="spin" />
+            <span>Veuillez patienter pendant l'envoi de votre image...</span>
+          </p>
+        </div>
         <h1>    
           <img src="images/steps/3.png" alt="3/4" />
           <strong>Ajoutez<br />  une photo ou vidéo</strong>
@@ -159,7 +165,7 @@
         <div class="loading-panel" ng-show="isUploading">
           <p>
             <img src="images/loading/eolilala.png" class="spin" />
-            <span>Veuillez patienter pendant l'envoi de votre point...</span>
+            <span>Veuillez patienter pendant l'envoi de votre image...</span>
           </p>
         </div>
         <h1>    

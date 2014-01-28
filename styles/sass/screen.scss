@@ -1289,7 +1289,7 @@ body > footer {
 			@include border-radius(0 6px 6px 0);
 
 			button {
-				height:100px;
+				height:140px;
 				width:100%;
 				color:white;
 				font-size:0.8rem;
@@ -1300,17 +1300,20 @@ body > footer {
 				border-top:1px solid #3a3a3a;
 
 				&.account {
-					background:image-url('login/inscription.png') no-repeat center 10px;
+					background:image-url('login/inscription.png') no-repeat center 20px;
 					border-top:0;
+					margin:10px 0 0 0;
 				}
 
 				&.gplus {
-					background:image-url('login/gplus.png') no-repeat center 10px;
+					background:image-url('login/gplus.png') no-repeat center 20px;
+					border-bottom:0;
 				}
 
 				&.facebook {
 					background:image-url('login/facebook.png') no-repeat center 10px;
 					border-bottom:0;
+					display:none;
 				}
 			}
 		}
@@ -1469,7 +1472,7 @@ body > footer {
 	}
 
 	form {
-		width:600px;
+		width:100%;
 		margin:0 auto;
 		padding:30px 0 0 0;
 
@@ -1488,7 +1491,7 @@ body > footer {
 		}
 
 		input[type="text"] {
-			width:38%;
+			width:300px;
 			border:0;
 			background:white;
 			height:36px;
@@ -1639,7 +1642,7 @@ body > footer {
 	h1 {
 		padding:42px 0 35px 45px;
 		width:100%;
-		height:168px;
+		height:140px;
 		background:white;
 		float:left;
 
@@ -1660,6 +1663,7 @@ body > footer {
 		    padding-left: 18px;
 		    text-transform: uppercase;
 		    width: 375px;
+		    padding-right:30px;
 		}
 
 		span {
@@ -1765,6 +1769,24 @@ body > footer {
 		    color:#666;
 		    @include border-radius(4px);
 		}
+
+		textarea {
+			border: 0 none;
+		    display: block;
+		    font-size: 0.8rem;
+		    height: 40px;
+		    margin: 8px 0 0;
+		    width: 100%;
+		    color:#666;
+		    font-family:'Raleway', Arial, sans-serif;
+		    @include border-radius(4px);
+		}
+
+		a {
+			font-size:0.7rem;
+			color:#4b4b4b;
+			text-decoration:none;
+		}
 	}
 
 	button.valid {
@@ -1835,6 +1857,7 @@ body > footer {
 		width:72%;
 		display:block;
 		line-height:30px;
+		background:image-url('mymaps-pointer-off.png') no-repeat 15px center !important;
 		@include border-radius(5px);
 
 		&:hover {
@@ -2112,21 +2135,54 @@ a.close-link {
 	bottom:18px;
 	left:100px;
 	z-index:4px;
+	background:white;
+	@include box-shadow(0 1px 2px #666);
+	@include border-radius(4px);
 
 	button {
 		height:42px;
 		width:42px;
 		display:block;
 		border:0;
-		background:white image-url('position_item1.png') no-repeat 10px center;
+		background:image-url('position_item1.png') no-repeat 10px center;
 		text-indent:-9999rem;
-		@include box-shadow(0 1px 2px #666);
-		@include border-radius(4px);
 	}
 
 	&.locked button {
-		background:white image-url('position_item2.png') no-repeat center center;
+		background:image-url('position_item2.png') no-repeat center center;
+		-webkit-animation: spin 1.5s infinite linear;
+		-moz-animation: spin 1.5s infinite linear;
+		-o-animation: spin 1.5s infinite linear;
+		-ms-animation: spin 1.5s infinite linear;
+		
+		@-webkit-keyframes spin {
+			0% { -webkit-transform: rotate(0deg);}
+			100% { -webkit-transform: rotate(360deg);}
+		}
+		@-moz-keyframes spin {
+			0% { -moz-transform: rotate(0deg);}
+			100% { -moz-transform: rotate(360deg);}
+		}
+		@-o-keyframes spin {
+			0% { -o-transform: rotate(0deg);}
+			100% { -o-transform: rotate(360deg);}
+		}
+		@-ms-keyframes spin {
+			0% { -ms-transform: rotate(0deg);}
+			100% { -ms-transform: rotate(360deg);}
+		}
 	}
+}
+
+#recadring {
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
+    @include border-radius(10px);
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    left: 118px;
+    padding: 20px;
+    position: absolute;
+    top: 376px;
 }
 
 /* ================= LEAFLET HACKS ============= */
