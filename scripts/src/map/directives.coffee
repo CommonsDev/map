@@ -40,6 +40,10 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                 # crs: L.CRS.EPSG4326
             )
 
+            # Fake center, required sometimes for the plugins to work...
+            $scope.map.setView([39.950041, -75.169884], 16)
+
+
             # Change callback
             $scope.$watch("center", ((center, oldValue) ->
                     console.debug("map center changed")
@@ -66,16 +70,76 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                 # Remove current layers
                 $scope.map.eachLayer((layer) =>
                     console.debug("removed layer #{layer._url}")
-                    $scope.map.removeLayer(layer)
+                    #$scope.map.removeLayer(layer)
                 )
 
                 # Add new ones
                 if layer
                     console.debug("installing new layer #{layer.url_template}")
-                    L.tileLayer(layer.url_template, layer.attrs).addTo($scope.map)
+
+                    latLngGeom = []
+
+                    lille = window.lille
+                    for jump in lille.coordinates
+                        for coord in jump
+                            latLngGeom.push(new L.LatLng(coord[1], coord[0]))
+
+                    layer.attrs['boundary'] = latLngGeom
+
+                    leaflayer = L.TileLayer.boundaryCanvas(layer.url_template, layer.attrs)
+                    leaflayer.addTo($scope.map)
+                    leaflayer.bringToBack()
+
             , true
             )
 
+
+            # Add feature selects
+            console.debug("loading features...")
+            myStyle = {
+                "color": "#ff7800",
+                "weight": 5,
+                "opacity": 0.65
+            }
+
+
+
+            layer = L.geoJson(window.districts,
+                style: myStyle
+                onEachFeature: (feature, layer) ->
+                    layer.on(
+                        click: (e) ->
+                            $scope.map.fitBounds(e.target.getBounds())
+                    )
+            )
+            fs = L.featureSelect({
+                featureGroup: layer
+                selectSize: [16, 16]
+            })
+
+            fs.on('select', (evt) ->
+                console.debug('zelect!')
+                for layer in evt.layers
+                    layer.setStyle(
+                        color: "#ff0000"
+                        opacity: 0.9
+                    )
+            )
+
+            fs.on('unselect', (evt) ->
+                console.debug('unzelect!')
+                for layer in evt.layers
+                    layer.setStyle(
+                        color: "#00ff00"
+                        opacity: 0.9
+                    )
+            )
+
+
+            layer.addTo($scope.map)
+            fs.addTo($scope.map)
+
+            console.debug($scope.map)
 
 
 

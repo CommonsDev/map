@@ -47,7 +47,6 @@ class MapService
                 console.debug("removing marker #{name}")
                 delete @markers[name]
 
-
         load: (slug, scope, callback) =>
                 @Restangular.withConfig((RestangularConfigurer) =>
                         RestangularConfigurer.setRestangularFields(
@@ -103,6 +102,7 @@ class MapService
                                                                 iconColor: marker.category.icon_color
                                                         )
                                         )
+
 
                         callback(@map)
                 )
