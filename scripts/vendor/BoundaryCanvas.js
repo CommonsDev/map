@@ -202,6 +202,11 @@
                         }
                     }
                 }
+
+		ctx.lineWidth = 3;
+		ctx.strokeStyle = "black";
+		ctx.stroke();
+
                 ctx.clip();
             }
 
@@ -210,6 +215,7 @@
             ctx.rect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = pattern;
             ctx.fill();
+
         };
         
         imageObj.onload = function () {

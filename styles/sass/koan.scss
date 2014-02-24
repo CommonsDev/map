@@ -1,0 +1,131 @@
+@import "compass/css3/font-face";
+
+$koan_red: #ff262d;
+
+@include font-face("Fringant Grotesk", font-files("fringant-grotesk-bold.otf"));
+
+.card .author {
+    visibility: hidden;
+}
+
+#overlay-panel {
+    width: 100%;
+}
+
+#overlay-panel .card {
+    visibility: hidden;
+}
+
+#overlay-panel .widgets {
+    background-color: #eee;
+    left: 10px;
+    right: 10px;
+    top: 10px;
+    bottom: 10px;
+}
+
+#overlay-panel .description {
+    width: 100%;
+}
+
+#overlay-panel .actions {
+    visibility: hidden;
+}
+
+#toolbar {
+    visibility: hidden;
+}
+
+.leaflet-container .leaflet-control-zoom {
+	margin-left: 10px;	
+}
+
+.leaflet-container {
+    background-color: white;
+    background: url("../../images/koan/building.png") left bottom no-repeat, url("../../images/koan/bg.png") left top repeat;
+}
+
+#logos {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+ }
+
+#map-title .sep {
+    width: 5px;
+    height: 50px;
+    border-left: 1px solid black;
+    float: left;
+}
+
+#map-title {
+    font-family: "Fringant Grotesk";
+
+    z-index: 1000;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    padding: 10px;
+    background-color: white;
+    background-image: url("../../images/koan/bloc.png");
+    background-repeat: no-repeat;
+    background-position: 10px 20px;
+    padding-left: 100px;
+
+    border: 5px dashed $koan_red;
+}
+
+#map-title h1 {
+    font-size: 3em;
+    float: left;
+}
+
+#map-title h2 {
+    font-size: 1em;
+}
+
+//-- Minimap
+
+.leaflet-control-minimap {
+    border:solid rgba(255, 255, 255, 1.0) 4px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+    border-radius: 3px;
+    background: #f8f8f9;
+    transition: all .2s;
+}
+
+.leaflet-control-minimap a {
+    background-color: rgba(255, 255, 255, 1.0);
+    background-repeat: no-repeat;
+    z-index: 99999;
+    transition: all .2s;
+    border-radius: 3px 0px 0px 0px;
+}
+
+.leaflet-control-minimap a.minimized {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    border-radius: 0px;
+}
+
+.leaflet-control-minimap-toggle-display {
+    background-image: url("images/toggle.png");
+    height: 19px;
+    width: 19px;
+    position: absolute;
+    bottom: 0;
+    right: 0; 
+}
+
+/* Old IE */
+.leaflet-oldie .leaflet-control-minimap {
+	border: 1px solid #999;
+}
+
+.leaflet-oldie .leaflet-control-minimap a {
+	background-color: #fff;
+}
+
+.leaflet-oldie .leaflet-control-minimap a.minimized {
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}

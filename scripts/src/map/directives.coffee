@@ -35,8 +35,10 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
             $el = element[0]
 
             $scope.map = new L.Map($el,
-                zoomControl: true
+                zoomControl: false
                 zoomAnimation: true
+                scrollWheelZoom: true
+                dragging: true
                 # crs: L.CRS.EPSG4326
             )
 
@@ -81,32 +83,44 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
 
                     lille = window.lille
                     for jump in lille.coordinates
-                        for coord in jump
+                       for coord in jump
                             latLngGeom.push(new L.LatLng(coord[1], coord[0]))
 
                     layer.attrs['boundary'] = latLngGeom
+                    layer.attrs['attribution'] = 'Contenu et identité graphique &copy Koan 2014' # FIXME
 
                     leaflayer = L.TileLayer.boundaryCanvas(layer.url_template, layer.attrs)
                     leaflayer.addTo($scope.map)
+
                     leaflayer.bringToBack()
 
             , true
             )
 
 
+
             # Add feature selects
             console.debug("loading features...")
             myStyle = {
-                "color": "#ff7800",
+                "color": "#EB2228",
+                "dashArray": "5, 4",
+                "lineCap": "butt",
+                "lineJoin": "miter",
                 "weight": 5,
                 "opacity": 0.65
+                "className": "feature"
             }
-
-
 
             layer = L.geoJson(window.districts,
                 style: myStyle
                 onEachFeature: (feature, layer) ->
+                    label = new L.Label()
+                    label.setContent("WAZEMMES")
+                    #center = layer.getBounds().getCenter()
+                    #label.setLatLng(center[0] - 0.1, center[1])
+                    #$scope.map.showLabel(label);
+                    layer.bindLabel("WAZEMMES").addTo($scope.map)
+
                     layer.on(
                         click: (e) ->
                             $scope.map.fitBounds(e.target.getBounds())
@@ -139,8 +153,9 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
             layer.addTo($scope.map)
             fs.addTo($scope.map)
 
-            console.debug($scope.map)
-
+            # Make a minimap
+            miniLayer = new L.TileLayer("http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.jpg", {minZoom: 0, maxZoom: 18});
+            miniMap = new L.Control.MiniMap(miniLayer, {zoomLevelFixed: 12}).addTo($scope.map)
 
 
             """
