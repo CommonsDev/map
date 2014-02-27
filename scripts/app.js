@@ -5,7 +5,7 @@ config = {
 angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
 
-app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'ngAnimate', 'googleOauth']);
+app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'ngAnimate', 'googleOauth', 'angular-unisson-auth']);
 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');

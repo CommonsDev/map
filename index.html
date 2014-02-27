@@ -17,41 +17,41 @@
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     </head>
     <body>
-      <div id="wrap-page" ng-controller="LoginCtrl">
+        <div id="wrap-page" ng-controller="LoginCtrl">
 
 	<!-- main view -->
-        <div id="page" ui-view></div>
+            <div id="page" ui-view></div>
 
-	<!-- login box -->
-        <div id="wrap-login" class="ng-cloak" ng-show="loginrequired">
-            <div id="inner-login">
-                <div class="left">
-                    <div class="title">Entrez votre identifiant pour vous connecter</div>
-            		<form name="loginForm">
-                      <p>
-                          <label for="login-field">Email</label>
-            		      <input id="login-field" type="text" ng-model="username" placeholder="Votre nom d'utilisateur..." required>
-                      </p>
-                      <p>
-                          <label for="pass-field">Password</label>
-            		      <input id="pass-field" type="password" ng-model="password" placeholder="Votre mot de passe..." required>
-                      </p>
-            		  <button ng-click="submit()" ng-disabled="form.$invalid" class="submit">Login</button>
-                      <a class="forgotten" href="#">Mot de passe oublié ?</a>
-            		</form>
+        <!-- login box -->
+            <div id="wrap-login" class="ng-cloak" ng-show="authVars.loginrequired">
+                <div id="inner-login">
+                    <div class="left">
+                        <div class="title">Entrez votre identifiant pour vous connecter</div>
+                        <form name="loginForm">
+                          <p>
+                              <label for="login-field">Email</label>
+                              <input id="login-field" type="text" ng-model="authVars.username" placeholder="Votre nom d'utilisateur..." required>
+                          </p>
+                          <p>
+                              <label for="pass-field">Password</label>
+                              <input id="pass-field" type="password" ng-model="authVars.password" placeholder="Votre mot de passe..." required>
+                          </p>
+                          <button ng-click="submit()" ng-disabled="form.$invalid" class="submit">Login</button>
+                          <a class="forgotten" href="#">Mot de passe oublié ?</a>
+                        </form>
+                    </div>
+                    <div class="right">
+                        <ul>
+                            <li><button class="account">S'inscrire</button></li>
+                            <li><button ng-click="authenticateGoogle()" class="gplus">Google +</button></li>
+                            <li><button class="facebook">Facebook</button></li>
+                        </ul>
+                    </div>
+                    <a href="javascript:void(0)" ng-click="authVars.loginrequired=false" class="close">Fermer</a> 
+                    <!-- TODO: changer cette méthode de fermeture de l'overlay -->
                 </div>
-                <div class="right">
-                    <ul>
-                        <li><button class="account">S'inscrire</button></li>
-                        <li><button ng-click="authenticateGoogle()" class="gplus">Google +</button></li>
-                        <li><button class="facebook">Facebook</button></li>
-                    </ul>
-                </div>
-                <a href="javascript:void(0)" ng-click="loginrequired=false" class="close">Fermer</a> 
-                <!-- TODO: changer cette méthode de fermeture de l'overlay -->
             </div>
         </div>
-      </div>
         <!--
         <footer>
             <nav>
@@ -100,7 +100,7 @@
 
     <script src="scripts/vendor/angularOauth.js"></script>
     <script src="scripts/vendor/googleOauth.js"></script>
-    
+    <script src="scripts/vendor/angular-unisson-auth/angular-unisson-auth.js"></script>
     
     <!-- Common -->
     <script src="scripts/lib/common/controllers.js"></script>
