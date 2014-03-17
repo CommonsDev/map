@@ -35,9 +35,9 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
             $el = element[0]
 
             $scope.map = new L.Map($el,
-                zoomControl: false
+                zoomControl: true
                 zoomAnimation: true
-                scrollWheelZoom: true
+                scrollWheelZoom: false
                 dragging: true
                 # crs: L.CRS.EPSG4326
             )
@@ -107,20 +107,23 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                 "lineCap": "butt",
                 "lineJoin": "miter",
                 "weight": 5,
-                "opacity": 0.65
+                "opacity": 0.65,
                 "className": "feature"
             }
 
             layer = L.geoJson(window.districts,
                 style: myStyle
                 onEachFeature: (feature, layer) ->
-                    label = new L.Label()
-                    label.setContent("WAZEMMES")
-                    #center = layer.getBounds().getCenter()
+                    label = new L.Label({className:"label", offset:[0,-30]})
+                    label.setContent(feature.name)
+                    center = layer.getBounds().getCenter()
+                    console.debug(" == center ==")
+                    console.debug(label)
                     #label.setLatLng(center[0] - 0.1, center[1])
-                    #$scope.map.showLabel(label);
-                    layer.bindLabel("WAZEMMES").addTo($scope.map)
-
+                    label.setLatLng(center)
+                    console.debug(label)
+                    #layer.bindLabel("WAZEMMES", {noHide: true}).addTo($scope.map)
+                    $scope.map.showLabel(label);
                     layer.on(
                         click: (e) ->
                             $scope.map.fitBounds(e.target.getBounds())
@@ -144,7 +147,7 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                 console.debug('unzelect!')
                 for layer in evt.layers
                     layer.setStyle(
-                        color: "#00ff00"
+                        color: "#CCCCCC" 
                         opacity: 0.9
                     )
             )

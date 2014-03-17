@@ -41,9 +41,7 @@
       <section class="description">
         <div class="title">{{ marker.title }}</div>
         <div class="inner">
-          <p>
-            {{ marker.description }}
-          </p>
+          <p ng-bind-html="marker.description"></p>
           <div class="actions">
             <button class="del">Supprimer</button>
             <button class="edit">Editer</button>

@@ -147,7 +147,7 @@ class MapMarkerDetailCtrl
         """
         Show the full page of a given Marker
         """
-        constructor: (@$scope, @$routeParams, @$state, @Restangular) ->
+        constructor: (@$scope, @$routeParams, @$state, @Restangular, @$sce) ->
                 @$scope.isLoading = true
 
                 @$scope.$state = @$state
@@ -155,6 +155,7 @@ class MapMarkerDetailCtrl
                 @Restangular.one('scout/marker', @$routeParams.markerId).get().then((marker) =>
                         console.debug("marker loaded")
                         @$scope.marker = angular.copy(marker)
+                        @$scope.marker.description = @$sce.trustAsHtml(@$scope.marker.description)
                         @$scope.isLoading = false
                 )
 
@@ -533,7 +534,7 @@ class MapMarkerNewCtrl
 # Controller declarations
 module.controller("MapDetailCtrl", ['$scope', '$rootScope', '$stateParams', '$location', 'MapService', 'geolocation', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', '$location', '$cookies', 'Restangular', MapNewCtrl])
-module.controller("MapMarkerDetailCtrl", ['$scope', '$stateParams', '$state', 'Restangular', MapMarkerDetailCtrl])
+module.controller("MapMarkerDetailCtrl", ['$scope', '$stateParams', '$state', 'Restangular', '$sce', MapMarkerDetailCtrl])
 module.controller("MapTileLayersCtrl", ['$scope', '$stateParams', 'Restangular', 'MapService', MapTileLayersCtrl])
 module.controller("MapMyMapsCtrl", ['$scope', '$state', 'Restangular', 'MapService', MapMyMapsCtrl])
 module.controller("MapSettingsCtrl", ['$scope', '$rootScope', '$state', 'Restangular', 'MapService', MapSettingsCtrl])
