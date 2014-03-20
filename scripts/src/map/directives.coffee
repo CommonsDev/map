@@ -33,18 +33,23 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
 
         link: ($scope, element, attrs, ctrl) ->
             $el = element[0]
-
+            # maxBounds set to Lille area 50.59685933376767,2.9827880859375 
+            sW = new L.latLng(50.59021193935192,2.96356201171875)
+            nE = new L.latLng(50.66088773034316,3.1470680236816406)
+            lilleBounds = new L.latLngBounds(sW, nE)
             $scope.map = new L.Map($el,
                 zoomControl: true
                 zoomAnimation: true
                 scrollWheelZoom: false
                 dragging: true
+                maxBounds: lilleBounds
+                maxZoom: 16 
+                minZoom: 13
                 # crs: L.CRS.EPSG4326
             )
-
+            
             # Fake center, required sometimes for the plugins to work...
             $scope.map.setView([39.950041, -75.169884], 16)
-
 
             # Change callback
             $scope.$watch("center", ((center, oldValue) ->
@@ -128,29 +133,34 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                         click: (e) ->
                             $scope.map.fitBounds(e.target.getBounds())
                     )
+                    layer.setStyle(
+                        color: "#CCCCCC"
+                        opacity: 0.9
+                    )
+                    layer.on(
+                        mouseover: (e)->
+                            layer.setStyle(
+                                color: "#ff0000"
+                                opacity: 0.9
+                            )
+                    )
+                    layer.on(
+                        mouseout: (e)->
+                            layer.setStyle(
+                                color: "#CCCCCC"
+                                opacity: 0.9
+                            )
+                    )
             )
             fs = L.featureSelect({
                 featureGroup: layer
                 selectSize: [16, 16]
             })
 
-            fs.on('select', (evt) ->
-                console.debug('zelect!')
-                for layer in evt.layers
-                    layer.setStyle(
-                        color: "#ff0000"
-                        opacity: 0.9
-                    )
-            )
-
-            fs.on('unselect', (evt) ->
-                console.debug('unzelect!')
-                for layer in evt.layers
-                    layer.setStyle(
-                        color: "#CCCCCC" 
-                        opacity: 0.9
-                    )
-            )
+            
+            
+           
+           
 
 
             layer.addTo($scope.map)
