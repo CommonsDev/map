@@ -155,7 +155,7 @@ class MapMarkerDetailCtrl
                 @Restangular.one('scout/marker', @$routeParams.markerId).get().then((marker) =>
                         console.debug("marker loaded")
                         @$scope.marker = angular.copy(marker)
-                        @$scope.marker.description = @$sce.trustAsHtml(@$scope.marker.description)
+                        @$scope.marker.video_src = @$sce.trustAsResourceUrl(@$scope.marker.video_src)
                         @$scope.isLoading = false
                 )
 

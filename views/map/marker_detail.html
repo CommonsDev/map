@@ -40,12 +40,14 @@
     <div class="slidee">
       <section class="description">
         <div class="title">{{ marker.title }}</div>
+        <div class="subtitle"> {{ marker.subtitle }} </div>
         <div class="inner">
-          <p ng-bind-html="marker.description"></p>
-          <div class="actions">
-            <button class="del">Supprimer</button>
-            <button class="edit">Editer</button>
-          </div>
+          <p>
+            {{ marker.description }}
+          </p>
+
+          <!--<p ng-bind-html="marker.video_src"></p>-->
+          <iframe ng-src="{{ marker.video_src }}" width="800" height="600" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
         </div>
       </section>
       <!-- <section class="forum">

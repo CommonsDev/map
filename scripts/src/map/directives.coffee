@@ -134,7 +134,7 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                             $scope.map.fitBounds(e.target.getBounds())
                     )
                     layer.setStyle(
-                        color: "#CCCCCC"
+                        color: "#8F8F8F"
                         opacity: 0.9
                     )
                     layer.on(
@@ -147,7 +147,7 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                     layer.on(
                         mouseout: (e)->
                             layer.setStyle(
-                                color: "#CCCCCC"
+                                color: "#8F8F8F"
                                 opacity: 0.9
                             )
                     )
@@ -175,7 +175,7 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
             # Manage map center events
             if attrs.center and $scope.center
               if $scope.center.lat and $scope.center.lng and $scope.center.zoom
-                map.setView(new L.LatLng($scope.center.lat, $scope.center.lng), $scope.center.zoom)
+                marp.setView(new L.LatLng($scope.center.lat, $scope.center.lng), $scope.center.zoom)
               else if $scope.center.autoDiscover is true
                 map.locate(
                   setView: true
