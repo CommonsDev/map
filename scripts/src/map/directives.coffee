@@ -134,7 +134,7 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                             $scope.map.fitBounds(e.target.getBounds())
                     )
                     layer.setStyle(
-                        color: "#8F8F8F"
+                        color: "#878787"
                         opacity: 0.9
                     )
                     layer.on(
@@ -147,7 +147,7 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                     layer.on(
                         mouseout: (e)->
                             layer.setStyle(
-                                color: "#8F8F8F"
+                                color: "#878787"
                                 opacity: 0.9
                             )
                     )

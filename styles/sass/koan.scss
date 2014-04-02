@@ -2,6 +2,17 @@
 
 // Marker detail
 
+// to hide sharing area on vimeo embeds
+#rectangle { 
+    z-index: 2000;
+    width: 100px;
+    height: 200px;
+    background: black;
+    position: absolute;
+    top: 149px;
+    right: 102px;                      
+}
+
 p.ng-binding {
     padding-bottom: 6px;
 }
@@ -78,6 +89,25 @@ $koan_red: #ff262d;
     left: 10px;
  }
 
+#main-title {
+    font-family: "Fringant Grotesk";
+    
+    z-index: 1000;
+    position: absolute;
+    right: 50%;
+    width:350px;
+    margin-right:-175px;
+    top: 10px;
+    padding: 5px;
+    padding-top:10px;
+    background-color: white;
+}
+
+#main-title h1 {
+    font-size: 3em;
+    float: center;
+}
+
 #map-title .sep {
     width: 5px;
     height: 50px;
@@ -86,25 +116,25 @@ $koan_red: #ff262d;
 }
 
 #map-title {
-    font-family: "Fringant Grotesk";
 
     z-index: 1000;
     position: absolute;
     right: 20px;
-    top: 20px;
+    top: 10px;
     padding: 10px;
     background-color: white;
     background-image: url("../../images/koan/bloc.png");
     background-repeat: no-repeat;
-    background-position: 10px 20px;
-    padding-left: 100px;
-
-    border: 5px dashed $koan_red;
+    background-position: 15px 13px;
+    width:200px;
+    border: 4px dashed $koan_red;
 }
 
 #map-title h1 {
-    font-size: 3em;
+    font-size: 1.2em;
     float: left;
+    margin-top:36px;
+    width:180px;
 }
 
 #map-title h2 {
