@@ -1,5 +1,27 @@
 @import "compass/css3/font-face";
 
+// Marker detail
+
+p.ng-binding {
+    padding-bottom: 6px;
+}
+
+.description .title {
+    padding: 15px 28px 10px !important;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.2rem;
+    padding: 0px 28px 10px;
+}
+
+iframe.ng-binding {
+    width: 600px;
+
+}
+
 $koan_red: #ff262d;
 
 @include font-face("Fringant Grotesk", font-files("fringant-grotesk-bold.otf"));
