@@ -16,7 +16,7 @@ app.config(['$httpProvider', function ($httpProvider) {
 app.config(['TokenProvider', '$locationProvider', function(TokenProvider, $locationProvider) {
 		TokenProvider.extendConfig({
 					       clientId: '645581170749.apps.googleusercontent.com',
-					       redirectUri: 'http://localhost:8080/oauth2callback.html',
+					       redirectUri: config.rootURL + 'oauth2callback.html',
 					       scopes: ["https://www.googleapis.com/auth/userinfo.email",
 							"https://www.googleapis.com/auth/userinfo.profile"],
 					   });

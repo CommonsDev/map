@@ -10,8 +10,8 @@
         <em>{{ marker.data.created_by.username }}</em>
       </div>
     </header>
-    <div class="inner">
-      <a ui-sref="map.marker_detail({map: $stateParams.slug, markerId: marker.data.id})">
+    <div class="inner"> 
+      <a ng-href="{{CONFIG.applicationAlias}}{{$stateParams.slug}}/marker/{{marker.data.id}}">
 	<!--<span class="date">{{ marker.data.created_on | fromNow }}</span>-->
 	<h1>{{ marker.data.title }}</h1>
 	<p>

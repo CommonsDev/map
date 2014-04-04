@@ -5,12 +5,13 @@
 // to hide sharing area on vimeo embeds
 #rectangle { 
     z-index: 2000;
-    width: 100px;
-    height: 200px;
+    width: 80px;
+    height: 800px;
     background: black;
-    position: absolute;
-    top: 149px;
-    right: 102px;                      
+    position: relative;
+    top: -804px;
+    left: 1514px;    
+    
 }
 
 p.ng-binding {

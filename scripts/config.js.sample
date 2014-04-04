@@ -3,5 +3,7 @@ config = {
     bucket_uri: 'http://YOUR_BUCKET_SERVER/bucket/upload/',
     useHtml5Mode: false,
     media_uri: 'http://YOUR_MEDIA_SERVER/',
-    rest_uri: "http://YOUR_REST_SERVER/api/v0"
+    rest_uri: "http://YOUR_REST_SERVER/api/v0",
+    rootUrl: "http://SERVER_URL/",
+    applicationAlias : "koanarts"
 }
