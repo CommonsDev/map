@@ -35,6 +35,7 @@ iframe.ng-binding {
 }
 
 $koan_red: #ff262d;
+$koan_yellow: #FFBE00;
 
 @include font-face("Fringant Grotesk", font-files("fringant-grotesk-bold.otf"));
 
@@ -81,7 +82,7 @@ $koan_red: #ff262d;
 
 .leaflet-container {
     background-color: white;
-    background: url("../../images/koan/building.png") left bottom no-repeat, url("../../images/koan/etoile_flyer.png") center center no-repeat;
+    background: url("../../images/koan/montagnes.jpg") left bottom no-repeat, url("../../images/koan/grille.jpg") center center no-repeat;
 }
 
 #logos {
@@ -128,7 +129,7 @@ $koan_red: #ff262d;
     background-repeat: no-repeat;
     background-position: 15px 13px;
     width:200px;
-    border: 4px dashed $koan_red;
+    border: 4px dashed $koan_yellow;
 }
 
 #map-title h1 {

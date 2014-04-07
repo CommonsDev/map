@@ -14,7 +14,12 @@
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
         <link rel="stylesheet" href="styles/css/Control.MiniMap.css">
         <link rel="stylesheet" href="styles/css/screen.css">
-        <link rel="stylesheet" href="styles/css/koan.css">
+        
+    <div ng-switch on="page_title">
+        <link ng-switch-when="koan" rel="stylesheet" href="styles/css/koan.css">
+        <link ng-switch-when="koan_metiers" rel="stylesheet" href="styles/css/koan_metiers.css">
+        <link ng-switch-default rel="stylesheet" href="styles/css/koan.css">
+    </div>
         <link rel="stylesheet" href="styles/css/vendor/leaflet.awesome-markers.css">
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
      <!-- Include the DarkHive ThemeRoller jQuery UI theme. -->

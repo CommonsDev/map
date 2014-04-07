@@ -4,7 +4,7 @@ module = angular.module("leaflet-directive", [])
 class LeafletController
     constructor: (@$scope) ->
         @$scope.marker_instances = []
-
+        
     addMarker: (lat, lng, options) =>
         marker = new L.marker([lat, lng], options).addTo(@$scope.map)
 
@@ -16,7 +16,7 @@ class LeafletController
 
 module.controller("LeafletController", ['$scope', LeafletController])
 
-module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $location) ->
+module.directive("leaflet", ["$http", "$log", "$location", "$rootScope", ($http, $log, $location, $rootScope) ->
     return {
         restrict: "E"
         replace: true
@@ -105,9 +105,19 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
 
 
             # Add feature selects
+            $scope.$watch('$root.page_title', (newValue, oldValue)=>
+                console.debug("========== COLOR =========")
+                switch $scope.$root.page_title
+                    when "koan"
+                        $scope.color_highlight = "#EB2228"
+                    when "koan_metiers"
+                        $scope.color_highlight = "#FFBE00"
+                console.debug($scope.color_highlight)
+            ,true)
+            
             console.debug("loading features...")
             myStyle = {
-                "color": "#EB2228",
+                "color": $scope.color_highlight,
                 "dashArray": "5, 4",
                 "lineCap": "butt",
                 "lineJoin": "miter",
@@ -119,10 +129,12 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
             layer = L.geoJson(window.districts,
                 style: myStyle
                 onEachFeature: (feature, layer) ->
-                    label = new L.Label({className:"label", offset:[0,-30]})
+                    label = new L.Label({className:"label", offset:[-20,-50]})
                     label.setContent(feature.name)
-                    center = layer.getBounds().getCenter()
+                    #center = layer.getBounds().getCenter()
+                    center = new L.LatLng(feature.center[0], feature.center[1])
                     console.debug(" == center ==")
+                    console.debug(center)
                     console.debug(label)
                     #label.setLatLng(center[0] - 0.1, center[1])
                     label.setLatLng(center)
@@ -140,7 +152,7 @@ module.directive("leaflet", ["$http", "$log", "$location", ($http, $log, $locati
                     layer.on(
                         mouseover: (e)->
                             layer.setStyle(
-                                color: "#ff0000"
+                                color: $scope.color_highlight
                                 opacity: 0.9
                             )
                     )

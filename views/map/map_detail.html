@@ -31,8 +31,10 @@
   <h2>{{ MapService.map.description }}</h2>
 </div>
 
-<div id="main-title">
-  <h1>Un certain art de Ville</h1>
+<div id="main-title" ng-switch on="page_title">
+  <h1 ng-switch-when="koan">Un certain art de Ville</h1>
+  <h1 ng-switch-when="koan_metiers">La possibilité d'un stage ?!</h1>
+  <h1 ng-switch-default>Main Title</h1>
 </div>
 
 <div id="logos">
