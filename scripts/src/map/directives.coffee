@@ -16,7 +16,7 @@ class LeafletController
 
 module.controller("LeafletController", ['$scope', LeafletController])
 
-module.directive("leaflet", ["$http", "$log", "$location", "$rootScope", ($http, $log, $location, $rootScope) ->
+module.directive("leaflet", ["$http", "$log", "$location", "$rootScope", "$stateParams", ($http, $log, $location, $rootScope, $stateParams) ->
     return {
         restrict: "E"
         replace: true
@@ -49,19 +49,19 @@ module.directive("leaflet", ["$http", "$log", "$location", "$rootScope", ($http,
             )
             
             # Fake center, required sometimes for the plugins to work...
-            $scope.map.setView([39.950041, -75.169884], 16)
+            $scope.map.setView([39.950041, -75.169884], 13)
 
             # Change callback
             $scope.$watch("center", ((center, oldValue) ->
                     console.debug("map center changed")
-                    $scope.map.setView([center.lat, center.lng], center.zoom)
+                    $scope.map.setView([center.lat, center.lng], 13) 
                 ), true
             )
 
             # Center
             if not attrs.center
                 console.debug("setting default center")
-                $scope.map.setView([0, 0], 1)
+                $scope.map.setView([0, 0], 13)
 
             # On "get_center" signal
             $scope.$on('map.get_center', (event, callback) =>
@@ -105,15 +105,13 @@ module.directive("leaflet", ["$http", "$log", "$location", "$rootScope", ($http,
 
 
             # Add feature selects
-            $scope.$watch('$root.page_title', (newValue, oldValue)=>
-                console.debug("========== COLOR =========")
-                switch $scope.$root.page_title
-                    when "koan"
-                        $scope.color_highlight = "#EB2228"
-                    when "koan_metiers"
-                        $scope.color_highlight = "#FFBE00"
-                console.debug($scope.color_highlight)
-            ,true)
+            console.debug("========== COLOR =========")
+            switch $stateParams.slug
+                when "koan"
+                    $scope.color_highlight = "#EB2228"
+                when "koan_metiers"
+                    $scope.color_highlight = "#FFBE00"
+            console.debug($scope.color_highlight)
             
             console.debug("loading features...")
             myStyle = {
@@ -125,22 +123,23 @@ module.directive("leaflet", ["$http", "$log", "$location", "$rootScope", ($http,
                 "opacity": 0.65,
                 "className": "feature"
             }
-
+            
+            $scope.map.setView([39.950041, -75.169884], 13)
             layer = L.geoJson(window.districts,
                 style: myStyle
                 onEachFeature: (feature, layer) ->
-                    label = new L.Label({className:"label", offset:[-20,-50]})
+
+                    label = new L.Label({className:"label", offset:[-30,-15]})
                     label.setContent(feature.name)
-                    #center = layer.getBounds().getCenter()
-                    center = new L.LatLng(feature.center[0], feature.center[1])
+                    center = layer.getBounds().getCenter()
+                    #center = new L.LatLng(feature.center[0], feature.center[1])
                     console.debug(" == center ==")
                     console.debug(center)
                     console.debug(label)
-                    #label.setLatLng(center[0] - 0.1, center[1])
                     label.setLatLng(center)
-                    console.debug(label)
-                    #layer.bindLabel("WAZEMMES", {noHide: true}).addTo($scope.map)
+                    #layer.bindLabel(feature.name).addTo($scope.map)
                     $scope.map.showLabel(label);
+                    
                     layer.on(
                         click: (e) ->
                             $scope.map.fitBounds(e.target.getBounds())

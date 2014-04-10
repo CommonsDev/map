@@ -95,13 +95,14 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 	    }
 	   ]);
 
-app.run(['$rootScope', function($rootScope) {
+app.run(['$rootScope', '$stateParams', function($rootScope, $stateParams) {
   $rootScope.MEDIA_URI = config.media_uri;
   $rootScope.CONFIG = config;
-
+	
   $rootScope.$on('$stateChangeSuccess', function (event, current, previous) {
-		     if ( current.page_title )
-			 $rootScope.page_title = current.page_title;
-		 });
+		if ( current.page_title )
+			$rootScope.page_title = current.page_title;
+			$rootScope.slug = $stateParams.slug
+	});
 
 }]);

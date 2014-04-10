@@ -1,95 +1,10 @@
 @import "compass/css3/font-face";
-
-// Marker detail
-
-// to hide sharing area on vimeo embeds
-#rectangle { 
-    z-index: 2000;
-    width: 80px;
-    height: 800px;
-    background: black;
-    position: relative;
-    top: -804px;
-    left: 1514px;    
-    
-}
-
-p.ng-binding {
-    padding-bottom: 6px;
-}
-
-.description .title {
-    padding: 15px 28px 10px !important;
-}
-
-.subtitle {
-    font-size: 1.2rem;
-    font-weight: 500;
-    line-height: 1.2rem;
-    padding: 0px 28px 10px;
-}
-
-iframe.ng-binding {
-    width: 600px;
-
-}
-
-$koan_red: #ff262d;
-$koan_yellow: #FFBE00;
-
-@include font-face("Fringant Grotesk", font-files("fringant-grotesk-bold.otf"));
-
-.card .author {
-    visibility: hidden;
-}
-
-#item-position{
-    visibility: hidden;
-}
-
-#overlay-panel {
-    width: 100%;
-}
-
-#overlay-panel .card {
-    visibility: hidden;
-}
-
-#overlay-panel .widgets {
-    background-color: #eee;
-    left: 10px;
-    right: 10px;
-    top: 10px;
-    bottom: 10px;
-}
-
-#overlay-panel .description {
-    width: 100%;
-}
-
-#overlay-panel .actions {
-    visibility: hidden;
-}
-
-#toolbar {
-    visibility: hidden;
-}
-
-.leaflet-container .leaflet-control-zoom {
-	margin-left: 10px;
-    margin-top: 80px;	
-}
+@import "koan_common";
 
 .leaflet-container {
     background-color: white;
     background: url("../../images/koan/montagnes.jpg") left bottom no-repeat, url("../../images/koan/grille.jpg") center center no-repeat;
 }
-
-#logos {
-    position: absolute;
-    top: 10px;
-    left: 10px;
- }
 
 #main-title {
     font-family: "Fringant Grotesk";
@@ -97,7 +12,7 @@ $koan_yellow: #FFBE00;
     z-index: 1000;
     position: absolute;
     right: 50%;
-    width:350px;
+    width:418px;
     margin-right:-175px;
     top: 10px;
     padding: 5px;
@@ -105,17 +20,6 @@ $koan_yellow: #FFBE00;
     background-color: white;
 }
 
-#main-title h1 {
-    font-size: 3em;
-    float: center;
-}
-
-#map-title .sep {
-    width: 5px;
-    height: 50px;
-    border-left: 1px solid black;
-    float: left;
-}
 
 #map-title {
 
@@ -139,57 +43,4 @@ $koan_yellow: #FFBE00;
     width:180px;
 }
 
-#map-title h2 {
-    font-size: 1em;
-}
 
-.label {
-    font-family: "Fringant Grotesk";
-    font-size: 1.4em;
-}
-
-//-- Minimap
-
-.leaflet-control-minimap {
-    border:solid rgba(255, 255, 255, 1.0) 4px;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-    border-radius: 3px;
-    background: #f8f8f9;
-    transition: all .2s;
-}
-
-.leaflet-control-minimap a {
-    background-color: rgba(255, 255, 255, 1.0);
-    background-repeat: no-repeat;
-    z-index: 99999;
-    transition: all .2s;
-    border-radius: 3px 0px 0px 0px;
-}
-
-.leaflet-control-minimap a.minimized {
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-    border-radius: 0px;
-}
-
-.leaflet-control-minimap-toggle-display {
-    background-image: url("images/toggle.png");
-    height: 19px;
-    width: 19px;
-    position: absolute;
-    bottom: 0;
-    right: 0; 
-}
-
-/* Old IE */
-.leaflet-oldie .leaflet-control-minimap {
-	border: 1px solid #999;
-}
-
-.leaflet-oldie .leaflet-control-minimap a {
-	background-color: #fff;
-}
-
-.leaflet-oldie .leaflet-control-minimap a.minimized {
-	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-}
