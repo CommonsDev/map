@@ -129,7 +129,7 @@ module.directive("leaflet", ["$http", "$log", "$location", "$rootScope", "$state
                 style: myStyle
                 onEachFeature: (feature, layer) ->
 
-                    label = new L.Label({className:"label", offset:[-30,-15]})
+                    label = new L.Label({className:"label", offset:[-20,-18]})
                     label.setContent(feature.name)
                     center = layer.getBounds().getCenter()
                     #center = new L.LatLng(feature.center[0], feature.center[1])
