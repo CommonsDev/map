@@ -355,7 +355,7 @@ class MapMarkerNewCtrl
                         ).progress((evt) =>
                                 console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
                         ).success((data, status, headers, config) =>
-                                @$scope.marker.picture_url = data[0].thumbnail_url
+                                @$scope.marker.picture_url = data.thumbnail_url
                                 @$scope.isUploading = false
                         );
 
