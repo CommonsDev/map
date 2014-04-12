@@ -40,7 +40,7 @@ module.directive("leaflet", ["$http", "$log", "$location", "$rootScope", "$state
             $scope.map = new L.Map($el,
                 zoomControl: true
                 zoomAnimation: true
-                scrollWheelZoom: false
+                scrollWheelZoom: true
                 dragging: true
                 maxBounds: lilleBounds
                 maxZoom: 16 
