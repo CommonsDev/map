@@ -1,3 +1,18 @@
+// Marker pointers  
+.awesome-marker {
+    background: url("../../../images/leaflet/markers-soft.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background-size:300px!important;
+    height: 38px!important;
+    width: 28px!important;
+    margin-left: -11px!important;
+    margin-top: -41px!important;
+}
+
+.leaflet-control-attribution a {
+    display: none !important;
+}
+
+
 // Marker detail
 
 

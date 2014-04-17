@@ -22,9 +22,20 @@
     </div>
         <link rel="stylesheet" href="styles/css/vendor/leaflet.awesome-markers.css">
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
+    <script language="javascript">
+	    document.onmousedown=disableclick;
+	    status="Right Click Disabled";
+	    Function disableclick(event)
+	    {
+	      if(event.button==2)
+	       {
+		 alert(status);
+		 return false;    
+	       }
+	    }
+	</script>
     </head>
-    <body>
+    <body oncontextmenu="return false">
       <div id="wrap-page" ng-controller="LoginCtrl">
 
 	<!-- main view -->

@@ -93,7 +93,7 @@ module.directive("leaflet", ["$http", "$log", "$location", "$rootScope", "$state
 
                     layer.attrs['boundary'] = latLngGeom
                     layer.attrs['attribution'] = 'Contenu et identité graphique &copy Koan 2014' # FIXME
-
+                    layer.attrs['attribution'] = true
                     leaflayer = L.TileLayer.boundaryCanvas(layer.url_template, layer.attrs)
                     leaflayer.addTo($scope.map)
 

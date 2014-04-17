@@ -3,7 +3,7 @@
     <a ng-href="{{CONFIG.applicationAlias}}{{$stateParams.slug}}/marker/{{marker.data.id}}">
       <header>
         <div class="minipic">
-          <img ng-show="marker.data.picture_url" alt="{{ marker.data.title }}" ng-src="{{ MEDIA_URI }}{{ marker.data.picture_url }}" width="248" height="184">
+          <img ng-show="marker.data.picture_url" alt="{{ marker.data.title }}" ng-src="{{ MEDIA_URI }}{{ marker.data.picture_url }}?width=248" width="248" height="184">
           <img ng-hide="marker.data.picture_url" alt="{{ marker.data.title }}" src="images/marker_nopicture.jpg" width="248" height="184">
         </div>
         <div class="author">
