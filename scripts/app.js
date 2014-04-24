@@ -1,7 +1,3 @@
-config = {
-    templateBaseUrl: '/views/',
-}
-
 angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
 
@@ -96,6 +92,8 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 app.run(['$rootScope', function($rootScope) {
   $rootScope.MEDIA_URI = 'http://localhost:8000';
   $rootScope.CONFIG = config;
+  $rootScope.loginBaseUrl = config.loginBaseUrl;
+  $rootScope.homeStateName = config.homeStateName;
 
   $rootScope.$on('$stateChangeSuccess', function (event, current, previous) {
 		     if ( current.page_title )
