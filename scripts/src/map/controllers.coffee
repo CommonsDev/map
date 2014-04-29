@@ -158,6 +158,14 @@ class MapMarkerDetailCtrl
                         @$scope.isLoading = false
                 )
 
+                @$scope.remove = this.remove
+
+        remove: =>
+                @Restangular.one('scout/marker', @$routeParams.markerId).remove().then(=>
+                        console.debug("marker deleted")
+                        @$state.go('map')
+                )
+
 
 class MapSettingsCtrl
         constructor: (@$scope, @$rootScope, @$stateParams, @Restangular, @MapService) ->
