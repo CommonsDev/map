@@ -66,6 +66,10 @@ class MapDetailCtrl
                                 @$scope.isLoading = false
                         )
 
+                query = @$location.search()
+                # Shall we show the toolbar?
+                @$scope.showToolbar = (query['toolbar'] != 'false')
+
                 # Bind methods
                 @$scope.search = this.search
                 @$scope.toggleLockPosition = this.toggleLockPosition
