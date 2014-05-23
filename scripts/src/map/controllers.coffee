@@ -264,18 +264,33 @@ class MapShareCtrl
         constructor: (@$scope, @$location, @$state, @Restangular, @MapService) ->
                 @$scope.$state = @$state
                 @$scope.$location = @$location
-                @$scope.map = @MapService.map
 
                 @$scope.form =
-                        privacy_level: 'readonly'
+                        privacy_level: 'GROUP_RW'
+
+
+                @$scope.$watch(@MapService.map, =>
+                        return if @MapService.map is null
+                        @$scope.map = @MapService.map
+                )
 
                 # Bind methods to scope
                 @$scope.changePrivacyLevel = this.changePrivacyLevel
 
         changePrivacyLevel: (level) =>
                 @$scope.form.privacy_level = level
-
-
+                @Restangular.withConfig((RestangularConfigurer) =>
+                        RestangularConfigurer.setRestangularFields(
+                                id: "slug" # We need this otherwise
+                                           # the URL isn't builded
+                                           # correctly (it used Id
+                                           # instead of slug)
+                        ))
+                .one('scout/map', @MapService.map.slug)
+                .patch({privacy: @$scope.form.privacy_level})
+                .then(->
+                        console.debug("privacy changed")
+                )
 
 class MapMarkerNewCtrl
         """

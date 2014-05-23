@@ -82,6 +82,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 		    .state('map.share', {
 			       url: '/share',
 			       templateUrl: moduleTemplateBaseUrl + 'map_share.html',
+			       controller: 'MapShareCtrl'
 			   })
 		    .state('map.my_maps', {
 			       url: '/my_maps',

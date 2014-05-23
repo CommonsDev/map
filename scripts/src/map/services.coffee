@@ -22,7 +22,6 @@ class MapService
                 """
                 Return the current map layer
                 """
-                console.debug(@map)
                 return @map.data_layers[0] # XXX Hacky
 
         addMarker: (name, aMarker) =>

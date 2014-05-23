@@ -1,33 +1,34 @@
-<div id="intercalar" ng-controller="MapShareCtrl">
+<div id="intercalar">
   <span class="caption">Ajustez le niveau de partage</span>
 
   <div id="intercalar-panel" class="map-share-panel">
     <a class="close-link" ui-sref="map">Fermer</a>
     <h1>    
-      <img src="images/share_ico.png" alt="" />
+      <img src="images/share_ico.png" alt="Sharing" />
       <strong>Niveau de partage de cette carte</strong>
       <span>Le niveau de partage définit qui peut voir et faire quoi.</span>
     </h1>
     <ng-form name="form">
     <ul id="privacy-list">
-      <li class="consult" ng-class="{active: form.privacy_level == 'readonly'}" ng-click="changePrivacyLevel('readonly')">
-	<input type="radio" name="privacy_level" value="readonly" ng-model="form.privacy_level" id="readonly"/>
-        <label for="readonly">Consultatif</label><br />
-	<em>Vous seul pouvez configurer la carte et ajouter des éléments.</em>
+      <li class="consult" ng-class="{active: form.privacy_level == 'GROUP_RW'}" ng-click="changePrivacyLevel('GROUP_RW')">
+	<input type="radio" name="privacy_level" value="GROUP_RW" ng-model="form.privacy_level" id="readonly"/>
+        <label for="readonly">Privé</label><br />
+	<em>Seul vous et votre groupe peuvent voir et modifier la carte.</em>
       </li>
 
-      <li class="contrib" ng-class="{active: form.privacy_level == 'contributive'}" ng-click="changePrivacyLevel('contributive')">
-	<input type="radio" name="privacy_level" value="contributive" ng-model="form.privacy_level" id="contributive"/>
-        <label for="contributive">Contributif</label><br />
-	<em>Vous seul pouvez configurer la carte mais chacun peut ajouter des éléments.</em>
+      <li class="contrib" ng-class="{active: form.privacy_level == 'GROUP_RW_OTHERS_RO'}" ng-click="changePrivacyLevel('GROUP_RW_OTHERS_RO')">
+	<input type="radio" name="privacy_level" value="GROUP_RW_OTHERS_RO" ng-model="form.privacy_level" id="contributive"/>
+        <label for="contributive">Consultatif</label><br/>
+	<em>Seul vous et votre groupe pouvez changer la carte mais tout le monde peut la voir.</em>
       </li>
 
-
+      <!--
       <li class="publi" ng-class="{active: form.privacy_level == 'public'}" ng-click="changePrivacyLevel('public')">
 	<input type="radio" name="privacy_level" value="public" ng-model="form.privacy_level" id="public"/>
         <label for="public">Publique</label><br />
 	<em>Tout le monde peut configurer la carte et ajouter des éléments.</em>
       </li>
+      -->
 
     </ul>
 
