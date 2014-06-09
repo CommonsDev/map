@@ -15,12 +15,12 @@
 
 <div id="intercalar-panel">
   <ng-form name="new_marker_form">
-  
+
     <div ng-switch="wizard.step">
     <!-- location -->
       <section id="add-block-1" class="add-panel-block" ng-switch-when="1">
         <a class="close-link" ui-sref="map">Fermer</a>
-        <h1>    
+        <h1>
           <img src="images/steps/1.png" alt="1/4" />
           <strong>Localisez<br /> votre Point d'intérêt</strong>
           <span>Entrez une adresse, placez ou géolocalisez-vous<br /> pour définir la position du point</span>
@@ -59,7 +59,7 @@
             <span>un instant, nous chargeons vos contenus...</span>
           </p>
         </div>
-        <h1>    
+        <h1>
           <img src="images/steps/2.png" alt="2/4" />
           <strong>Qualifiez<br />  votre point d'intérêt</strong>
           <span>Séléctionnez la nature du point<br /> dans les listes ci-dessous</span>
@@ -75,10 +75,10 @@
                 <div class="inner">
                   <ul>
                     <li ng-repeat="cat in marker_categories" class="category">
-                      <input type="radio" name="category" ng-click="wizard.step = 3" ng-model="marker.category" value="{{ cat.resource_uri }}" id="{{ cat.id }}" />
+                      <input type="radio" ng-change="wizard.step = 3" ng-model="marker.category" value="{{ cat.resource_uri }}" id="{{ cat.id }}" />
                       <label for="{{ cat.id }}">
                         <div class="amazing-marker {{ cat.marker_color }}">
-                          <i class="fa fa-{{ cat.icon_name }} icon-{{ cat.icon_color }}"></i> 
+                          <i class="fa fa-{{ cat.icon_name }} icon-{{ cat.icon_color }}"></i>
                         </div>
                         <span>{{ cat.name }}</span>
                       </label>
@@ -116,7 +116,7 @@
             <span>Veuillez patienter pendant l'envoi de votre image...</span>
           </p>
         </div>
-        <h1>    
+        <h1>
           <img src="images/steps/3.png" alt="3/4" />
           <strong>Ajoutez<br />  une photo ou vidéo</strong>
           <span>Prenez une photo / vidéo ou sélectionnez-en une<br /> dans votre répertoire</span>
@@ -168,7 +168,7 @@
             <span>Veuillez patienter pendant l'envoi de votre image...</span>
           </p>
         </div>
-        <h1>    
+        <h1>
           <img src="images/steps/4.png" alt="4/4" />
           <strong>Entrez<br />  votre description</strong>
           <span>Donnez un titre à votre point d'intérêt et entrez <br />votre description</span>
