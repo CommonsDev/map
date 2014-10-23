@@ -75,34 +75,6 @@ class MapService
                                         lng: aMap.center.coordinates[1]
                                         zoom: aMap.zoom
 
-                        # Add every tile layer
-                        console.debug("Adding tile layer...")
-                        @tilelayer =
-                                name: aMap.tile_layer.name
-                                uri: aMap.tile_layer.resource_uri
-                                url_template: aMap.tile_layer.url_template
-                                attrs:
-                                        zoom: 12
-
-                        # Add data layers
-                        @markers = {}
-
-                        for layer in aMap.data_layers
-                                console.debug("Adding data layer...")
-                                # Add its markers
-                                for marker in layer.markers
-                                        this.addMarker(marker.id,
-                                                lat: marker.position.coordinates[0]
-                                                lng: marker.position.coordinates[1]
-                                                data: marker
-                                                options:
-                                                        icon: L.AwesomeMarkers.icon(
-                                                                icon: marker.category.icon_name
-                                                                markerColor: marker.category.marker_color
-                                                                iconColor: marker.category.icon_color
-                                                        )
-                                        )
-
                         callback(@map)
                 )
 

@@ -1,13 +1,8 @@
 <!-- background map -->
 <div>
-  <leaflet center="MapService.center" tilelayer="MapService.tilelayer" id="background-map">
-    <div ng-repeat="marker in MapService.markers">
-      <leaflet-marker marker="marker">
-	<div ng-include src="'views/map/marker_card.html'"></div>
-      </leaflet-marker>
-    </div>
+  <leaflet id="background-map" markers="markers" center="center" layers="layers">
   </leaflet>
-  
+
 </div>
 
 <!-- left sidebar -->

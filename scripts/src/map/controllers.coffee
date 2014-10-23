@@ -52,6 +52,21 @@ class MapDetailCtrl
                 @$scope.MapService = @MapService
                 @$scope.$stateParams = @$stateParams
 
+                angular.extend(@$scope, {
+                        center:
+                                lat: 0
+                                lng: 0
+                                zoom: 11
+                        layers:
+                                baselayers:
+                                        osm:
+                                                name: 'OpenStreetMap'
+                                                url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                                                type: 'xyz'
+                })
+
+                @$scope.markers = new Array()
+
                 @$scope.isLoading = true
 
                 @$scope.acquiringPosition = false
@@ -64,6 +79,36 @@ class MapDetailCtrl
                                 console.debug("map loaded...")
                                 @$rootScope.page_title = map.name
                                 @$scope.isLoading = false
+
+                                # Set zoom and coordinates
+                                @$scope.center.lat = map.center.coordinates[0]
+                                @$scope.center.lng = map.center.coordinates[1]
+                                @$scope.center.zoom = map.zoom
+
+                                # Fill in markers
+                                for layer in map.data_layers
+                                        console.debug("Adding data layer...")
+                                        # Add its markers
+                                        for marker in layer.markers
+                                                @$scope.markers.push({
+                                                        lat: marker.position.coordinates[0]
+                                                        lng: marker.position.coordinates[1]
+                                                        #data: marker
+                                                        options:
+                                                                icon: L.AwesomeMarkers.icon(
+                                                                        icon: marker.category.icon_name
+                                                                        markerColor: marker.category.marker_color
+                                                                        iconColor: marker.category.icon_color
+                                                                )
+                                                })
+
+                                # Add every tile layer
+                                console.debug("Adding tile layer...")
+                                @$scope.layers.baselayers[map.tile_layer.name] =
+                                        name: map.tile_layer.name
+                                        url: map.tile_layer.url_template
+                                        type: "xyz"
+
                         )
 
                 query = @$location.search()
