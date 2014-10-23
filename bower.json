@@ -29,6 +29,8 @@
     "angular-animate": "~1.2.26",
     "restangular": "~1.4.0",
     "angular-unisson-auth": "~0.1.4",
-    "angular-ui-router": "0.2.11"
+    "angular-ui-router": "0.2.11",
+    "leaflet": "0.7.3",
+    "angular-leaflet-directive": "0.7.8"
   }
 }
