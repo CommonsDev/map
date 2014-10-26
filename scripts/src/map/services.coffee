@@ -11,6 +11,8 @@ class MapService
 
                 @tiles = {}
 
+                @geojson = {}
+
                 @map = null
 
         getCurrentDataLayer: =>

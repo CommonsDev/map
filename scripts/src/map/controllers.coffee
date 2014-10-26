@@ -580,6 +580,92 @@ class MapMarkerNewCtrl
 
                 )
 
+module.controller("MapSPARQLCtrl", ['$scope', '$http', 'MapService', 'leafletData', ($scope, $http, MapService, leafletData) ->
+        $scope.cmOptions =
+                lineNumbers: true
+                theme: "solarized dark"
+                mode: "sparql"
+
+        $scope.sparql_query = """
+Prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix ogc: <http://www.opengis.net/ont/geosparql#>
+Prefix geom: <http://geovocab.org/geometry#>
+Prefix lgdo: <http://linkedgeodata.org/ontology/>
+Prefix geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+Select ?location ?label
+From <http://linkedgeodata.org> {
+  ?amenity
+    a lgdo:School ;
+    rdfs:label ?label ;
+    geom:geometry [
+        ogc:asWKT ?location
+    ] .
+
+    Filter(bif:st_intersects (?location, bif:st_point (3.042359900000065, 50.6138111), 0.1)) .
+} LIMIT 20
+"""
+
+        $scope.q_in_progress = false
+        $scope.result_info = ""
+
+        $scope.$watch("MapService.geojson", ->
+                console.debug("changed")
+                leafletData.getMap("background-map").then((map) ->
+                        leafletData.getGeoJSON("background-map").then((geojsonData) ->
+                                map.fitBounds(geojsonData.getBounds())
+                        )
+                )
+        )
+
+
+        $scope.sparql_endpoint = "http://linkedgeodata.org/sparql"
+
+        $scope.run_query = =>
+                $scope.q_in_progress = true
+
+                $http({
+                        url: $scope.sparql_endpoint
+                        params:
+                                query: $scope.sparql_query
+                                format: 'json'
+                        headers:
+                                Accept: "application/sparql-results+json, */*; q=0.01"
+
+                        transformRequest: (data, headersGetter) ->
+                                delete headersGetter()['Authorization'] # We have to remove this header for CORS to work
+                }).success((data, status, headers, config) ->
+                        # convert to geojson
+                        collection =
+                                type: "FeatureCollection"
+                                features: []
+
+                        for binding in data.results.bindings
+                                geometry = wellknown.parse(binding.location.value)
+                                feature =
+                                        type: "Feature"
+                                        geometry: geometry
+
+                                collection.features.push(feature)
+
+                        MapService.geojson =
+                                data: collection
+                                style:
+                                        fillColor: 'green'
+                                        weight: 2
+                                        opacity: 1
+                                        color: 'green'
+                                        dashArray: '3'
+                                        fillOpacity: 0.7
+
+                        $scope.q_in_progress = false
+                        $scope.result_info = "#{collection.features.length} result(s)"
+
+                )
+
+
+])
+
 
 # Controller declarations
 module.controller("MapDetailCtrl", ['$scope', '$rootScope', '$stateParams', '$location', 'MapService', 'geolocation', '$compile', MapDetailCtrl])

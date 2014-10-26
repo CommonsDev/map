@@ -1,15 +1,15 @@
 angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
 
-app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'ngAnimate', 'googleOauth']);
+app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'ui.codemirror', 'ngAnimate', 'googleOauth']);
 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
 
 // CORS
 app.config(['$httpProvider', function ($httpProvider) {
-		$httpProvider.defaults.useXDomain = true;
-		delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }
 ]);
 
@@ -40,7 +40,7 @@ app.config(function(RestangularProvider) {
 
 	   });
 
-app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'moduleTemplateBaseUrl', 
+app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'moduleTemplateBaseUrl',
 	    function($locationProvider, $stateProvider, $urlRouterProvider, moduleTemplateBaseUrl) {
 		$locationProvider.html5Mode(config.useHtml5Mode);
 		$urlRouterProvider.otherwise("/")
@@ -92,7 +92,12 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 			      url: '/marker/:markerId',
 			      templateUrl: moduleTemplateBaseUrl + 'marker_detail.html',
 			      controller: 'MapMarkerDetailCtrl'
-			   });
+			   })
+                    .state('map.sparql', {
+                        url:'/sparql',
+                        templateUrl: moduleTemplateBaseUrl + 'sparql.html',
+                        controller: 'MapSPARQLCtrl'
+                    });
 	    }
 	   ]);
 

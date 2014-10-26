@@ -31,6 +31,8 @@
     "angular-unisson-auth": "~0.1.4",
     "angular-ui-router": "0.2.11",
     "leaflet": "0.7.3",
-    "angular-leaflet-directive": "0.7.8"
+    "angular-leaflet-directive": "0.7.8",
+    "angular-ui-codemirror": "",
+    "wellknown": "0.3.0"
   }
 }

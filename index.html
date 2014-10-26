@@ -15,6 +15,9 @@
         <link rel="stylesheet" href="styles/css/screen.css">
         <link rel="stylesheet" href="styles/css/vendor/leaflet.awesome-markers.css">
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="scripts/vendor/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" type="text/css" href="scripts/vendor/codemirror/theme/solarized.css">
+
     </head>
     <body>
       <div id="wrap-page" ng-controller="LoginCtrl">
@@ -87,15 +90,18 @@
     <!-- google services -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
 
+    <!-- RDF -->
+    <script src="scripts/vendor/rdflib.js"></script>
+
     <!-- bower -->
     <script src="scripts/vendor/underscore/underscore.js"></script>
-
     <script src="scripts/vendor/angular/angular.min.js"></script>
     <script src="scripts/vendor/angular-animate/angular-animate.min.js"></script>
     <script src="scripts/vendor/angular-cookies/angular-cookies.min.js"></script>
 
     <script src="scripts/vendor/leaflet/dist/leaflet.js"></script>
     <script src="scripts/vendor/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+    <script src="scripts/vendor/wellknown/wellknown.js"></script>
 
     <script src="scripts/vendor/restangular/dist/restangular.js"></script>
     <script src="scripts/vendor/angular-ui-router/release/angular-ui-router.js"></script>
@@ -106,6 +112,10 @@
 
     <script src="scripts/vendor/angularOauth.js"></script>
     <script src="scripts/vendor/googleOauth.js"></script>
+
+    <script type="text/javascript" src="scripts/vendor/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="scripts/vendor/codemirror/mode/sparql/sparql.js"></script>
+    <script type="text/javascript" src="scripts/vendor/angular-ui-codemirror/ui-codemirror.js"></script>
 
     <!-- leaflet -->
     <script src="scripts/vendor/leaflet.awesome-markers.min.js"></script>
