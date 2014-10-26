@@ -66,8 +66,8 @@ class MapDetailCtrl
                                 @$scope.isLoading = false
                         )
 
+                # Catch popup opening, format template with current data and open popup
                 @$scope.$on('leafletDirectiveMarker.popupopen', (event, leafletEvent) ->
-                        console.debug("yo")
                         newScope = $scope.$new()
                         angular.extend(newScope,
                                 marker: $scope.MapService.markers[leafletEvent.markerName]
@@ -100,10 +100,9 @@ class MapDetailCtrl
                                                 marker.lat = position.coords.latitude
                                                 marker.lng = position.coords.longitude
                                         else
-                                                @MapService.addMarker("geoloc_marker",
+                                                @MapService.markers['geoloc_marker'] =
                                                         lat: position.coords.latitude
                                                         lng: position.coords.longitude
-                                                )
 
                                         console.debug("map center set to #{position.coords.latitude}, #{position.coords.longitude}")
 
@@ -181,21 +180,25 @@ class MapMarkerDetailCtrl
 
 
 class MapSettingsCtrl
-        constructor: (@$scope, @$rootScope, @$stateParams, @Restangular, @MapService) ->
+        constructor: (@$scope, @$stateParams, @Restangular, @MapService) ->
                 console.debug("settings initialized")
                 @$scope.set_center = this.set_center
 
         set_center: =>
-                console.debug("setting center...")
-                @$rootScope.$broadcast('map.get_center', (center, zoom) =>
-                        @MapService.map.center =
-                                coordinates: [center.lat, center.lng]
-                                type: 'Point'
-                        @MapService.map.zoom = zoom
-                        @MapService.map.patch({'center': @MapService.map.center, 'zoom': @MapService.map.zoom}).then(() =>
-                                $("#recadring").fadeIn('slow').delay(1000).fadeOut('slow')
-                        )
+                console.debug("setting center1...")
+                center = @MapService.center
+
+                @MapService.map.center =
+                        coordinates: [center.lat, center.lng]
+                        type: 'Point'
+                @MapService.map.zoom = center.zoom
+
+                console.debug("setting center2...")
+
+                @MapService.map.patch({'center': @MapService.map.center, 'zoom': @MapService.map.zoom}).then(() =>
+                        $("#recadring").fadeIn('slow').delay(1000).fadeOut('slow')
                 )
+                console.debug("setting center3...")
 
 class MapMyMapsCtrl
         """
@@ -214,7 +217,7 @@ class MapTileLayersCtrl
         """
         Changes the background layer of a map
         """
-        constructor: (@$scope, @$stateParams, @Restangular, @MapService, @leafletData) ->
+        constructor: (@$scope, @$stateParams, @Restangular, @MapService) ->
                 @$scope.form = {}
                 @$scope.isLoading = true
                 @$scope.available_layers = []
@@ -234,6 +237,7 @@ class MapTileLayersCtrl
                                         attribution: new_tl.attribution
 
                         # Save preference to server
+                        # FIXME Should use smthg liek setTiles() and saveTiles() from the service
                         @MapService.map.tile_layer = @$scope.available_layers[tilelayer_idx].resource_uri
                         @MapService.map.patch({'tile_layer': @MapService.map.tile_layer})
                 )
@@ -340,23 +344,27 @@ class MapMarkerNewCtrl
 
                 @$scope.uploads = {}
 
+                @$scope.MapService = @MapService
+
                 # The new marker we'll submit if everything is OK
                 @$scope.marker = {}
                 @$scope.marker.position =
                         coordinates: null
                         type: "Point"
 
-                # Preview the next marker
-                @$scope.marker_preview =
+                # Preview the next marker, using a target icon
+                @$scope.MapService.markers['marker_preview'] =
                         lat: @MapService.center.lat
                         lng: @MapService.center.lng
-                        options:
-                                draggable: true
-                                icon: @MapService.icon
-                @MapService.addMarker('marker_preview', @$scope.marker_preview)
+                        draggable: true
+                        icon:
+                                type: 'awesomeMarker'
+                                icon: 'dot-circle-o'
+                                markerColor: 'blue'
+                                iconColor: 'white'
 
-                $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) =>
-                        @MapService.removeMarker('marker_preview')
+                @$scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) =>
+                        @MapService.markers = _.without(@MapService.markers, 'marker_preview')
                 )
 
                 # Wizard Steps
@@ -381,7 +389,7 @@ class MapMarkerNewCtrl
                 @$scope.on_marker_preview_moved = @debounce(this.on_marker_preview_moved, 2)
 
                 # Cursor move callback
-                @$scope.$watch('marker_preview.lat + marker_preview.lng', =>
+                @$scope.$watch('MapService.markers["marker_preview"].lat + MapService.markers["marker_preview"].lng', =>
                         @$scope.on_marker_preview_moved()
                 )
 
@@ -422,18 +430,16 @@ class MapMarkerNewCtrl
                         @MapService.removeMarker('marker_preview')
 
                         # Create new marker
-                        @MapService.addMarker(marker.id,
+                        @MapService.markers[marker.id] =
                                 lat: marker.position.coordinates[0]
                                 lng: marker.position.coordinates[1]
+                                message: '<div ng-include="\'/views/map/marker_card.html\'"></div>'
                                 data: angular.copy(marker)
-                                options:
-                                        icon: L.AwesomeMarkers.icon({
-                                                icon: marker.category.icon_name
-                                                iconColor: marker.category.icon_color
-                                                markerColor: marker.category.marker_color
-                                        })
-
-                        )
+                                icon:
+                                        type: 'awesomeMarker'
+                                        icon: marker.category.icon_name
+                                        iconColor: marker.category.icon_color
+                                        markerColor: marker.category.marker_color
 
                         @$scope.isUploading = false
 
@@ -519,15 +525,16 @@ class MapMarkerNewCtrl
                 """
                 When the marker was moved, update position and geocode
                 """
-                if (not @$scope.marker_preview.lat) or (not @$scope.marker_preview.lng)
+                marker_preview = @MapService.markers['marker_preview']
+                if (not marker_preview.lat) or (not marker_preview.lng)
                         return
 
                 # Update marker position
-                @$scope.marker.position.coordinates = [@$scope.marker_preview.lat, @$scope.marker_preview.lng]
+                @$scope.marker.position.coordinates = [marker_preview.lat, marker_preview.lng]
                 console.debug("pos set @#{@$scope.marker.position.coordinates}")
 
                 # Resolve lat/lng to a human readable address
-                pro = @geolocation.resolveLatLng(@$scope.marker_preview.lat, @$scope.marker_preview.lng).then((address) =>
+                pro = @geolocation.resolveLatLng(marker_preview.lat, marker_preview.lng).then((address) =>
                         console.debug("Found address match: #{address.formatted_address}")
                         @$scope.marker.address = angular.copy(address.formatted_address)
                 )
@@ -539,13 +546,14 @@ class MapMarkerNewCtrl
                         (pos) =>
                                 console.debug("Resolving #{pos.coords.latitude}")
 
-                                @$scope.marker_preview.lat = pos.coords.latitude
-                                @$scope.marker_preview.lng = pos.coords.longitude
+                                marker_preview = @MapService.markers['marker_preview']
+                                marker_preview.lat = pos.coords.latitude
+                                marker_preview.lng = pos.coords.longitude
 
                                 # Focus on new location
                                 @MapService.center =
-                                        lat: @$scope.marker_preview.lat
-                                        lng: @$scope.marker_preview.lng
+                                        lat: marker_preview.lat
+                                        lng: marker_preview.lng
                                         zoom: 20
                         , (reason) =>
                                 console.debug("error while getting position...")
@@ -560,13 +568,14 @@ class MapMarkerNewCtrl
                         console.debug("Found pos #{coords}")
 
                         # move preview marker
-                        @$scope.marker_preview.lat = coords[0]
-                        @$scope.marker_preview.lng = coords[1]
+                        marker_preview = @MapService.markers['marker_preview']
+                        marker_preview.lat = coords[0]
+                        marker_preview.lng = coords[1]
 
                         # Focus on new position
                         @MapService.center =
-                                lat: @$scope.marker_preview.lat
-                                lng: @$scope.marker_preview.lng
+                                lat: marker_preview.lat
+                                lng: marker_preview.lng
                                 zoom: 15
 
                 )
@@ -576,9 +585,9 @@ class MapMarkerNewCtrl
 module.controller("MapDetailCtrl", ['$scope', '$rootScope', '$stateParams', '$location', 'MapService', 'geolocation', '$compile', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', '$location', '$cookies', 'Restangular', MapNewCtrl])
 module.controller("MapMarkerDetailCtrl", ['$scope', '$stateParams', '$state', 'Restangular', MapMarkerDetailCtrl])
-module.controller("MapTileLayersCtrl", ['$scope', '$stateParams', 'Restangular', 'MapService', 'leafletData', MapTileLayersCtrl])
+module.controller("MapTileLayersCtrl", ['$scope', '$stateParams', 'Restangular', 'MapService', MapTileLayersCtrl])
 module.controller("MapMyMapsCtrl", ['$scope', '$state', 'Restangular', 'MapService', MapMyMapsCtrl])
-module.controller("MapSettingsCtrl", ['$scope', '$rootScope', '$state', 'Restangular', 'MapService', MapSettingsCtrl])
+module.controller("MapSettingsCtrl", ['$scope', '$state', 'Restangular', 'MapService', MapSettingsCtrl])
 module.controller("MapShareCtrl", ['$scope', '$location', '$state', 'Restangular', 'MapService', MapShareCtrl])
 module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$state', '$upload', '$location', 'MapService', 'Restangular', 'geolocation', MapMarkerNewCtrl])
 module.controller("MapSearchCtrl", ['$scope', '$rootScope', '$state', 'MapService', 'Restangular', 'geolocation', MapSearchCtrl])

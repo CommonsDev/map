@@ -2,12 +2,6 @@ services = angular.module('map.services', ['restangular'])
 
 class MapService
         constructor: (@$compile, @Restangular) ->
-                @icon = L.AwesomeMarkers.icon({
-                        icon: 'dot-circle-o'
-                        iconColor: 'white'
-                        markerColor: 'cadetblue'
-                })
-
                 @markers = new Array()
 
                 @center =
