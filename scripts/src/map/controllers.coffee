@@ -526,7 +526,7 @@ class MapMarkerNewCtrl
                 When the marker was moved, update position and geocode
                 """
                 marker_preview = @MapService.markers['marker_preview']
-                if (not marker_preview.lat) or (not marker_preview.lng)
+                if (marker_preview is undefined) or (not marker_preview.lat) or (not marker_preview.lng)
                         return
 
                 # Update marker position
