@@ -2,19 +2,14 @@ services = angular.module('map.services', ['restangular'])
 
 class MapService
         constructor: (@$compile, @Restangular) ->
-                @icon = L.AwesomeMarkers.icon({
-                        icon: 'dot-circle-o'
-                        iconColor: 'white'
-                        markerColor: 'cadetblue'
-                })
+                @markers = new Array()
 
-                @markers = {}
                 @center =
                         lat: 1.0
                         lng: 1.0
                         zoom: 8
 
-                @tilelayer = null
+                @tiles = {}
 
                 @map = null
 
@@ -75,33 +70,40 @@ class MapService
                                         lng: aMap.center.coordinates[1]
                                         zoom: aMap.zoom
 
-                        # Add every tile layer
-                        console.debug("Adding tile layer...")
-                        @tilelayer =
-                                name: aMap.tile_layer.name
-                                uri: aMap.tile_layer.resource_uri
-                                url_template: aMap.tile_layer.url_template
-                                attrs:
-                                        zoom: 12
 
-                        # Add data layers
-                        @markers = {}
-
+                        # Fill in markers
                         for layer in aMap.data_layers
                                 console.debug("Adding data layer...")
+
                                 # Add its markers
                                 for marker in layer.markers
-                                        this.addMarker(marker.id,
+                                        @markers.push({
                                                 lat: marker.position.coordinates[0]
                                                 lng: marker.position.coordinates[1]
-                                                data: marker
-                                                options:
-                                                        icon: L.AwesomeMarkers.icon(
-                                                                icon: marker.category.icon_name
-                                                                markerColor: marker.category.marker_color
-                                                                iconColor: marker.category.icon_color
-                                                        )
-                                        )
+                                                message: '<div ng-include="\'/views/map/marker_card.html\'"></div>'
+                                                data:
+                                                        title: marker.title
+                                                        subtitle: marker.subtitle
+                                                        description: marker.description
+                                                        picture_url: marker.picture_url
+                                                        created_by: marker.created_by
+                                                        address: marker.address
+                                                        id: marker.id
+
+                                                icon:
+                                                        type: 'awesomeMarker'
+                                                        icon: marker.category.icon_name
+                                                        markerColor: marker.category.marker_color
+                                                        iconColor: marker.category.icon_color
+                                                })
+
+                        # Add background tile layer
+                        console.debug("Adding tile layer...")
+                        @tiles =
+                                name: aMap.tile_layer.name
+                                url: aMap.tile_layer.url_template
+                                options:
+                                        attribution: aMap.tile_layer.attribution
 
                         callback(@map)
                 )

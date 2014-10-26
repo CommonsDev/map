@@ -11,7 +11,7 @@
 
         <link href='http://fonts.googleapis.com/css?family=Raleway:400,500,600,700' rel='stylesheet' type='text/css' />
 	<!-- css -->
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+	<link rel="stylesheet" href="scripts/vendor/leaflet/dist/leaflet.css" />
         <link rel="stylesheet" href="styles/css/screen.css">
         <link rel="stylesheet" href="styles/css/vendor/leaflet.awesome-markers.css">
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -47,7 +47,7 @@
                         <li><button class="facebook">Facebook</button></li>
                     </ul>
                 </div>
-                <a href="javascript:void(0)" ng-click="loginrequired=false" class="close">Fermer</a> 
+                <a href="javascript:void(0)" ng-click="loginrequired=false" class="close">Fermer</a>
                 <!-- TODO: changer cette méthode de fermeture de l'overlay -->
             </div>
         </div>
@@ -67,12 +67,12 @@
         -->
     </body>
 
-    <!-- vendor includes -->        
+    <!-- vendor includes -->
     <!--[if lt IE 9]>
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
     <!-- jquery and plugins -->
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="scripts/vendor/jquery/dist/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.fileupload/8.6.1/js/jquery.iframe-transport.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.fileupload/8.6.1/js/jquery.fileupload.js"></script>
@@ -83,44 +83,46 @@
 
     <!-- FIXME: Mehdi's script, move it -->
     <script src="scripts/vendor/script.js"></script>
-    
+
     <!-- google services -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
-    
-    <!-- leaflet -->
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js" type="text/javascript"></script>
-    <script src="scripts/vendor/leaflet.awesome-markers.min.js"></script>
-    
-    <!-- angular -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-animate.min.js"></script>
-    <script src="scripts/vendor/angular-cookies.min.js"></script>
-    <script type="text/javascript" src="//underscorejs.org/underscore-min.js"></script>
-    <script type="text/javascript" src="scripts/vendor/restangular.min.js"></script>
-    <script src="scripts/vendor/angular-ui-router.min.js"></script>
-    
+
+    <!-- bower -->
+    <script src="scripts/vendor/underscore/underscore.js"></script>
+
+    <script src="scripts/vendor/angular/angular.min.js"></script>
+    <script src="scripts/vendor/angular-animate/angular-animate.min.js"></script>
+    <script src="scripts/vendor/angular-cookies/angular-cookies.min.js"></script>
+
+    <script src="scripts/vendor/leaflet/dist/leaflet.js"></script>
+    <script src="scripts/vendor/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+
+    <script src="scripts/vendor/restangular/dist/restangular.js"></script>
+    <script src="scripts/vendor/angular-ui-router/release/angular-ui-router.js"></script>
+
     <script src="scripts/vendor/http-auth-interceptor.js"></script>
     <script src="scripts/vendor/angular-imageupload.js"></script>
     <script src="scripts/vendor/angular-file-upload.min.js"></script>
 
     <script src="scripts/vendor/angularOauth.js"></script>
     <script src="scripts/vendor/googleOauth.js"></script>
-    
-    
+
+    <!-- leaflet -->
+    <script src="scripts/vendor/leaflet.awesome-markers.min.js"></script>
+
+
     <!-- Common -->
     <script src="scripts/lib/common/controllers.js"></script>
     <script src="scripts/lib/common/filters.js"></script>
     <script src="scripts/lib/common/services.js"></script>
-    
+
     <!-- Map module -->
     <script src="scripts/lib/map/services.js"></script>
     <script src="scripts/lib/map/controllers.js"></script>
     <script src="scripts/lib/map/filters.js"></script>
-    <script src="scripts/lib/map/directives.js" type="text/javascript"></script>
-    
+
     <!-- main app -->
     <script src="scripts/config.js"></script>
     <script src="scripts/app.js"></script>
-    
-</html>
 
+</html>
