@@ -603,7 +603,7 @@ From <http://linkedgeodata.org> {
     ] .
 
     Filter(bif:st_intersects (?location, bif:st_point (3.042359900000065, 50.6138111), 0.1)) .
-} LIMIT 20
+} LIMIT 500
 """
 
         $scope.q_in_progress = false
