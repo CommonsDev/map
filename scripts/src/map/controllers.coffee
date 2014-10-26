@@ -48,24 +48,9 @@ class MapDetailCtrl
         """
         Base controller for interacting with a map
         """
-        constructor: (@$scope, @$rootScope, @$stateParams, @$location, @MapService, @geolocation) ->
+        constructor: (@$scope, @$rootScope, @$stateParams, @$location, @MapService, @geolocation, $compile) ->
                 @$scope.MapService = @MapService
                 @$scope.$stateParams = @$stateParams
-
-                angular.extend(@$scope, {
-                        center:
-                                lat: 0
-                                lng: 0
-                                zoom: 11
-                        layers:
-                                baselayers:
-                                        osm:
-                                                name: 'OpenStreetMap'
-                                                url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-                                                type: 'xyz'
-                })
-
-                @$scope.markers = new Array()
 
                 @$scope.isLoading = true
 
@@ -79,37 +64,16 @@ class MapDetailCtrl
                                 console.debug("map loaded...")
                                 @$rootScope.page_title = map.name
                                 @$scope.isLoading = false
-
-                                # Set zoom and coordinates
-                                @$scope.center.lat = map.center.coordinates[0]
-                                @$scope.center.lng = map.center.coordinates[1]
-                                @$scope.center.zoom = map.zoom
-
-                                # Fill in markers
-                                for layer in map.data_layers
-                                        console.debug("Adding data layer...")
-                                        # Add its markers
-                                        for marker in layer.markers
-                                                @$scope.markers.push({
-                                                        lat: marker.position.coordinates[0]
-                                                        lng: marker.position.coordinates[1]
-                                                        #data: marker
-                                                        options:
-                                                                icon: L.AwesomeMarkers.icon(
-                                                                        icon: marker.category.icon_name
-                                                                        markerColor: marker.category.marker_color
-                                                                        iconColor: marker.category.icon_color
-                                                                )
-                                                })
-
-                                # Add every tile layer
-                                console.debug("Adding tile layer...")
-                                @$scope.layers.baselayers[map.tile_layer.name] =
-                                        name: map.tile_layer.name
-                                        url: map.tile_layer.url_template
-                                        type: "xyz"
-
                         )
+
+                @$scope.$on('leafletDirectiveMarker.popupopen', (event, leafletEvent) ->
+                        console.debug("yo")
+                        newScope = $scope.$new()
+                        angular.extend(newScope,
+                                marker: $scope.MapService.markers[leafletEvent.markerName]
+                        )
+                        $compile(leafletEvent.leafletEvent.popup._contentNode)(newScope)
+                )
 
                 query = @$location.search()
                 # Shall we show the toolbar?
@@ -250,7 +214,7 @@ class MapTileLayersCtrl
         """
         Changes the background layer of a map
         """
-        constructor: (@$scope, @$stateParams, @Restangular, @MapService) ->
+        constructor: (@$scope, @$stateParams, @Restangular, @MapService, @leafletData) ->
                 @$scope.form = {}
                 @$scope.isLoading = true
                 @$scope.available_layers = []
@@ -261,9 +225,15 @@ class MapTileLayersCtrl
                         if @$scope.isLoading
                                 return
 
-                        @MapService.tilelayer = @$scope.available_layers[tilelayer_idx]
+                        new_tl = @$scope.available_layers[tilelayer_idx]
 
-                        # Save preference
+                        @MapService.tiles =
+                                name: new_tl.name
+                                url: new_tl.url_template
+                                options:
+                                        attribution: new_tl.attribution
+
+                        # Save preference to server
                         @MapService.map.tile_layer = @$scope.available_layers[tilelayer_idx].resource_uri
                         @MapService.map.patch({'tile_layer': @MapService.map.tile_layer})
                 )
@@ -363,7 +333,7 @@ class MapMarkerNewCtrl
 
                 # Load marker categories
                 @Restangular.all("scout/marker_category").getList().then((categories) =>
-                        console.debug("cat loaded!")
+                        console.debug("Marker categories loaded")
                         @$scope.marker_categories = angular.copy(categories)
                         @$scope.marker_categories_loading = false
                 )
@@ -603,10 +573,10 @@ class MapMarkerNewCtrl
 
 
 # Controller declarations
-module.controller("MapDetailCtrl", ['$scope', '$rootScope', '$stateParams', '$location', 'MapService', 'geolocation', MapDetailCtrl])
+module.controller("MapDetailCtrl", ['$scope', '$rootScope', '$stateParams', '$location', 'MapService', 'geolocation', '$compile', MapDetailCtrl])
 module.controller("MapNewCtrl", ['$scope', '$location', '$cookies', 'Restangular', MapNewCtrl])
 module.controller("MapMarkerDetailCtrl", ['$scope', '$stateParams', '$state', 'Restangular', MapMarkerDetailCtrl])
-module.controller("MapTileLayersCtrl", ['$scope', '$stateParams', 'Restangular', 'MapService', MapTileLayersCtrl])
+module.controller("MapTileLayersCtrl", ['$scope', '$stateParams', 'Restangular', 'MapService', 'leafletData', MapTileLayersCtrl])
 module.controller("MapMyMapsCtrl", ['$scope', '$state', 'Restangular', 'MapService', MapMyMapsCtrl])
 module.controller("MapSettingsCtrl", ['$scope', '$rootScope', '$state', 'Restangular', 'MapService', MapSettingsCtrl])
 module.controller("MapShareCtrl", ['$scope', '$location', '$state', 'Restangular', 'MapService', MapShareCtrl])
