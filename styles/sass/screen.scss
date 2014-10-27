@@ -12,7 +12,7 @@
 }
 
 * {
-	@include box-sizing(border-box); 
+	@include box-sizing(border-box);
 }
 
 html {
@@ -56,7 +56,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 
 div#background-map {
-	position: absolute;	  
+	position: absolute;
 	top: 0px;
 	left: 0px;
         height: 100%;
@@ -99,7 +99,7 @@ div#background-map {
 	li:first-child button { border-top: 0 }
 	li:last-child button { border-bottom: 0 }
 
-	li.item-addpoi button { 
+	li.item-addpoi button {
 		background:image-url('toolbar/ico_addpoi.png') no-repeat center 11px / 36px;
 
 		&:hover {
@@ -108,7 +108,7 @@ div#background-map {
 	}
 
 	li.item-search {
-		button { 
+		button {
 			background:image-url('toolbar/ico_search.png') no-repeat center 15px / 36px;
 
 			&:hover {
@@ -118,7 +118,7 @@ div#background-map {
 	}
 
 	li.item-layers {
-		button { 
+		button {
 			background:image-url('toolbar/ico_layers.png') no-repeat center 15px / 36px;
 
 			&:hover {
@@ -128,7 +128,7 @@ div#background-map {
 	}
 
 	li.item-share {
-		button { 
+		button {
 			background:image-url('toolbar/ico_share.png') no-repeat center 15px / 36px;
 
 			&:hover {
@@ -138,7 +138,7 @@ div#background-map {
 	}
 
 	li.item-setcenter {
-		button { 
+		button {
 			background:image-url('toolbar/ico_setcenter.png') no-repeat center 10px / 44px;
 
 			&:hover {
@@ -150,7 +150,7 @@ div#background-map {
 	li.item-mymaps {
 	    position: absolute;
 	    bottom: 28px;
-		button { 
+		button {
 			background:image-url('toolbar/ico_mymaps.png') no-repeat center 14px / 36px;
 
 			&:hover {
@@ -200,7 +200,7 @@ div.marker {
 
 .ui-effects-transfer { border: 2px dotted gray; }
 
-.card {	
+.card {
 	width:248px;
 	position:absolute;
 	top:-78px;
@@ -437,9 +437,9 @@ div.marker {
 				float:left;
 				margin:0 5px 0 0;
 
-				img {		
+				img {
 					border:2px solid #4a4a4a;
-					@include border-radius(5px);		
+					@include border-radius(5px);
 				}
 			}
 		}
@@ -680,7 +680,7 @@ body > footer {
 #add-block-1 {
 	height:100%;
 	min-height:100%;
-	width:510px;    
+	width:510px;
 	position:absolute;
 	right:0;
 	top:0;
@@ -692,7 +692,7 @@ body > footer {
 	width:100%;
 	float:left;
 
-	div.find {	
+	div.find {
 		display:block;
 		height:86px;
 		float:left;
@@ -797,7 +797,7 @@ body > footer {
 	background:#212121;
 	height:100%;
 	min-height:100%;
-	width:510px;    
+	width:510px;
 	position:absolute;
 	right:0;
 	top:0;
@@ -921,7 +921,7 @@ body > footer {
 						line-height:54px;
 					}
 
-					.icon-white { color:white }	
+					.icon-white { color:white }
 					.icon-black { color:black }
 				}
 
@@ -949,7 +949,7 @@ body > footer {
 #add-block-3 {
 	height:100%;
 	min-height:100%;
-	width:510px;    
+	width:510px;
 	position:absolute;
 	right:0;
 	top:0;
@@ -1036,7 +1036,7 @@ body > footer {
 }
 
 .photo-selected {
-	.preview { 
+	.preview {
 		background: none repeat scroll 0 0 #FFFFFF;
 	    float: left;
 	    text-align: center;
@@ -1102,7 +1102,7 @@ body > footer {
 #add-block-4 {
 	height:100%;
 	min-height:100%;
-	width:510px;    
+	width:510px;
 	position:absolute;
 	right:0;
 	top:0;
@@ -1210,7 +1210,7 @@ body > footer {
 
 .add-panel-block.ng-enter-active {
 	right:0 !important;
-} 
+}
 
 .add-panel-block.ng-leave {
   right:0 !important;
@@ -1260,7 +1260,7 @@ body > footer {
 	}
 	#default-panel {
 		margin: 50px 35px;
-		
+
 		h1 {
 			font-size:2rem;
 			line-height:2.4rem;
@@ -1873,6 +1873,11 @@ body > footer {
 		float: left;
 	    margin: 0 !important;
 	    width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: calc(100% - 150px);
+            overflow: auto;
 	}
 
 	li {
@@ -2178,7 +2183,7 @@ a.close-link {
 		-moz-animation: spin 1.5s infinite linear;
 		-o-animation: spin 1.5s infinite linear;
 		-ms-animation: spin 1.5s infinite linear;
-		
+
 		@-webkit-keyframes spin {
 			0% { -webkit-transform: rotate(0deg); }
 			100% { -webkit-transform: rotate(360deg);}
@@ -2218,7 +2223,7 @@ a.close-link {
 
 
 .leaflet-container .leaflet-control-zoom {
-	margin-left:92px;	
+	margin-left:92px;
 }
 
 
