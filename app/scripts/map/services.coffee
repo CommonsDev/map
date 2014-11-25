@@ -1,7 +1,7 @@
 services = angular.module('map.services', ['restangular'])
 
 class MapService
-        constructor: (@$compile, @Restangular) ->
+        constructor: (@$compile, @$http, @Restangular) ->
                 @markers = new Array()
 
                 @center =
@@ -10,6 +10,8 @@ class MapService
                         zoom: 8
 
                 @tiles = {}
+
+                @geojson = null
 
                 @map = null
 
@@ -70,10 +72,19 @@ class MapService
                                         lng: aMap.center.coordinates[1]
                                         zoom: aMap.zoom
 
-
                         # Fill in markers
                         for layer in aMap.data_layers
                                 console.debug("Adding data layer...")
+
+                                # Load the geojson layer if specified
+                                if layer.geojson
+                                        @$http.get(layer.geojson).success((data, status) =>
+                                                console.debug("GEOJSONNNN")
+                                                @geojson =
+                                                        data: data
+                                                        pointToLayer: (feature, latlng) ->
+                                                                return new L.CircleMarker(latlng, {radius: 10})
+                                        )
 
                                 # Add its markers
                                 for marker in layer.markers
@@ -111,6 +122,6 @@ class MapService
 
 
 # Services
-services.factory('MapService', ['$compile', 'Restangular', ($compile, Restangular) ->
-        return new MapService($compile, Restangular)
+services.factory('MapService', ['$compile', '$http', 'Restangular', ($compile, $http, Restangular) ->
+        return new MapService($compile, $http, Restangular)
 ])

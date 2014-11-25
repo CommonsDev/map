@@ -1,0 +1,25 @@
+{
+  "name": "map",
+  "version": "0.0.1",
+  "repository": "https://github.com/UnissonCo/map",
+  "description": "XXXX.",
+  "author": {
+    "name": "Guillaume Libersat",
+    "url": "http://sigill.org/"
+  },
+  "main": "./lib/index",
+  "dependencies": {
+    "sass-brunch": "^1.8.6"
+  },
+  "devDependencies": {
+    "bower": "latest",
+    "brunch": "latest",
+    "javascript-brunch": "latest",
+    "coffee-script-brunch": "latest",
+    "sass-brunch": "latest",
+    "css-brunch": "latest",
+    "ng-annotate-uglify-js-brunch": "latest",
+    "clean-css-brunch": "latest",
+    "auto-reload-brunch": "latest"
+  }
+}

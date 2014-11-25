@@ -1,7 +1,7 @@
 angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
 
-app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'ngAnimate', 'googleOauth']);
+app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'googleOauth']);
 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
@@ -40,7 +40,7 @@ app.config(function(RestangularProvider) {
 
 	   });
 
-app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'moduleTemplateBaseUrl', 
+app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'moduleTemplateBaseUrl',
 	    function($locationProvider, $stateProvider, $urlRouterProvider, moduleTemplateBaseUrl) {
 		$locationProvider.html5Mode(config.useHtml5Mode);
 		$urlRouterProvider.otherwise("/")

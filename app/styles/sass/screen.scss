@@ -100,49 +100,49 @@ div#background-map {
 	li:last-child button { border-bottom: 0 }
 
 	li.item-addpoi button {
-		background:image-url('toolbar/ico_addpoi.png') no-repeat center 11px / 36px;
+		background:image-url('images/toolbar/ico_addpoi.png') no-repeat center 11px / 36px;
 
 		&:hover {
-			background:image-url('toolbar/ico_addpoi_active.png') no-repeat center 11px / 36px;
+			background:image-url('images/toolbar/ico_addpoi_active.png') no-repeat center 11px / 36px;
 		}
 	}
 
 	li.item-search {
 		button {
-			background:image-url('toolbar/ico_search.png') no-repeat center 15px / 36px;
+			background:image-url('images/toolbar/ico_search.png') no-repeat center 15px / 36px;
 
 			&:hover {
-				background:image-url('toolbar/ico_search_active.png') no-repeat center 15px / 36px;
+				background:image-url('images/toolbar/ico_search_active.png') no-repeat center 15px / 36px;
 			}
 		}
 	}
 
 	li.item-layers {
 		button {
-			background:image-url('toolbar/ico_layers.png') no-repeat center 15px / 36px;
+			background:image-url('images/toolbar/ico_layers.png') no-repeat center 15px / 36px;
 
 			&:hover {
-				background:image-url('toolbar/ico_layers_active.png') no-repeat center 15px / 36px;
+				background:image-url('images/toolbar/ico_layers_active.png') no-repeat center 15px / 36px;
 			}
 		}
 	}
 
 	li.item-share {
 		button {
-			background:image-url('toolbar/ico_share.png') no-repeat center 15px / 36px;
+			background:image-url('images/toolbar/ico_share.png') no-repeat center 15px / 36px;
 
 			&:hover {
-				background:image-url('toolbar/ico_share_active.png') no-repeat center 15px / 36px;
+				background:image-url('images/toolbar/ico_share_active.png') no-repeat center 15px / 36px;
 			}
 		}
 	}
 
 	li.item-setcenter {
 		button {
-			background:image-url('toolbar/ico_setcenter.png') no-repeat center 10px / 44px;
+			background:image-url('images/toolbar/ico_setcenter.png') no-repeat center 10px / 44px;
 
 			&:hover {
-				background:image-url('toolbar/ico_setcenter_active.png') no-repeat center 10px / 44px;
+				background:image-url('images/toolbar/ico_setcenter_active.png') no-repeat center 10px / 44px;
 			}
 		}
 	}
@@ -151,10 +151,10 @@ div#background-map {
 	    position: absolute;
 	    bottom: 28px;
 		button {
-			background:image-url('toolbar/ico_mymaps.png') no-repeat center 14px / 36px;
+			background:image-url('images/toolbar/ico_mymaps.png') no-repeat center 14px / 36px;
 
 			&:hover {
-				background:image-url('toolbar/ico_mymaps_active.png') no-repeat center 14px / 36px;
+				background:image-url('images/toolbar/ico_mymaps_active.png') no-repeat center 14px / 36px;
 			}
 		}
 	}
@@ -410,13 +410,13 @@ div.marker {
 				font-size:0.85rem;
 
 				&.supports {
-					background:image-url('card_support.png') no-repeat center left;
+					background:image-url('images/card_support.png') no-repeat center left;
 				}
 				&.comments {
-					background:image-url('card_discu.png') no-repeat center left;
+					background:image-url('images/card_discu.png') no-repeat center left;
 				}
 				&.polls {
-					background:image-url('card_sond.png') no-repeat center left;
+					background:image-url('images/card_sond.png') no-repeat center left;
 				}
 			}
 		}
@@ -602,21 +602,21 @@ body > footer {
 
 		}
 		&.loc button {
-			background:image-url('intercal1.png') no-repeat top left;
+			background:image-url('images/intercal1.png') no-repeat top left;
 			z-index:500;
 		}
 		&.quali button {
-			background:image-url('intercal2.png') no-repeat top left;
+			background:image-url('images/intercal2.png') no-repeat top left;
 			top:-29px;
 			z-index:501;
 		}
 		&.photo button {
-			background:image-url('intercal3.png') no-repeat top left;
+			background:image-url('images/intercal3.png') no-repeat top left;
 			top:-58px;
 			z-index:502;
 		}
 		&.desc button {
-			background:image-url('intercal4.png') no-repeat top left;
+			background:image-url('images/intercal4.png') no-repeat top left;
 			top:-87px;
 			z-index:503;
 		}
@@ -685,7 +685,7 @@ body > footer {
 	right:0;
 	top:0;
 	z-index:1000;
-	background:#fff image-url('target.jpg') no-repeat 78% 100%;
+	background:#fff image-url('images/target.jpg') no-repeat 78% 100%;
 }
 
 .adress-form {
@@ -702,13 +702,13 @@ body > footer {
 		margin-bottom:10px;
 
 		&.find1 {
-			background:image-url('loca1.jpg') no-repeat 60px 0;
+			background:image-url('images/loca1.jpg') no-repeat 60px 0;
 		}
 		&.find2 {
-			background:image-url('loca2.jpg') no-repeat 60px 0;
+			background:image-url('images/loca2.jpg') no-repeat 60px 0;
 		}
 		&.find3 {
-			background:image-url('loca3.jpg') no-repeat 60px 0;
+			background:image-url('images/loca3.jpg') no-repeat 60px 0;
 		}
 
 		label, span {
@@ -829,7 +829,7 @@ body > footer {
 
 			&.active {
 				a {
-					background:#f68d60 image-url('tab_active_triangle.gif') no-repeat 49% 100%;
+					background:#f68d60 image-url('images/tab_active_triangle.gif') no-repeat 49% 100%;
 					color:white;
 					font-weight:500;
 				}
@@ -931,10 +931,10 @@ body > footer {
 				    background-color:#444;
 				}
 
-				&.point1 label { background:image-url('_TEMP/bt1.png') no-repeat top center; }
-				&.point2 label { background:image-url('_TEMP/bt2.png') no-repeat top center; }
-				&.point3 label { background:image-url('_TEMP/bt3.png') no-repeat top center; }
-				&.point4 label { background:image-url('_TEMP/bt4.png') no-repeat top center; }
+				&.point1 label { background:image-url('images/_TEMP/bt1.png') no-repeat top center; }
+				&.point2 label { background:image-url('images/_TEMP/bt2.png') no-repeat top center; }
+				&.point3 label { background:image-url('images/_TEMP/bt3.png') no-repeat top center; }
+				&.point4 label { background:image-url('images/_TEMP/bt4.png') no-repeat top center; }
 			}
 		}
 	}
@@ -954,7 +954,7 @@ body > footer {
 	right:0;
 	top:0;
 	z-index:1000;
-	background:#fff image-url('photo_bg.jpg') no-repeat center 190px;
+	background:#fff image-url('images/photo_bg.jpg') no-repeat center 190px;
 }
 
 
@@ -1026,11 +1026,11 @@ body > footer {
 		}
 
 		li:first-child a{
-			background:image-url('photo_bt.png') no-repeat center 76px;
+			background:image-url('images/photo_bt.png') no-repeat center 76px;
 		}
 
 		li:last-child a{
-			background:image-url('folder_bt.png') no-repeat center 76px;
+			background:image-url('images/folder_bt.png') no-repeat center 76px;
 		}
 	}
 }
@@ -1107,7 +1107,7 @@ body > footer {
 	right:0;
 	top:0;
 	z-index:1000;
-	background:#fff image-url('descpen.jpg') no-repeat 100% 100%;
+	background:#fff image-url('images/descpen.jpg') no-repeat 100% 100%;
 }
 
 
@@ -1322,18 +1322,18 @@ body > footer {
 				border-top:1px solid #3a3a3a;
 
 				&.account {
-					background:image-url('login/inscription.png') no-repeat center 20px;
+					background:image-url('images/login/inscription.png') no-repeat center 20px;
 					border-top:0;
 					margin:10px 0 0 0;
 				}
 
 				&.gplus {
-					background:image-url('login/gplus.png') no-repeat center 20px;
+					background:image-url('images/login/gplus.png') no-repeat center 20px;
 					border-bottom:0;
 				}
 
 				&.facebook {
-					background:image-url('login/facebook.png') no-repeat center 10px;
+					background:image-url('images/login/facebook.png') no-repeat center 10px;
 					border-bottom:0;
 					display:none;
 				}
@@ -1363,11 +1363,11 @@ body > footer {
 			text-indent:-9999em;
 
 			&[for="login-field"] {
-				background:image-url('login/login_bt.gif') no-repeat top left;
+				background:image-url('images/login/login_bt.gif') no-repeat top left;
 			}
 
 			&[for="pass-field"] {
-				background:image-url('login/password_bt.gif') no-repeat top left;
+				background:image-url('images/login/password_bt.gif') no-repeat top left;
 			}
 		}
 
@@ -1418,7 +1418,7 @@ body > footer {
 		bottom:-90px;
 		left:50%;
 		margin:0 -29px;
-		background:image-url('login/close.png') no-repeat top left;
+		background:image-url('images/login/close.png') no-repeat top left;
 		outline:0;
 		text-indent:-9999em;
 	}
@@ -1445,7 +1445,7 @@ body > footer {
 			height:30px;
 			line-height:30px;
 			padding:0 10px 0 37px;
-			background:#6b808f image-url('ico_user.png') no-repeat 10px center;
+			background:#6b808f image-url('images/ico_user.png') no-repeat 10px center;
 			border:0;
 			color:#1f2f3a;
 			font-size:0.8rem;
@@ -1460,7 +1460,7 @@ body > footer {
 	height:100%;
 	min-height:100%;
 	width:100%;
-	background:#fff image-url('crea_bg.jpg') no-repeat top center;
+	background:#fff image-url('images/crea_bg.jpg') no-repeat top center;
 	padding:10px 0 0 0;
 
 	.intro {
@@ -1468,7 +1468,7 @@ body > footer {
 		width:870px;
 		height:225px;
 		padding-left:300px;
-		background:image-url('creamap_ico.png') no-repeat 46px 52px / 210px;
+		background:image-url('images/creamap_ico.png') no-repeat 46px 52px / 210px;
 
 		h1 {
 			color: white;
@@ -1597,7 +1597,7 @@ body > footer {
 			position:absolute;
 			top:0;
 			right:0;
-			background:rgba(255,255,255,0.5) image-url('check.png') no-repeat center center;
+			background:rgba(255,255,255,0.5) image-url('images/check.png') no-repeat center center;
 			width:128px;
 			height:128px;
 			border:5px solid #85c9fa;
@@ -1711,15 +1711,15 @@ body > footer {
 		cursor:pointer;
 
 		&.contrib {
-			background:image-url('share_ico_contrib.png') no-repeat 10px center;
+			background:image-url('images/share_ico_contrib.png') no-repeat 10px center;
 		}
 
 		&.consult {
-			background:image-url('share_ico_consul.png') no-repeat 10px center;
+			background:image-url('images/share_ico_consul.png') no-repeat 10px center;
 		}
 
 		&.publi {
-			background:image-url('share_ico_publi.png') no-repeat 10px center;
+			background:image-url('images/share_ico_publi.png') no-repeat 10px center;
 		}
 
 		&.active {
@@ -1734,15 +1734,15 @@ body > footer {
 			}
 
 			&.contrib {
-				background:#85c9fa image-url('share_ico_contrib_on.png') no-repeat 10px center;
+				background:#85c9fa image-url('images/share_ico_contrib_on.png') no-repeat 10px center;
 			}
 
 			&.consult {
-				background:#85c9fa image-url('share_ico_consul_on.png') no-repeat 10px center;
+				background:#85c9fa image-url('images/share_ico_consul_on.png') no-repeat 10px center;
 			}
 
 			&.publi {
-				background:#85c9fa image-url('share_ico_publi_on.png') no-repeat 10px center;
+				background:#85c9fa image-url('images/share_ico_publi_on.png') no-repeat 10px center;
 			}
 		}
 
@@ -1886,11 +1886,11 @@ body > footer {
 		width:72%;
 		display:block;
 		line-height:30px;
-		background:image-url('mymaps-pointer-off.png') no-repeat 15px center !important;
+		background:image-url('images/mymaps-pointer-off.png') no-repeat 15px center !important;
 		@include border-radius(5px);
 
 		&:hover {
-			background:#85c9fa image-url('mymaps-pointer.png') no-repeat 15px center !important;
+			background:#85c9fa image-url('images/mymaps-pointer.png') no-repeat 15px center !important;
 
 			a {
 				color:#fff;
@@ -1930,7 +1930,7 @@ body > footer {
 	height:100%;
 	width:100%;
 	min-height:500px;
-	background:image-url('white_trans.png');
+	background:image-url('images/white_trans.png');
 	z-index:5;
 
 	.container {
@@ -1955,7 +1955,7 @@ body > footer {
 	}
 
 	button.geoloc {
-		background:#b9b9b9 image-url('geoloc_ico.png') no-repeat 10px center;
+		background:#b9b9b9 image-url('images/geoloc_ico.png') no-repeat 10px center;
 		color:white;
 		display:block;
 		text-decoration:none;
@@ -1987,7 +1987,7 @@ body > footer {
 		width:66px;
 		display:block;
 		border:0;
-		background:image-url('bt_search.png') no-repeat top left;
+		background:image-url('images/bt_search.png') no-repeat top left;
 		text-indent:-9999em;
 		margin:0 auto;
 		cursor:pointer;
@@ -2001,7 +2001,7 @@ body > footer {
 		li {
 			display:block;
 			padding:0 0 0 20px;
-			background:image-url('search_result_ico.png') no-repeat left center;
+			background:image-url('images/search_result_ico.png') no-repeat left center;
 			font-size:0.85rem;
 			height:25px;
 			line-height:25px;
@@ -2149,7 +2149,7 @@ a.close-link {
     position: absolute;
     right: 15px;
     top: 15px;
-    background:image-url('bt_close.png') no-repeat top left;
+    background:image-url('images/bt_close.png') no-repeat top left;
     height:28px;
     width:28px;
     text-indent:-99999em;
@@ -2173,12 +2173,12 @@ a.close-link {
 		width:42px;
 		display:block;
 		border:0;
-		background:image-url('position_item1.png') no-repeat 10px center;
+		background:image-url('images/position_item1.png') no-repeat 10px center;
 		text-indent:-9999rem;
 	}
 
 	&.acquiring button {
-		background:image-url('position_item2.png') no-repeat center center;
+		background:image-url('images/position_item2.png') no-repeat center center;
 		-webkit-animation: spin 1.5s infinite linear;
 		-moz-animation: spin 1.5s infinite linear;
 		-o-animation: spin 1.5s infinite linear;
@@ -2203,7 +2203,7 @@ a.close-link {
 	}
 
 	&.locked button {
-		background:image-url('position_item2.png') no-repeat center center;
+		background:image-url('images/position_item2.png') no-repeat center center;
 	}
 }
 

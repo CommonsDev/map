@@ -1,3 +1,7 @@
 *~
 scripts/lib/*
 styles/stylesheets/*
+node_modules/*
+_public/
+app/styles/.sass-cache/
+bower_components/
