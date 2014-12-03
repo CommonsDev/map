@@ -1,7 +1,8 @@
+"use strict";
+
 angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
-
-app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'googleOauth']);
+var app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'googleOauth']);
 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
@@ -18,9 +19,9 @@ app.config(['TokenProvider', '$locationProvider', function(TokenProvider, $locat
 					       clientId: '645581170749.apps.googleusercontent.com',
 					       redirectUri: 'http://localhost:8080/oauth2callback.html',
 					       scopes: ["https://www.googleapis.com/auth/userinfo.email",
-							"https://www.googleapis.com/auth/userinfo.profile"],
+							"https://www.googleapis.com/auth/userinfo.profile"]
 					   });
-	    }])
+	    }]);
 
 
 app.config(function(RestangularProvider) {
@@ -106,3 +107,7 @@ app.run(['$rootScope', function($rootScope) {
 		 });
 
 }]);
+
+angular.element(document).ready(function() {
+    angular.bootstrap(document, ['unisson_map']);
+});

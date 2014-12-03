@@ -79,11 +79,19 @@ class MapService
                                 # Load the geojson layer if specified
                                 if layer.geojson
                                         @$http.get(layer.geojson).success((data, status) =>
-                                                console.debug("GEOJSONNNN")
                                                 @geojson =
                                                         data: data
                                                         pointToLayer: (feature, latlng) ->
-                                                                return new L.CircleMarker(latlng, {radius: 10})
+                                                                console.debug(feature)
+                                                                return new L.Marker(latlng,
+                                                                        {
+                                                                                icon: L.AwesomeMarkers.icon({
+                                                                                        prefix: 'fa',
+                                                                                        markerColor: feature.properties['marker-color'],
+                                                                                        icon: feature.properties['marker-symbol']
+                                                                                });
+                                                                        }
+                                                                )
                                         )
 
                                 # Add its markers
@@ -103,6 +111,7 @@ class MapService
 
                                                 icon:
                                                         type: 'awesomeMarker'
+                                                        prefix: 'fa'
                                                         icon: marker.category.icon_name
                                                         markerColor: marker.category.marker_color
                                                         iconColor: marker.category.icon_color

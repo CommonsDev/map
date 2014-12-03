@@ -1,4 +1,6 @@
-module = angular.module('map.controllers', ['imageupload', 'angularFileUpload', 'restangular'])
+"use strict"
+
+module = angular.module('map.controllers', ['angularFileUpload', 'restangular'])
 
 class MapSearchCtrl
         constructor: (@$scope, @$rootScope, @$state, @MapService, @Restangular, @geolocation) ->

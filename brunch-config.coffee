@@ -16,11 +16,18 @@ exports.config =
                 javascripts:
                         joinTo:
                                 'js/vendor.js': /^bower_components/
-                                'js/app.js': /^app\/scripts/
+                                'js/app.js': [
+                                        'app/scripts/common/**/*.coffee'
+                                        'app/scripts/map/**/*.coffee'
+                                        'app/scripts/app.js'
+                                ]
+                         order:
+                                 before: [
+                                        'bower_components/jquery/dist/jquery.js'
+                                        'bower_components/angular/angular.js'
+                                ]
+
                 stylesheets:
                         joinTo:
                                 'css/vendor.css': /^bower_components/
                                 'css/app.css': /^app\/styles/
-                        order:
-                                before: [
-                                ]

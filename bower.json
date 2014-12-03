@@ -22,14 +22,12 @@
   ],
   "dependencies": {
     "underscore": "~1.6.0",
-    "modernizr": "git://github.com/components/modernizr.git",
     "jquery": "~2.1.1",
     "angular": "1.2.27",
-    "angular-cookies": "1.2.27",
     "angular-animate": "1.2.27",
+    "angular-cookies": "1.2.27",
     "jquery-file-upload": "latest",
-    "angularjs-imageupload-directive": "latest",
-    "angular-file-upload": "latest",
+    "ng-file-upload": "latest",
     "restangular": "~1.4.0",
     "angular-unisson-auth": "latest",
     "angular-oauth": "git://github.com/UnissonCo/angular-oauth.git",
@@ -42,5 +40,10 @@
   },
   "resolutions": {
     "angular": "1.2.x"
-  }
+  },
+    "overrides": {
+        "font-awesome": {
+            "main": "css/font-awesome.css"
+        }
+    }
 }
