@@ -1,6 +1,6 @@
 <!-- background map -->
 <div>
-  <leaflet id="background-map" markers="MapService.markers" center="MapService.center" tiles="MapService.tiles" geojson="MapService.geojson">
+  <leaflet id="background-map" markers="MapService.markers" event-broadcast="MapService.events" watch-markers="false" layers="MapService.layers" center="MapService.center" tiles="MapService.tiles" geojson="MapService.geojson">
   </leaflet>
 
 </div>
@@ -14,9 +14,11 @@
     <li class="item item-share"><button ui-sref="map.share">Partage</button></li>
     <li class="item item-setcenter" ng-controller="MapSettingsCtrl"><button ng-click="set_center()">Recadrer</button></li>
     <li class="item item-mymaps"><button ui-sref="map.my_maps">Mes cartes</button></li>
+    <!--
     <li class="connected">
       <a ng-toggle="" href="javascript:void(0)"><img src="images/toolbar/connected_ico.png" alt="" /></a>
     </li>
+    -->
   </ul>
 </div>
 
@@ -24,6 +26,7 @@
   Recadrage effectué
 </div>
 
+<jqcloud words="MapService.tags" width="500" height="350" steps="7"></jqcloud>
 
 <div id="item-position" ng-class="{'locked': positionLocked, 'acquiring': acquiringPosition}">
   <button ng-click="toggleLockPosition()">Position</button>
@@ -49,7 +52,7 @@
 
  <div class="loading-panel" ng-show="isLoading">
   <p>
-    <img src="images/loading/satililalou.png" class="blocked" />
+    <img src="images/loading/satililalou.png" width="200px" height="200px" class="blocked" />
     <span>un instant, nous chargeons votre carte...</span>
   </p>
 </div>

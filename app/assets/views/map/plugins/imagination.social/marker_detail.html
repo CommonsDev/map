@@ -1,0 +1,59 @@
+<article ng-controller="MapISMarkerDetailCtrl" ng-show="!isLoading" ng-cloak>
+  <section class="imaginationsocial_card active">
+    <a class="close-link" ui-sref="map">Fermer</a>
+    <header>
+      <div class="bigpic">
+        <img ng-show="marker.picture_url" ng-src="{{ MEDIA_URI }}{{ marker.picture_url }}" height="282" width="378" alt="{{ marker.title }}"/>
+        <img ng-hide="marker.picture_url" src="images/marker_nopicture.jpg" height="282" width="378" alt="{{ marker.title }}"/>
+      </div>
+      <div class="author">
+        <img src="images/default_avatar.gif" alt="{{ marker.created_by.username }}" width="60px" />
+        <em>{{ marker.created_by.username }}</em>
+        <span>{{ marker.created_on | fromNow }}</span>
+      </div>
+    </header>
+    <div class="inner">
+      <p>
+        {{ marker.address }}
+      </p>
+      <ul class="social">
+        <li><a target="_new" href="http://twitter.com/home?status=Découvrez '{{ marker.title }}' {{ $state.href('map.is_marker_detail', {}, {absolute: true}) }}" title="Partager sur twitter"><img src="images/ico_twitter.png" alt="twitter"/></a></li>
+        <li><a target="_new" href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]={{ $state.href('map.is_marker_detail', {}, {absolute: true}) }}&p[images][0]=&p[title]={{ marker.title }}&p[summary]=Je vous invite à découvrir ce projet." title="partager sur facebook"><img src="images/ico_fb.png" alt="facebook"/></a></li>
+        <li><a target="_new" href="https://plus.google.com/share?url={{ $state.href('map.is_marker_detail', {}, {absolute: true}) }}" title="partager sur google plus"><img src="images/ico_google.png" alt="google plus" /></a></li>
+      </ul>
+    </div>
+    <!--
+    <footer>
+      <div class="supports-list">
+        <span>4 supports</span>
+        <ul>
+          <li><img src="/images/_TEMP/dave.png" alt="Dave" /></li>
+          <li><img src="/images/_TEMP/dave.png" alt="Dave" /></li>
+          <li><img src="/images/_TEMP/dave.png" alt="Dave" /></li>
+          <li><img src="/images/_TEMP/dave.png" alt="Dave" /></li>
+        </ul>
+      </div>
+    </footer>
+    -->
+
+  <div class="about">
+    <div class="title">{{ marker.title }}</div>
+    <div class="baseline">{{ marker.baseline }}</div>
+    <div class="description">
+      <p>
+        {{ marker.description }}
+      </p>
+      <div class="actions">
+        <button class="edit">Enrichir la description de ce projet</button>
+      </div>
+    </div>
+  </section>
+  <!-- <section class="forum">
+       <img src="/images/_TEMP/forum.jpg" alt="" />
+  </section> -->
+  </div>
+</div>
+
+  </section>
+</article>
+<script src="scripts/vendor/script.js"></script>

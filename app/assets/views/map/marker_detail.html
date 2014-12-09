@@ -1,4 +1,4 @@
-<article ng-show="!isLoading" ng-cloak>
+<article ng-controller="MapMarkerDetailCtrl" ng-show="!isLoading" ng-cloak>
   <section class="card active">
     <header>
       <div class="bigpic">
@@ -6,7 +6,7 @@
         <img ng-hide="marker.picture_url" src="images/marker_nopicture.jpg" height="282" width="378" alt="{{ marker.title }}"/>
       </div>
       <div class="author">
-        <img src="images/_TEMP/generic_avatar.gif" alt="{{ marker.created_by.username }}" width="60px" />
+        <img src="images/default_avatar.gif" alt="{{ marker.created_by.username }}" width="60px" />
         <em>{{ marker.created_by.username }}</em>
         <span>{{ marker.created_on | fromNow }}</span>
       </div>

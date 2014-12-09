@@ -1,7 +1,7 @@
-services = angular.module('map.services', ['restangular'])
+services = angular.module('map.services', ['restangular', 'angular-jqcloud'])
 
 class MapService
-        constructor: (@$compile, @$http, @Restangular) ->
+        constructor: (@$rootScope, @$compile, @$http, @Restangular, @leafletEvents) ->
                 @markers = new Array()
 
                 @center =
@@ -10,6 +10,28 @@ class MapService
                         zoom: 8
 
                 @tiles = {}
+
+                @tags = [
+                ]
+
+                @events =
+                        map:
+                                disable: @leafletEvents.getAvailableMapEvents()
+                        markers:
+                                disable: @leafletEvents.getAvailableMarkerEvents()
+
+                @layers =
+                        baselayers:
+                                cloudmade:
+                                        name: "OSM"
+                                        type: "xyz"
+                                        url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+                        overlays:
+                                json:
+                                        name: "JSON Layer"
+                                        type: "markercluster"
+                                        visible: true
 
                 @geojson = null
 
@@ -20,6 +42,32 @@ class MapService
                 Return the current map layer
                 """
                 return @map.data_layers[0] # XXX Hacky
+
+        readISJson: (data) =>
+                markers = []
+                for project in data.objects
+                        @markers.push({
+                                layer: "json"
+                                lat: project.location.geo.coordinates[1]
+                                lng: project.location.geo.coordinates[0]
+                                message: '<div ng-include="\'/views/map/plugins/imagination.social/marker_card.html\'"></div>'
+                                data:
+                                        title: project.title
+                                        baseline: project.baseline
+                                        description: project.description
+                                        # picture_url: marker.picture_url
+                                        created_by: "??"
+                                        created_on: project.created_on
+                                        address: project.location.postal_address
+                                        id: project.id
+
+                                icon:
+                                        type: 'awesomeMarker'
+                                        prefix: 'fa'
+                                        # icon: marker.category.icon_name
+                                        markerColor: "blue"
+                                        iconColor: "white"
+                        })
 
         addMarker: (name, aMarker) =>
                 """
@@ -79,19 +127,29 @@ class MapService
                                 # Load the geojson layer if specified
                                 if layer.geojson
                                         @$http.get(layer.geojson).success((data, status) =>
-                                                @geojson =
-                                                        data: data
-                                                        pointToLayer: (feature, latlng) ->
-                                                                console.debug(feature)
-                                                                return new L.Marker(latlng,
-                                                                        {
-                                                                                icon: L.AwesomeMarkers.icon({
-                                                                                        prefix: 'fa',
-                                                                                        markerColor: feature.properties['marker-color'],
-                                                                                        icon: feature.properties['marker-symbol']
-                                                                                });
-                                                                        }
-                                                                )
+                                                this.readISJson(data)
+
+                                                # @geojson =
+                                                #         data: data
+                                                #         pointToLayer: (feature, latlng) =>
+                                                #                 # Create tags
+                                                #                 if feature.properties.tags
+                                                #                         for tag in feature.properties['tags']
+                                                #                                 console.debug(tag)
+                                                #                                 @tags.push({text: tag, weight: 13, handlers: {click: () ->
+                                                #                                         console.debug("plop")
+                                                #                                 }})
+
+                                                #                 # Create real marker
+                                                #                 return new L.Marker(latlng,
+                                                #                         {
+                                                #                                 icon: L.AwesomeMarkers.icon({
+                                                #                                         prefix: 'fa',
+                                                #                                         markerColor: feature.properties['marker-color'],
+                                                #                                         icon: feature.properties['marker-symbol']
+                                                #                                 });
+                                                #                         }
+                                                #                 )
                                         )
 
                                 # Add its markers
@@ -131,6 +189,6 @@ class MapService
 
 
 # Services
-services.factory('MapService', ['$compile', '$http', 'Restangular', ($compile, $http, Restangular) ->
-        return new MapService($compile, $http, Restangular)
+services.factory('MapService', ['$rootScope', '$compile', '$http', 'Restangular', 'leafletEvents', ($rootScope, $compile, $http, Restangular, leafletEvents) ->
+        return new MapService($rootScope, $compile, $http, Restangular, leafletEvents)
 ])

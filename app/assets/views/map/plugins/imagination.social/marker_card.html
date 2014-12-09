@@ -1,0 +1,23 @@
+<article class="leaflet-popup" ng-show="!isLoading">
+  <section class="card">
+    <header>
+      <div class="minipic">
+        <img ng-if="marker.data.picture_url" alt="{{ marker.data.title }}" ng-src="{{ MEDIA_URI }}{{ marker.data.picture_url }}" width="248" height="184">
+        <img ng-if="!marker.data.picture_url" alt="{{ marker.data.title }}" src="images/marker_nopicture.jpg" width="248" height="184">
+      </div>
+      <div class="author">
+        <img src="images/default_avatar.gif" height="60px" width="60px" alt="{{ marker.data.created_by.username }}" />
+        <em>{{ marker.data.created_by.username }}</em>
+      </div>
+    </header>
+    <div class="inner">
+      <a ui-sref="map.is_marker_detail({map: $stateParams.slug, projectId: marker.data.id})">
+	<h1>{{ marker.data.title }}</h1>
+	<p>
+          {{ marker.data.baseline }}
+	</p>
+      </a>
+      <span class="date">Ajouté {{ marker.data.created_on | fromNow }}</span>
+    </div>
+  </section>
+</article>

@@ -35,15 +35,25 @@
     "leaflet": "0.7.3",
     "Leaflet.awesome-markers": "latest",
     "angular-leaflet-directive": "0.7.9",
+    "leaflet.markercluster": "latest",
     "compass-mixins": "latest",
-    "moment": "latest"
+    "moment": "latest",
+    "angular-jqcloud": "~1.0.0",
+    "angular-loading-bar": "~0.6.0"
   },
   "resolutions": {
     "angular": "1.2.x"
   },
-    "overrides": {
-        "font-awesome": {
-            "main": "css/font-awesome.css"
-        }
+  "overrides": {
+    "font-awesome": {
+      "main": "css/font-awesome.css"
+    },
+    "leaflet.markercluster": {
+      "main": [
+        "dist/leaflet.markercluster.js",
+        "dist/MarkerCluster.css",
+        "dist/MarkerCluster.Default.css"
+      ]
     }
+  }
 }

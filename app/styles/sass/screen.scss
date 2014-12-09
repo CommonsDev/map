@@ -5,7 +5,6 @@
 
 @import "base";
 
-
 /* Angular helper */
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
@@ -2245,10 +2244,10 @@ a.close-link {
     height: 20px;
     padding: 0;
     position: absolute;
-    right: -230px;
+    right: -250px;
     text-align: center;
     text-decoration: none;
-    top: -78px;
+    top: -64px;
     width: 20px;
     z-index: 10000;
 }

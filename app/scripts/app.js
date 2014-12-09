@@ -1,8 +1,9 @@
 "use strict";
 
-angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive']);
+angular.module('map-plugins', ['map.plugins.imaginationsocial.controllers']);
+angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive', 'map-plugins']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
-var app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'googleOauth']);
+var app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'googleOauth', 'angular-loading-bar']);
 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
@@ -92,8 +93,11 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 		    .state('map.marker_detail', {
 			      url: '/marker/:markerId',
 			      templateUrl: moduleTemplateBaseUrl + 'marker_detail.html',
-			      controller: 'MapMarkerDetailCtrl'
-			   });
+		    })
+                    .state('map.is_marker_detail', {
+			url: '/is_marker/:projectId',
+			templateUrl: moduleTemplateBaseUrl + 'plugins/imagination.social/marker_detail.html',
+                    });
 	    }
 	   ]);
 
