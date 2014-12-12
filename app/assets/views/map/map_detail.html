@@ -22,11 +22,11 @@
   </ul>
 </div>
 
+<div ng-if="MapService.tags.length" id="filter-panel" ng-include="'views/map/filter_panel.html'"></div>
+
 <div id="recadring">
   Recadrage effectué
 </div>
-
-<jqcloud words="MapService.tags" width="500" height="350" steps="7"></jqcloud>
 
 <div id="item-position" ng-class="{'locked': positionLocked, 'acquiring': acquiringPosition}">
   <button ng-click="toggleLockPosition()">Position</button>

@@ -1,0 +1,21 @@
+<div id="panel-filter" class="filters">
+  <h2>Filtrer...</h2>
+<form>
+  <!--
+  <fieldset>
+    <legend>Par Mots clés</legend>
+    <input type="search" ng-model="searchForm.term" placeholder="Entrez votre mot clé..." />
+  </fieldset>
+  -->
+  <fieldset>
+    <ul class="tags">
+      <li ng-repeat="tag in MapService.tags | orderBy:'label'">
+	<input type="checkbox" ng-click="updateLabelFilter($event, tag.resource_uri)" id="filter-tag-{{ $index }}" class="tag tag-{{ $index }}">
+	<label style="background-color: {{ tag.color }}" for="filter-tag-{{ $index }}" class="tag-{{ $index }}">{{ tag.label }}</label>
+      </li>
+    </ul>
+  </fieldset>
+
+<!--  <button name="reset" type="reset" class="submit primary">Réinitialiser <img src="img/buttons/reset.png" alt="Réinitialiser" /></button> -->
+</form>
+</div>

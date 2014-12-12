@@ -2029,7 +2029,7 @@ body > footer {
     position: absolute;
     top: 0;
     width: 100%;
-    z-index:30000;
+    z-index:10000;
 }
 
 .loading-panel p {
@@ -2221,6 +2221,11 @@ a.close-link {
 /* ================= LEAFLET HACKS ============= */
 
 
+.leaflet-control-layers {
+        display: none;
+        visibility: hidden;
+}
+
 .leaflet-container .leaflet-control-zoom {
 	margin-left:92px;
 }
@@ -2249,5 +2254,8 @@ a.close-link {
     text-decoration: none;
     top: -64px;
     width: 20px;
-    z-index: 10000;
+    z-index: 9999;
 }
+
+@import "tags";
+@import "filter_panel";

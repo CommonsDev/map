@@ -11,8 +11,7 @@ class MapService
 
                 @tiles = {}
 
-                @tags = [
-                ]
+                @tags = new Array()
 
                 @events =
                         map:
@@ -44,8 +43,13 @@ class MapService
                 return @map.data_layers[0] # XXX Hacky
 
         readISJson: (data) =>
-                markers = []
                 for project in data.objects
+                        # Gather tags
+                        for tag in project.tags
+                                if not _.where(@tags, {slug: tag.slug}).length
+                                        @tags.push({label: tag.name, slug: tag.slug, color: Please.make_color({saturation: 0.4, hue: 0.2, value: 0.7}, {from_hash: tag.slug})})
+
+                        # Create new marker
                         @markers.push({
                                 layer: "json"
                                 lat: project.location.geo.coordinates[1]

@@ -39,7 +39,8 @@
     "compass-mixins": "latest",
     "moment": "latest",
     "angular-jqcloud": "~1.0.0",
-    "angular-loading-bar": "~0.6.0"
+    "angular-loading-bar": "~0.6.0",
+    "pleasejs": "ibarrajo/PleaseJS"
   },
   "resolutions": {
     "angular": "1.2.x"

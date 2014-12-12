@@ -1,0 +1,62 @@
+$tag-color: #fff;
+$tag-0-color: #cc3366;
+$tag-1-color: #99ccff;
+$tag-2-color: #66cc99;
+$tag-3-color: #ffcc66;
+$tag-4-color: #cc66cc;
+$tag-5-color: #5f4d48;
+$tag-0-color-hover: #d9668c;
+$tag-1-color-hover: #b3d9ff;
+$tag-2-color-hover: #8cd9b3;
+$tag-3-color-hover: #ffd98c;
+$tag-4-color-hover: #d98cd9;
+$tag-5-color-hover: #877a76;
+
+
+.tags li {
+	@include border-radius(5px);
+}
+
+
+button.tags,
+ul.tags a.tag,
+ul.tags label {
+	display: block;
+	width: 100%;
+	margin: 0 0 5px 0;
+	padding: 4px 8px;
+	border: none;
+	font-size: 1.1em;
+	color: $tag-color !important;
+	text-align: left;
+        max-width: 150px;
+	@include border-radius(5px);
+	background-repeat: no-repeat;
+	background-position: 96% 50%;
+        background-color: #666;
+}
+
+ul.tags .selected {
+	background-image: image-url('images/tag_selected.png');
+}
+
+.tag-0 { background-color: $tag-0-color }
+.tag-1 { background-color: $tag-1-color }
+.tag-2 { background-color: $tag-2-color }
+.tag-3 { background-color: $tag-3-color }
+.tag-4 { background-color: $tag-4-color }
+.tag-5 { background-color: $tag-5-color }
+
+.tag-0:hover { background-color: $tag-0-color-hover }
+.tag-1:hover { background-color: $tag-1-color-hover }
+.tag-2:hover { background-color: $tag-2-color-hover }
+.tag-3:hover { background-color: $tag-3-color-hover }
+.tag-4:hover { background-color: $tag-4-color-hover }
+.tag-5:hover { background-color: $tag-5-color-hover }
+
+#left-panel.settings fieldset.tags .tag-0 { color: $tag-0-color }
+#left-panel.settings fieldset.tags .tag-1 { color: $tag-1-color }
+#left-panel.settings fieldset.tags .tag-2 { color: $tag-2-color }
+#left-panel.settings fieldset.tags .tag-3 { color: $tag-3-color }
+#left-panel.settings fieldset.tags .tag-4 { color: $tag-4-color }
+#left-panel.settings fieldset.tags .tag-5 { color: $tag-5-color }
