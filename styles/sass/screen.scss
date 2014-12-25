@@ -1869,11 +1869,16 @@ body > footer {
 		}
 	}
 
-	ul {
-		float: left;
-	    margin: 0 !important;
-	    width: 100%;
-	}
+        ul {
+                float: left;
+            margin: 0 !important;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: calc(100% - 150px);
+            overflow: auto;
+        }
 
 	li {
 		margin:0 40px;
