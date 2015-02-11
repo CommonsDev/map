@@ -3,7 +3,7 @@
 angular.module('map-plugins', ['map.plugins.imaginationsocial.controllers']);
 angular.module('map', ['map.controllers', 'map.services', 'map.filters', 'leaflet-directive', 'map-plugins']);
 angular.module('common', ['common.filters', 'common.controllers', 'common.services']);
-var app = angular.module('unisson_map', ['common', 'map', 'ui.router', 'googleOauth', 'angular-loading-bar']);
+var app = angular.module('unisson_map', ['common', 'map', 'ui.bootstrap', 'ui.router', 'googleOauth', 'angular-loading-bar', 'angularSpectrumColorpicker']);
 
 // Config
 app.constant('moduleTemplateBaseUrl', config.templateBaseUrl + 'map/');
@@ -80,6 +80,10 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'module
 		    .state('map.layers', {
 			       url: '/layers',
 			       templateUrl: moduleTemplateBaseUrl + 'map_layers.html',
+			   })
+		    .state('map.marker_categories', {
+			       url: '/marker_categories',
+			       templateUrl: moduleTemplateBaseUrl + 'map_marker_categories.html',
 			   })
 		    .state('map.share', {
 			       url: '/share',

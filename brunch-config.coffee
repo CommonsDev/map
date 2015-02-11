@@ -20,14 +20,16 @@ exports.config =
                                         'bower_components/leaflet.markercluster/**/*.js'
                                 ]
                                 'js/app.js': [
+                                        'app/scripts/app.js'
                                         'app/scripts/common/**/*.coffee'
                                         'app/scripts/map/**/*.coffee'
-                                        'app/scripts/app.js'
                                 ]
                          order:
                                 before: [
                                         'bower_components/jquery/dist/jquery.js'
                                         'bower_components/angular/angular.js'
+                                        'bower_components/angularui/angular-ui.js'
+                                        'bower_component/angularui/angular-ui-ieshiv.js'
                                 ]
                                 after: [
                                         'bower_components/leaflet.markercluster/dist/leaflet.markercluster.js'
@@ -37,3 +39,8 @@ exports.config =
                         joinTo:
                                 'css/vendor.css': /^bower_components/
                                 'css/app.css': /^app\/styles/
+                        order:
+                                before: [
+                                        'vendor/styles/bootstrap.less'
+                                        'vendor/styles/bootstrap-responsive.less'
+                                ]

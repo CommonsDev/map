@@ -1,0 +1,23 @@
+<div ng-controller="MapMarkerCategoriesCtrl">
+  <div id="intercalar">
+    <span class="caption">Customize Markers</span>
+  </div>
+    <div id="intercalar-panel" class="map-panel map-markercategories-panel">
+      <a class="close-link" ui-sref="map">Fermer</a>
+      <h1>
+        <img src="images/layers_ico.png" alt="" />
+        <strong>Customize<br /> marker categories</strong>
+        <span>Create categories you can use with the marker by picking colors and icons.</span>
+      </h1>
+      <form>
+        <ul>
+  	  <li ng-repeat="category in marker_categories">
+            {{ category.name }}
+            {{ category.icon_name }}
+            Foreground: <spectrum-colorpicker ng-model="category.icon_color" options='foreground_color_options'></spectrum-colorpicker>
+            Background: <spectrum-colorpicker ng-model="category.marker_color" options='background_color_options'></spectrum-colorpicker>
+  	  </li>
+        </ul>
+      </form>
+    </div>
+</div>

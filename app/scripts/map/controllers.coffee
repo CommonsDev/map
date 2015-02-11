@@ -1,49 +1,49 @@
+# -*- tab-width: 2 -*-
 "use strict"
 
-module = angular.module('map.controllers', ['angularFileUpload', 'restangular'])
+module = angular.module('map.controllers', ['angularFileUpload', 'restangular', 'angularSpectrumColorpicker'])
 
 class MapSearchCtrl
-        constructor: (@$scope, @$rootScope, @$state, @MapService, @Restangular, @geolocation) ->
-                @$scope.lookupAddress = this.lookupAddress
-                @$scope.geolocate = this.geolocate
+  constructor: (@$scope, @$rootScope, @$state, @MapService, @Restangular, @geolocation) ->
+    @$scope.lookupAddress = this.lookupAddress
+    @$scope.geolocate = this.geolocate
 
-                @$scope.form =
-                        address: ""
+    @$scope.form =
+      address: ""
 
-        geolocate: =>
-                p = @geolocation.position().then(
-                        (pos) =>
-                                console.debug("Resolving #{pos.coords.latitude}")
+    geolocate: =>
+      p = @geolocation.position().then(
+        (pos) =>
+          console.debug("Resolving #{pos.coords.latitude}")
 
-                                # Focus on new location
-                                @MapService.center =
-                                        lat: pos.coords.latitude
-                                        lng: pos.coords.longitude
-                                        zoom: 20
+          # Focus on new location
+          @MapService.center =
+            lat: pos.coords.latitude
+            lng: pos.coords.longitude
+            zoom: 20
 
-                                @$state.go('map')
+          @$state.go('map')
 
-                        , (reason) =>
-                                console.debug("error while getting position...")
-                )
+        , (reason) =>
+          console.debug("error while getting position...")
+    )
 
+  lookupAddress: =>
+    """
+    Given an address, find lat/lng
+    """
+    console.debug("looking up #{@$scope.form.address}")
+    pos_promise = @geolocation.lookupAddress(@$scope.form.address).then((coords)=>
+      console.debug("Found pos #{coords}")
 
-        lookupAddress: =>
-                """
-                Given an address, find lat/lng
-                """
-                console.debug("looking up #{@$scope.form.address}")
-                pos_promise = @geolocation.lookupAddress(@$scope.form.address).then((coords)=>
-                        console.debug("Found pos #{coords}")
+      # Focus on new position
+      @MapService.center =
+        lat: coords[0]
+        lng: coords[1]
+        zoom: 20
 
-                        # Focus on new position
-                        @MapService.center =
-                                lat: coords[0]
-                                lng: coords[1]
-                                zoom: 20
-
-                        @$state.go('map')
-                )
+      @$state.go('map')
+    )
 
 
 class MapDetailCtrl
@@ -581,6 +581,35 @@ class MapMarkerNewCtrl
                                 zoom: 15
 
                 )
+
+module.controller("MapMarkerCategoriesCtrl", ($scope, MapService, Restangular) ->
+
+  $scope.color = null
+
+  $scope.foreground_color_options =
+    color: 'white'
+
+  $scope.background_color_options =
+    showPaletteOnly: true,
+    showPalette:true,
+    color: 'red',
+    palette: [
+        "red",
+        "darkred",
+        "orange",
+        "green",
+        "darkgreen",
+        "blue",
+        "purple",
+        "darkpurple",
+        "cadetblue"
+      ]
+
+  $scope.$watch("MapService.map", (map) ->
+    if map
+      $scope.marker_categories = MapService.map.marker_categories
+  )
+)
 
 
 # Controller declarations

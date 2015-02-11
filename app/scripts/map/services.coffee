@@ -1,4 +1,4 @@
-services = angular.module('map.services', ['restangular', 'angular-jqcloud'])
+services = angular.module('map.services', ['restangular'])
 
 class MapService
         constructor: (@$rootScope, @$compile, @$http, @Restangular, @leafletEvents) ->
@@ -42,29 +42,50 @@ class MapService
                 """
                 return @map.data_layers[0] # XXX Hacky
 
-        readISJson: (data) =>
-                for project in data.objects
-                        # Gather tags
-                        for tag in project.tags
-                                if not _.where(@tags, {slug: tag.slug}).length
-                                        @tags.push({label: tag.name, slug: tag.slug, color: Please.make_color({saturation: 0.4, hue: 0.2, value: 0.7}, {from_hash: tag.slug})})
+        readJson: (data, xpaths) =>
+                if (not xpaths.object_path or not xpaths.title or not xpaths.lat or not xpaths.lng)
+                        console.error("Required xpaths")
+                        return
 
+                default_xpaths =
+                        object_path: "*"
+                        title: "*"
+                        baseline: "*"
+                        description: "*"
+                        lat: "*"
+                        lng: "*"
+                        created_by: "*"
+                        created_on: "*"
+                        address: "*"
+                        id: "*"
+
+
+                xpaths = $.extend(true, default_xpaths, xpaths)
+
+                #snapshot = Defiant.getSnapshot(data)
+
+                items = JSONSelect.match(xpaths.object_path, data)[0]
+                for item in items
+                        console.debug(item)
+                        # Gather tags
+                        #for tag in item.tags
+                        #        if not _.where(@tags, {slug: tag.slug}).length
+                        #                @tags.push({label: tag.name, slug: tag.slug, color: Please.make_color({saturation: 0.4, hue: 0.2, value: 0.7}, {from_hash: tag.slug})})
                         # Create new marker
                         @markers.push({
                                 layer: "json"
-                                lat: project.location.geo.coordinates[1]
-                                lng: project.location.geo.coordinates[0]
+                                lat: JSONSelect.match(xpaths.lat, item)[0]
+                                lng: JSONSelect.match(xpaths.lng, item)[0]
                                 message: '<div ng-include="\'/views/map/plugins/imagination.social/marker_card.html\'"></div>'
                                 data:
-                                        title: project.title
-                                        baseline: project.baseline
-                                        description: project.description
+                                        title: JSONSelect.match(xpaths.title, item)[0]
+                                        baseline: JSONSelect.match(xpaths.baseline, item)[0]
+                                        description: JSONSelect.match(xpaths.description, item)[0]
                                         # picture_url: marker.picture_url
-                                        created_by: "??"
-                                        created_on: project.created_on
-                                        address: project.location.postal_address
-                                        id: project.id
-
+                                        created_by: JSONSelect.match(xpaths.created_by, item)[0]
+                                        created_on: JSONSelect.match(xpaths.created_on, item)[0]
+                                        address: JSONSelect.match(xpaths.address, item)[0]
+                                        id: JSONSelect.match(xpaths.id, item)[0]
                                 icon:
                                         type: 'awesomeMarker'
                                         prefix: 'fa'
@@ -129,9 +150,21 @@ class MapService
                                 console.debug("Adding data layer...")
 
                                 # Load the geojson layer if specified
-                                if layer.geojson
-                                        @$http.get(layer.geojson).success((data, status) =>
-                                                this.readISJson(data)
+                                if layer.json_uri
+                                        @$http.get(layer.json_uri).success((data, status) =>
+                                                is_paths =
+                                                        lat: "//location/geo/coordinates[2]"
+                                                        lng: "//location/geo/coordinates[1]"
+                                                        title: "//title"
+                                                        baseline: "//baseline"
+                                                        description: "//description"
+                                                        created_on: "//created_on"
+                                                        created_by: "//created_by"
+                                                        address: "//location/postal_address"
+                                                        id: "//id"
+
+
+                                                this.readJson(data, layer.json_mapping)
 
                                                 # @geojson =
                                                 #         data: data
