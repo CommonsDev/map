@@ -34,7 +34,7 @@
     "angular-ui-router": "~0.2.11",
     "leaflet": "0.7.3",
     "Leaflet.awesome-markers": "latest",
-    "angular-leaflet-directive": "0.7.9",
+    "angular-leaflet-directive": "0.7.11",
     "leaflet.markercluster": "latest",
     "compass-mixins": "latest",
     "moment": "*",

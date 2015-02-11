@@ -60,7 +60,7 @@ class GeolocationService
                 @geocoder.geocode({'address': location},
                         (results, status) =>
                                 if status == google.maps.GeocoderStatus.OK
-                                        latLong = [ results[0].geometry.location.lat(), results[0].geometry.location.lng() ]
+                                        latLong = [ results[0].geometry.location.lat(), results[0].geometry.location.lng(), results[0].geometry.viewport ]
                                         @$rootScope.$apply(->
                                                 deferred.resolve(angular.copy(latLong))
                                         )

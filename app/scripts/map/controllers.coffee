@@ -4,7 +4,7 @@
 module = angular.module('map.controllers', ['angularFileUpload', 'restangular', 'angularSpectrumColorpicker'])
 
 class MapSearchCtrl
-  constructor: (@$scope, @$rootScope, @$state, @MapService, @Restangular, @geolocation) ->
+  constructor: (@$scope, @$rootScope, @$state, @MapService, @Restangular, @geolocation, @leafletBoundsHelpers) ->
     @$scope.lookupAddress = this.lookupAddress
     @$scope.geolocate = this.geolocate
 
@@ -34,13 +34,12 @@ class MapSearchCtrl
     """
     console.debug("looking up #{@$scope.form.address}")
     pos_promise = @geolocation.lookupAddress(@$scope.form.address).then((coords)=>
-      console.debug("Found pos #{coords}")
 
-      # Focus on new position
-      @MapService.center =
-        lat: coords[0]
-        lng: coords[1]
-        zoom: 20
+      # Fitting bounds is better than adjusting lat/lng since it provides a dynamic zoom level
+      @MapService.bounds = @leafletBoundsHelpers.createBoundsFromArray([
+        [coords[2].getSouthWest().lat(), coords[2].getSouthWest().lng()]
+        [coords[2].getNorthEast().lat(), coords[2].getNorthEast().lng()]
+      ])
 
       @$state.go('map')
     )
@@ -621,4 +620,4 @@ module.controller("MapMyMapsCtrl", ['$scope', '$state', 'Restangular', 'MapServi
 module.controller("MapSettingsCtrl", ['$scope', '$state', 'Restangular', 'MapService', MapSettingsCtrl])
 module.controller("MapShareCtrl", ['$scope', '$location', '$state', 'Restangular', 'MapService', MapShareCtrl])
 module.controller("MapMarkerNewCtrl", ['$scope', '$rootScope', 'debounce', '$state', '$upload', '$location', 'MapService', 'Restangular', 'geolocation', MapMarkerNewCtrl])
-module.controller("MapSearchCtrl", ['$scope', '$rootScope', '$state', 'MapService', 'Restangular', 'geolocation', MapSearchCtrl])
+module.controller("MapSearchCtrl", ['$scope', '$rootScope', '$state', 'MapService', 'Restangular', 'geolocation', 'leafletBoundsHelpers', MapSearchCtrl])

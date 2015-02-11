@@ -9,6 +9,8 @@ class MapService
                         lng: 1.0
                         zoom: 8
 
+                @bounds = null
+
                 @tiles = {}
 
                 @tags = new Array()
