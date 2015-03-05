@@ -23,10 +23,10 @@ class MapService
 
                 @layers =
                         baselayers:
-                                cloudmade:
-                                        name: "OSM"
+                                null_layer:
+                                        name: "yo"
                                         type: "xyz"
-                                        url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        url: "null"
 
                         overlays:
                                 json:
@@ -68,16 +68,20 @@ class MapService
 
                 items = JSONSelect.match(xpaths.object_path, data)[0]
                 for item in items
-                        console.debug(item)
                         # Gather tags
-                        #for tag in item.tags
-                        #        if not _.where(@tags, {slug: tag.slug}).length
-                        #                @tags.push({label: tag.name, slug: tag.slug, color: Please.make_color({saturation: 0.4, hue: 0.2, value: 0.7}, {from_hash: tag.slug})})
+                        for tag in item.tags
+                                if not _.where(@tags, {slug: tag.slug}).length
+                                        @tags.push({label: tag.name, slug: tag.slug, color: Please.make_color({saturation: 0.4, hue: 0.2, value: 0.7}, {from_hash: tag.slug})})
+
                         # Create new marker
+                        lat = JSONSelect.match(xpaths.lat, item)[0]
+                        lng = JSONSelect.match(xpaths.lng, item)[0]
+                        if not lat or not lng
+                                continue
                         @markers.push({
                                 layer: "json"
-                                lat: JSONSelect.match(xpaths.lat, item)[0]
-                                lng: JSONSelect.match(xpaths.lng, item)[0]
+                                lat: lat
+                                lng: lng
                                 message: '<div ng-include="\'/views/map/plugins/imagination.social/marker_card.html\'"></div>'
                                 data:
                                         title: JSONSelect.match(xpaths.title, item)[0]
@@ -216,8 +220,10 @@ class MapService
 
                         # Add background tile layer
                         console.debug("Adding tile layer...")
-                        @tiles =
+                        @layers.baselayers = {}
+                        @layers.baselayers[name] =
                                 name: aMap.tile_layer.name
+                                type: "xyz"
                                 url: aMap.tile_layer.url_template
                                 options:
                                         attribution: aMap.tile_layer.attribution

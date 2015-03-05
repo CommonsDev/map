@@ -231,8 +231,14 @@ class MapTileLayersCtrl
 
                         new_tl = @$scope.available_layers[tilelayer_idx]
 
-                        @MapService.tiles =
+                        # Remove previous tile layers
+                        for idx, layer of @MapService.layers.baselayers
+                          delete @MapService.layers.baselayers[idx]
+
+                        # Add this tile layer
+                        @MapService.layers.baselayers[new_tl.name] =
                                 name: new_tl.name
+                                type: "xyz"
                                 url: new_tl.url_template
                                 options:
                                         attribution: new_tl.attribution
