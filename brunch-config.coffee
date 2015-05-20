@@ -24,9 +24,6 @@ exports.config =
                                         'app/scripts/common/**/*.coffee'
                                         'app/scripts/map/**/*.coffee'
                                 ]
-                                'js/config.js':[
-                                        'app/scripts/config.js'
-                                ]
                          order:
                                 before: [
                                         'bower_components/jquery/dist/jquery.js'
